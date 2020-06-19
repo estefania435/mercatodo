@@ -23,12 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $YES = 'SI';
-
-        if ($YES == 'SI') {
-            echo 'si es igual';
-        }
-
-        return view('home');
+                return view('home');
     }
 }
