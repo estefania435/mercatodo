@@ -1,6 +1,9 @@
 {
     "E-Mail Address": "Correo electrónico",
     "Password": "Contraseña",
+    "Surname": "Apellidos",
+    "Address": "Direccion",
+    "Phone": "Contacto",
     "Remember Me": "Recuérdame",
     "Login": "Acceder",
     "Forgot Your Password?": "¿Olvidaste tu contraseña?",
