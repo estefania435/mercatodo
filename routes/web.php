@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\User;
+use App\MercatodoPermission\Models\Role;
+use App\MercatodoPermission\Models\Permission;
+use Illuminate\Support\Facades\Gate;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +27,16 @@ Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
 
+Route::get('/test', function () {
+    $user=User::find(1);
+    //$user->roles()->sync([8]);
+    Gate::authorize('haveaccess', 'role.show');
+    return $user;
+    //return $user->havePermission('role.create');
+});
 
+Route::resource('/role', 'RoleController')->names('role');
 
+Route::resource('/user', 'UserController', ['except'=>[
+    'create','store']])->names('user');
+Route::post('restore/{id}', [ 'as' => 'user.restore', 'uses' => 'UserController@restore']);

@@ -10,7 +10,7 @@ return PhpCsFixer\Config::create()
     ->setLineEnding("\r\n")
     ->setRules([
         '@Symfony' => true,
-        '@PSR12' => true,
+        '@PSR2' => true,
         '@PhpCsFixer' => true,
         'array_syntax' => ['syntax' => 'short'],
         'no_superfluous_phpdoc_tags' => false,
