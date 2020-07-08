@@ -83,9 +83,12 @@ class UserController extends Controller
     {
         $request->validate([
             'name'               => 'required|max:50|unique:users,name,'.$user->id,
+            'SurnameUser'        => 'required|max:50,'.$user->id,
+            'UserIdentification' => 'required|max:50|unique:users,UserIdentification,'.$user->id,
+            'UserAddress'        => 'required|max:50,'.$user->id,
+            'UserPhone'          => 'required|max:50,'.$user->id,
             'email'              => 'required|max:50|unique:users,email,'.$user->id,
         ]);
-
 
         $user->update($request->all());
 
@@ -106,6 +109,7 @@ class UserController extends Controller
         $this->authorize('haveaccess', 'user.destroy');
 
         $user->delete();
+
         return redirect()->route('user.index')
             ->with('status_success', 'user successfully disabled');
     }
@@ -113,6 +117,7 @@ class UserController extends Controller
     public function restore(Request $request)
     {
         User::withTrashed()->find($request->id)->restore();
+
         return redirect()->route('user.index')
             ->with('status_success', 'user  enabled');
     }

@@ -32,6 +32,48 @@
                                 <div class="form-group">
                                     <input type="text"
                                            class="form-control"
+                                           id="SurnameUser"
+                                           placeholder="Surname"
+                                           name="SurnameUser"
+                                           value="{{ old('SurnameUser',$user->SurnameUser) }}"
+
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input type="number"
+                                           class="form-control"
+                                           id="UserIdentification"
+                                           placeholder="Identification"
+                                           name="UserIdentification"
+                                           value="{{ old('Identification',$user->UserIdentification) }}"
+
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="UserAddress"
+                                           placeholder="Address"
+                                           name="UserAddress"
+                                           value="{{ old('Address',$user->UserAddress) }}"
+
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input type="number"
+                                           class="form-control"
+                                           id="UserPhone"
+                                           placeholder="Phone"
+                                           name="UserPhone"
+                                           value="{{ old('Phone',$user->UserPhone) }}"
+
+                                    >
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
                                            id="email"
                                            placeholder="email"
                                            name="email"
@@ -40,6 +82,7 @@
                                 </div>
 
                                 <div class="form-group">
+
                                     <select class="form-control" name="roles" id="roles">
                                         @foreach($roles as $role)
                                             <option value="{{ $role->id }}"
@@ -48,11 +91,10 @@
                                                     selected
                                                 @endif
                                                 @endisset
-
-
                                             >{{ $role->name }}</option>
                                         @endforeach
                                     </select>
+
                                 </div>
                                 <hr>
                                 <input class="btn btn-primary" type="submit" value="Save">

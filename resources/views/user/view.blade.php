@@ -34,6 +34,48 @@
                                 <div class="form-group">
                                     <input type="text"
                                            class="form-control"
+                                           id="SurnameUser"
+                                           placeholder="Surname"
+                                           name="SurnameUser"
+                                           value="{{ old('Surname',$user->SurnameUser) }}"
+                                           disabled
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input type="number"
+                                           class="form-control"
+                                           id="UserIdentification"
+                                           placeholder="Identification"
+                                           name="UserIdentification"
+                                           value="{{ old('Identification',$user->UserIdentification) }}"
+                                           disabled
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="UserAddress"
+                                           placeholder="Address"
+                                           name="UserAddress"
+                                           value="{{ old('Address',$user->UserAddress) }}"
+                                           disabled
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input type="number"
+                                           class="form-control"
+                                           id="UserPhone"
+                                           placeholder="Phone"
+                                           name="UserPhone"
+                                           value="{{ old('Phone',$user->UserPhone) }}"
+                                           disabled
+                                    >
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
                                            id="email"
                                            placeholder="email"
                                            name="email"
