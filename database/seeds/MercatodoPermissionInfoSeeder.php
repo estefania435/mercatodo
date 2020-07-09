@@ -25,10 +25,10 @@ class MercatodoPermissionInfoSeeder extends Seeder
         $useradmin= User::create([
 
             'name'                  =>'admin',
-            'SurnameUser'           =>'Eladmin',
-            'UserIdentification'    =>'1152221469',
-            'UserAddress'           =>'carrera 76 B # 54 38',
-            'UserPhone'             =>'3173015596',
+            'surname'               =>'Eladmin',
+            'identification'        =>'1152221469',
+            'address'               =>'carrera 76 B # 54 38',
+            'phone'                 =>'3173015596',
             'email'                 =>'admin@admin.com',
             'password'              =>Hash::make('admin123'),
         ]);

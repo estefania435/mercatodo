@@ -34,40 +34,40 @@
                                 <div class="form-group">
                                     <input type="text"
                                            class="form-control"
-                                           id="SurnameUser"
+                                           id="surname"
                                            placeholder="Surname"
-                                           name="SurnameUser"
-                                           value="{{ old('Surname',$user->SurnameUser) }}"
+                                           name="surname"
+                                           value="{{ old('Surname',$user->surname) }}"
                                            disabled
                                     >
                                 </div>
                                 <div class="form-group">
                                     <input type="number"
                                            class="form-control"
-                                           id="UserIdentification"
+                                           id="identification"
                                            placeholder="Identification"
-                                           name="UserIdentification"
-                                           value="{{ old('Identification',$user->UserIdentification) }}"
+                                           name="identification"
+                                           value="{{ old('Identification',$user->identification) }}"
                                            disabled
                                     >
                                 </div>
                                 <div class="form-group">
                                     <input type="text"
                                            class="form-control"
-                                           id="UserAddress"
+                                           id="address"
                                            placeholder="Address"
-                                           name="UserAddress"
-                                           value="{{ old('Address',$user->UserAddress) }}"
+                                           name="address"
+                                           value="{{ old('Address',$user->address) }}"
                                            disabled
                                     >
                                 </div>
                                 <div class="form-group">
                                     <input type="number"
                                            class="form-control"
-                                           id="UserPhone"
+                                           id="phone"
                                            placeholder="Phone"
-                                           name="UserPhone"
-                                           value="{{ old('Phone',$user->UserPhone) }}"
+                                           name="phone"
+                                           value="{{ old('Phone',$user->phone) }}"
                                            disabled
                                     >
                                 </div>
