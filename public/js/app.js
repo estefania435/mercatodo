@@ -49669,6 +49669,72 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/apicategory.js":
+/*!*************************************!*\
+  !*** ./resources/js/apicategory.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var apicategory = new Vue({
+  el: '#apicategory',
+  data: {
+    name: 'Estefanía Agudelo',
+    slug: '',
+    div_messageslug: 'Slug exist',
+    div_class_slug: 'badge badge-danger',
+    div_appear: false,
+    disable_button: 0
+  },
+  computed: {
+    generateSlug: function generateSlug() {
+      var _char = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "Á": "A",
+        "É": "E",
+        "Í": "I",
+        "Ó": "O",
+        "Ú": "U",
+        "ñ": "n",
+        "Ñ": "N",
+        " ": "-",
+        "_": "-"
+      };
+      var expr = /[áéíóúÁÉÍÓÚÑñ_ ]/g;
+      this.slug = this.name.trim().replace(expr, function (e) {
+        return _char[e];
+      }).toLowerCase();
+      return this.slug;
+    }
+  },
+  methods: {
+    getCategory: function getCategory() {
+      var _this = this;
+
+      var url = '/api/category/' + this.slug;
+      axios.get(url).then(function (response) {
+        _this.div_messageslug = response.data;
+
+        if (_this.div_messageslug === 'Slug available') {
+          _this.div_class_slug = 'badge badge-success';
+          _this.disable_button = 0;
+        } else {
+          _this.div_class_slug = 'badge badge-danger';
+          _this.disable_button = 1;
+        }
+
+        _this.div_appear = true;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -49704,6 +49770,8 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+
+__webpack_require__(/*! ./apicategory */ "./resources/js/apicategory.js");
 
 /***/ }),
 

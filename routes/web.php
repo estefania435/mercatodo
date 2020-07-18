@@ -40,3 +40,6 @@ Route::resource('/role', 'RoleController')->names('role');
 Route::resource('/user', 'UserController', ['except'=>[
     'create','store']])->names('user');
 Route::post('restore/{id}', [ 'as' => 'user.restore', 'uses' => 'UserController@restore']);
+Route::get('/admin', function (){
+    return view('admin.category.create');
+});
