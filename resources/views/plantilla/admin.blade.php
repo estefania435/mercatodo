@@ -723,6 +723,26 @@
         <!-- Main content -->
         <section class="content">
 
+            @if( session('data'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('data') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <spam aria-hidden="true">&times;</spam>
+                    </button>
+                </div>
+
+            @endif
+
+                @if( session('cancel'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('cancel') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <spam aria-hidden="true">&times;</spam>
+                        </button>
+                    </div>
+
+                @endif
+
           @yield('content')
 
         </section>

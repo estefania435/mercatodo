@@ -40,7 +40,10 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return Category::create($request->all());
+        Category::create($request->all());
+
+        return redirect()->route('admin.category.index')
+            ->with('data','Record created successfully!');
     }
 
     /**
@@ -80,7 +83,8 @@ class AdminCategoryController extends Controller
         $cat= Category::findOrFail($id);
         $cat-> fill($request->all())->save();
 
-        return $cat;
+        return redirect()->route('admin.category.index')
+            ->with('data','Record updated successfully!');
     }
 
     /**
