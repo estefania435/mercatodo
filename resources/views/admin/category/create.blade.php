@@ -4,9 +4,12 @@
 
 @section('content')
 
-    <div id="apicategory">
+<div id="apicategory">
 
-<!-- Default box -->
+        <form action="{{ route('admin.category.store') }}" method="POST">
+        @csrf
+
+        <!-- Default box -->
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Administration of categories</h3>
@@ -23,8 +26,7 @@
 
 
 
-                <form action="">
-                    <h1>Create category</h1>
+
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input v-model="name"
@@ -50,11 +52,11 @@
         <input
             :disabled="disable_button==1"
             type="submit" value="Save" class="btn btn-primary float-right">
-        </form>
+
     </div>
     <!-- /.card-footer-->
 </div>
 <!-- /.card -->
-
+        </form>
     </div>
 @endsection
