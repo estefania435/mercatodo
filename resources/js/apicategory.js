@@ -3,12 +3,12 @@
 const apicategory = new Vue({
     el: '#apicategory',
     data: {
-        name: 'Estefanía Agudelo',
+        name: '',
         slug: '',
         div_messageslug: 'Slug exist',
         div_class_slug: 'badge badge-danger',
         div_appear: false,
-        disable_button: 0
+        disable_button: 1
     },
     computed: {
         generateSlug : function () {
@@ -49,6 +49,13 @@ const apicategory = new Vue({
                 this.div_appear = true;
             }
         }
+    },
+    mounted(){
+        if (document.getElementById('edit').innerHTML){
+            this.name = document.getElementById('nametemp').innerHTML;
+            this.disable_button = 0;
+        }
+
     }
 
 });
