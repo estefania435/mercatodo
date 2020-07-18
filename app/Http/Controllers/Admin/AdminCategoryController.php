@@ -16,8 +16,11 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories= Category::orderBy('name')->paginate(2);
+
+        return view('admin.category.index',compact('categories'));
     }
+
 
     /**
      * Show the form for creating a new resource.
