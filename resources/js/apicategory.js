@@ -51,7 +51,7 @@ const apicategory = new Vue({
         }
     },
     mounted(){
-        if (document.getElementById('edit').innerHTML){
+        if (document.getElementById('edit')){
             this.name = document.getElementById('nametemp').innerHTML;
             this.disable_button = 0;
         }

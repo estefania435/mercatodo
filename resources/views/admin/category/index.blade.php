@@ -5,7 +5,11 @@
 @section('content')
 
 
-    <div class="row">
+    <div id="confirmdelete" class="row">
+
+        <span style="display:none;" id="urlbase">{{route('admin.category.index')}}</span>
+
+        @include('custom.modal_delete')
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -56,7 +60,9 @@
                                    href="{{ route('admin.category.edit',$category->slug) }}">Edit</a></td>
 
                             <td><a class="btn btn-danger"
-                                   href="{{ route('admin.category.index',$category->slug) }}">destroy</a></td>
+                                   href="{{ route('admin.category.index') }}"
+                                    v-on:click.prevent="you_want_to_delete({{$category->id}})"
+                                >Destroy</a></td>
 
                             <td> </td>
                             <td> </td>
