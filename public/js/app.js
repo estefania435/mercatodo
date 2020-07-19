@@ -49748,6 +49748,85 @@ var apicategory = new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/admin/apiproduct.js":
+/*!******************************************!*\
+  !*** ./resources/js/admin/apiproduct.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var apiproduct = new Vue({
+  el: '#apiproduct',
+  data: {
+    name: '',
+    slug: '',
+    div_messageslug: 'Slug exist',
+    div_class_slug: 'badge badge-danger',
+    div_appear: false,
+    disable_button: 1
+  },
+  computed: {
+    generateSlug: function generateSlug() {
+      var _char = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "Á": "A",
+        "É": "E",
+        "Í": "I",
+        "Ó": "O",
+        "Ú": "U",
+        "ñ": "n",
+        "Ñ": "N",
+        " ": "-",
+        "_": "-"
+      };
+      var expr = /[áéíóúÁÉÍÓÚÑñ_ ]/g;
+      this.slug = this.name.trim().replace(expr, function (e) {
+        return _char[e];
+      }).toLowerCase();
+      return this.slug;
+    }
+  },
+  methods: {
+    getProduct: function getProduct() {
+      var _this = this;
+
+      if (this.slug) {
+        var url = '/api/product/' + this.slug;
+        axios.get(url).then(function (response) {
+          _this.div_messageslug = response.data;
+
+          if (_this.div_messageslug === 'Slug available') {
+            _this.div_class_slug = 'badge badge-success';
+            _this.disable_button = 0;
+          } else {
+            _this.div_class_slug = 'badge badge-danger';
+            _this.disable_button = 1;
+          }
+
+          _this.div_appear = true;
+        });
+      } else {
+        this.div_class_slug = 'badge badge-danger';
+        this.div_messageslug = "you must write a product";
+        this.disable_button = 1;
+        this.div_appear = true;
+      }
+    }
+  },
+  mounted: function mounted() {
+    if (document.getElementById('edit')) {
+      this.name = document.getElementById('nametemp').innerHTML;
+      this.disable_button = 0;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -49858,6 +49937,10 @@ if (document.getElementById('app')) {
 
 if (document.getElementById('apicategory')) {
   __webpack_require__(/*! ./admin/apicategory */ "./resources/js/admin/apicategory.js");
+}
+
+if (document.getElementById('apiproduct')) {
+  __webpack_require__(/*! ./admin/apiproduct */ "./resources/js/admin/apiproduct.js");
 }
 
 if (document.getElementById('confirmdelete')) {

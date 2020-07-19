@@ -1,6 +1,5 @@
 @extends('plantilla.admin')
 
-
 @section('title', 'Create Product')
 
 @section('breadcrumb')
@@ -8,8 +7,9 @@
     <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
-
 @section('content')
+
+    <div id="apiproduct">
 
     <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data" >
     @csrf
@@ -19,12 +19,9 @@
             <div class="container-fluid">
                 <!-- SELECT2 EXAMPLE -->
 
-
-
                 <div class="card card-success">
                     <div class="card-header">
                         <h3 class="card-title">Automatically generated data</h3>
-
 
                     </div>
                     <!-- /.card-header -->
@@ -36,7 +33,6 @@
 
                                     <label>Visits</label>
                                     <input  class="form-control" type="number" id="visits" name="visits">
-
 
                                 </div>
                                 <!-- /.form-group -->
@@ -56,9 +52,6 @@
                         </div>
                         <!-- /.row -->
 
-
-
-
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -67,28 +60,9 @@
                 </div>
                 <!-- /.card -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Product dates</h3>
-
 
                     </div>
                     <!-- /.card-header -->
@@ -98,11 +72,25 @@
                                 <div class="form-group">
 
                                     <label>Name</label>
-                                    <input class="form-control" type="text" id="name" name="name">
+                                    <input
+
+                                    v-model="name"
+                                    @blur="getProduct"
+                                    @focus="div_appear= false"
+
+                                    class="form-control" type="text" id="name" name="name">
 
                                     <label>Slug</label>
-                                    <input class="form-control" type="text" id="slug" name="slug" >
+                                    <input
+                                    readonly
+                                    v-model="generateSlug"
 
+                                    class="form-control" type="text" id="slug" name="slug" >
+
+                                    <div v-if="div_appear" v-bind:class="div_class_slug">
+                                        @{{div_messageslug}}
+                                    </div>
+                                    <br v-if="div_appear">
 
                                 </div>
                                 <!-- /.form-group -->
@@ -111,9 +99,6 @@
                             <!-- /.col -->
                             <div class="col-md-6">
                                 <div class="form-group">
-
-
-
 
                                     <label>category</label>
                                     <select name="category_id" class="form-control select2" style="width: 100%;">
@@ -126,7 +111,6 @@
                                             @endif
                                         @endforeach
 
-
                                     </select>
                                     <label>Quantity</label>
                                     <input class="form-control" type="number" id="quantity" name="quantity" >
@@ -138,7 +122,6 @@
                         </div>
                         <!-- /.row -->
 
-
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -148,12 +131,9 @@
 
                 <!-- /.card -->
 
-
-
                 <div class="card card-success">
                     <div class="card-header">
                         <h3 class="card-title">Pricing Section</h3>
-
 
                     </div>
                     <!-- /.card-header -->
@@ -177,10 +157,8 @@
                             </div>
                             <!-- /.col -->
 
-
                         </div>
                         <!-- /.row -->
-
 
                     </div>
                     <!-- /.card-body -->
@@ -214,9 +192,6 @@
                     </div>
                     <!-- /.col-md-6 -->
 
-
-
-
                     <div class="col-md-6">
 
                         <div class="card card-info">
@@ -248,18 +223,12 @@
                     </div>
                     <!-- /.col-md-6 -->
 
-
-
                 </div>
                 <!-- /.row -->
-
-
-
 
                 <div class="card card-warning">
                     <div class="card-header">
                         <h3 class="card-title">Images</h3>
-
 
                     </div>
                     <!-- /.card-header -->
@@ -273,9 +242,7 @@
                                    accept="image/*" >
                         </div>
 
-
                     </div>
-
 
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -283,7 +250,6 @@
                     </div>
                 </div>
                 <!-- /.card -->
-
 
                 <div class="card card-danger">
                     <div class="card-header">
@@ -326,6 +292,8 @@
 
                                     <a class="btn btn-danger" href="{{ route('cancel','admin.product.index') }}">cancel</a>
                                     <input
+                                        :disabled="disable_button==1"
+
                                         type="submit" value="Save" class="btn btn-primary">
 
                                 </div>
@@ -334,32 +302,19 @@
                             </div>
                             <!-- /.col -->
 
-
-
-
-
                         </div>
                         <!-- /.row -->
 
-
-
-
                     </div>
 
-
-
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-
-                    </div>
                 </div>
                 <!-- /.card -->
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
 
-
-
     </form>
+
+    </div>
 
 @endsection
