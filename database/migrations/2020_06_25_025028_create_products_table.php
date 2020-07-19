@@ -18,11 +18,11 @@ class CreateProductsTable extends Migration
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->unsignedBigInteger('category_id');
-            $table->bigInteger('Quantity')->unsigned()->default(0);
+            $table->bigInteger('quantity')->unsigned()->default(0);
             $table->decimal('price')->default(0);
             $table->Text('description')->nullable();
             $table->Text('specifications')->nullable();
-            $table->text('data-of-interest')->nullable();
+            $table->text('data_of_interest')->nullable();
             $table->unsignedbigInteger('visits')->default(0);
             $table->unsignedbigInteger('sales')->default(0);
             $table->string('status');

@@ -211,7 +211,7 @@
                                 <div class="form-group">
                                     <label>Data of interest:</label>
 
-                                    <textarea class="form-control" name="data-of-interest" id="data-of-interest" rows="5"></textarea>
+                                    <textarea class="form-control" name="data_of_interest" id="data_of_interest" rows="5"></textarea>
 
                                 </div>
 
