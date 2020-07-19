@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\MercatodoModels\Product;
+use App\MercatodoModels\Category;
 use Illuminate\Http\Request;
 
 class AdminProductController extends Controller
@@ -29,7 +30,9 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories= Category::orderBy('name')->get();
+
+        return view('admin.product.create', compact('categories'));
     }
 
     /**

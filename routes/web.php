@@ -49,7 +49,6 @@ Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin
 
 Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product');
 
-Route::get('cancel/{ruta}', function ($ruta) {
-    return redirect()->route('admin.category.index')
-        ->with('data', 'Action canceled!');
+Route::get('cancel/{ruta}', function($ruta) {
+    return redirect()->route($ruta)->with('cancel','Action Canceled!');
 })->name('cancel');
