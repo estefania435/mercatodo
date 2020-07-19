@@ -2,6 +2,10 @@
 
 @section('title','Administration of categories')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item active">@yield('title')</li>
+@endsection
+
 @section('content')
 
 
@@ -16,13 +20,20 @@
                     <h3 class="card-title">Section of categories</h3>
 
                     <div class="card-tools">
+                        <form>
+
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                            <input type="text" name="name" class="form-control float-right"
+                                   placeholder="Search"
+                                    value="{{ request()->get('name') }}"
+                            >
 
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
+                        </form>
+
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -73,7 +84,7 @@
 
                         </tbody>
                     </table>
-                    {{ $categories->links() }}
+                    {{ $categories->appends($_GET)->links() }}
                 </div>
                 <!-- /.card-body -->
             </div>

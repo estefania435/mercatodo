@@ -43,13 +43,12 @@ Route::post('restore/{id}', [ 'as' => 'user.restore', 'uses' => 'UserController@
 
 Route::get('/admin', function (){
         return view('plantilla.admin');
-});
+})->name('admin');
 
 Route::resource('admin/category','Admin\AdminCategoryController')->names('admin.category');
 
 Route::get('cancel/{ruta}', function ($ruta)
 {
-
     return redirect()->route('admin.category.index')
         ->with('data','Action canceled!');
 })->name('cancel');
