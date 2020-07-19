@@ -41,14 +41,15 @@ Route::resource('/user', 'UserController', ['except'=>[
     'create','store']])->names('user');
 Route::post('restore/{id}', [ 'as' => 'user.restore', 'uses' => 'UserController@restore']);
 
-Route::get('/admin', function (){
-        return view('plantilla.admin');
+Route::get('/admin', function () {
+    return view('plantilla.admin');
 })->name('admin');
 
-Route::resource('admin/category','Admin\AdminCategoryController')->names('admin.category');
+Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category');
 
-Route::get('cancel/{ruta}', function ($ruta)
-{
+Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product');
+
+Route::get('cancel/{ruta}', function ($ruta) {
     return redirect()->route('admin.category.index')
-        ->with('data','Action canceled!');
+        ->with('data', 'Action canceled!');
 })->name('cancel');
