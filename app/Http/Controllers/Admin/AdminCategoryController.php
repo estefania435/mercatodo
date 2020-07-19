@@ -98,6 +98,9 @@ class AdminCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cat= Category::findOrFail($id);
+        $cat->delete();
+        return redirect()->route('admin.category.index')
+            ->with('data','Record delete successfully!');
     }
 }
