@@ -43,6 +43,31 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:products,name',
+            'slug' => 'required|unique:products,slug',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $urlimages = [];
+        if ($request->hasFile('images'))
+        {
+            $images = $request->file('images');
+
+            foreach ($images as $image)
+            {
+                $name = time().'_'.$image->getClientOriginalName();
+
+                $route = public_path().'/images';
+
+                $image->move($route , $name);
+
+                $urlimages[]['url'] = '/images/'.$name;
+            }
+
+           // return $urlimages;
+        }
+
         $prod = new Product;
 
         $prod->name=                  $request->name;
@@ -55,16 +80,21 @@ class AdminProductController extends Controller
         $prod->data_of_interest=      $request->data_of_interest;
         $prod->status=                $request->status;
 
-        if ($request->active){
+        if ($request->active)
+        {
             $prod->active= 'SI';
         }
-        else{
+        else
+        {
             $prod->active= 'NO';
         }
 
         $prod->save();
 
-        return $prod;
+        $prod->images()->createMany($urlimages);
+
+        return redirect()->route('admin.product.index')
+            ->with('data','Record created successfully!');
     }
 
     /**

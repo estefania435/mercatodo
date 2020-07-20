@@ -10,4 +10,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\MercatodoModels\Category');
     }
+
+    public function images()
+    {
+        return $this->morphMany('App\MercatodoModels\Image','imageable');
+    }
 }
