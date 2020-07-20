@@ -236,10 +236,11 @@
 
                         <div class="form-group">
 
-                            <label for="imagefiles">Upload multiple images</label>
+                            <label for="images">Add images</label>
 
-                            <input type="file" class="form-control-file" id="imagefiles[]" multiple
+                            <input type="file" class="form-control-file" name="images[]" id="images[]" multiple
                                    accept="image/*" >
+
                         </div>
 
                     </div>
