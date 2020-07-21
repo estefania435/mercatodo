@@ -8,6 +8,21 @@
 
 @section('content')
 
+    <style type="text/css">
+        .table1 {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            text-align: center;
+        }
+
+        .table1 td, .table1 th {
+            padding: .75rem;
+            vertical-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+
+    </style>
 
     <div id="confirmdelete" class="row">
 
@@ -39,15 +54,14 @@
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
                     <td><a class=" m-2 float-right btn btn-primary" href="{{ route('admin.product.create') }}">Create</a></td>
-                    <table class="table table-head-fixed text-nowrap">
+                    <table class="table1 table-head-fixed text-nowrap">
                         <thead>
                         <tr>
-                            <th>ID</th>
+
                             <th>Name</th>
-                            <th>Slug</th>
-                            <th>Description</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
+                            <th>Image</th>
+                            <th>Price</th>
+
                             <th colspan="3"></th>
 
                         </tr>
@@ -57,12 +71,17 @@
 
                         @foreach($products as $product)
                             <tr>
-                                <td>{{$product->id}}</td>
+
                                 <td>{{$product->name}}</td>
-                                <td>{{$product->slug}}</td>
-                                <td>{{$product->description}}</td>
-                                <td>{{$product->created_at}}</td>
-                                <td>{{$product->updated_at}}</td>
+                                <td>
+                                    @if($product->images->count()<=0)
+                                        <img style="height: 100px; width: 100px" src="/images/avatar.png" class="rounded-circle">
+                                    @else
+                                        <img style="height: 100px; width: 100px"  src="{{ $product->images->random()->url }}" class="rounded-circle">
+                                    @endif
+                                </td>
+                                <td>{{$product->price}}</td>
+
 
                                 <td><a class="btn btn-default"
                                        href="{{ route('admin.product.show',$product->slug) }}">See</a></td>

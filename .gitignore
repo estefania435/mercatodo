@@ -13,3 +13,4 @@ yarn-error.log
 public/.DS_Store
 public/admin-lte
 resources/js/.DS_Store
+resources/views/admin/.DS_Store

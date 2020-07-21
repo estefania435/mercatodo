@@ -41,6 +41,15 @@ const apicategory = new Vue({
                         this.disable_button = 1;
                     }
                     this.div_appear = true;
+
+                    if (document.getElementById('edit')){
+                        if(document.getElementById('nametemp').innerHTML===this.name){
+                            this.disable_button = 0;
+                            this.div_messageslug = '';
+                            this.div_class_slug = '';
+                            this.div_appear = false;
+                        }
+                    }
                 })
             }else {
                 this.div_class_slug = 'badge badge-danger';

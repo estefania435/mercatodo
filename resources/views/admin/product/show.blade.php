@@ -1,18 +1,41 @@
 @extends('plantilla.admin')
 
-@section('title', 'Create Product')
+@section('title', 'Show Product')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('admin.product.index')}}">Products</a></li>
     <li class="breadcrumb-item active">@yield('title')</li>
 @endsection
 
+<link rel="stylesheet" href="/admin-lte/plugins/ekko-lightbox/ekko-lightbox.css">
+<script src="/admin-lte/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+
+<script>
+    window.data = {
+        edit:'Si',
+        dat: {
+            "name":"{{$product->name}}",
+        }
+    }
+
+    $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            });
+        });
+    });
+</script>
+
+
 @section('content')
 
     <div id="apiproduct">
 
-    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data" >
+    <form action="{{ route('admin.product.update',$product->id) }}" method="POST" enctype="multipart/form-data" >
     @csrf
+        @method('PUT')
 
     <!-- Main content -->
         <section class="content">
@@ -32,8 +55,8 @@
                                 <div class="form-group">
 
                                     <label>Visits</label>
-                                    <input  class="form-control" type="number" id="visits" name="visits">
-
+                                    <input class="form-control" type="number" id="visits" name="visits"
+                                    readonly value="{{ $product->visits }}">
                                 </div>
                                 <!-- /.form-group -->
 
@@ -43,7 +66,8 @@
                                 <div class="form-group">
 
                                     <label>Sales</label>
-                                    <input  class="form-control" type="number" id="sales" name="sales" >
+                                    <input  class="form-control" type="number" id="sales" name="sales"
+                                    readonly value="{{ $product->sales }}">
                                 </div>
                                 <!-- /.form-group -->
 
@@ -74,6 +98,7 @@
                                     <label>Name</label>
                                     <input
 
+                                    readonly
                                     v-model="name"
                                     @blur="getProduct"
                                     @focus="div_appear= false"
@@ -101,10 +126,10 @@
                                 <div class="form-group">
 
                                     <label>category</label>
-                                    <select name="category_id" class="form-control select2" style="width: 100%;">
+                                    <select disabled name="category_id" class="form-control select2" style="width: 100%;">
                                         @foreach($categories as $category)
 
-                                            @if ($loop->first)
+                                            @if ($category->id == $product->category_id )
                                                 <option value="{{ $category->id }}" selected="selected">{{ $category->name }}</option>
                                             @else
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -113,7 +138,8 @@
 
                                     </select>
                                     <label>Quantity</label>
-                                    <input class="form-control" type="number" id="quantity" name="quantity" >
+                                    <input readonly class="form-control" type="number" id="quantity" name="quantity"
+                                     value="{{ $product->quantity }}">
                                 </div>
                                 <!-- /.form-group -->
 
@@ -148,7 +174,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">$</span>
                                         </div>
-                                        <input class="form-control" type="number" id="price" name="price" min="0" value="0" step=".01">
+                                        <input readonly class="form-control" type="number" id="price" name="price" min="0" step=".01"
+                                               value="{{ $product->price }}">
                                     </div>
 
                                 </div>
@@ -180,7 +207,9 @@
                                 <div class="form-group">
                                     <label>Description:</label>
 
-                                    <textarea class="form-control" name="description" id="description" rows="5"></textarea>
+                                    <textarea readonly class="form-control" name="description" id="description" rows="5">
+                                        {!! $product->description !!}
+                                    </textarea>
 
                                 </div>
 
@@ -203,7 +232,9 @@
                                 <div class="form-group">
                                     <label>Specifications:</label>
 
-                                    <textarea class="form-control" name="specifications" id="specifications" rows="3"></textarea>
+                                    <textarea readonly class="form-control" name="specifications" id="specifications" rows="3">
+                                        {!! $product->specifications !!}
+                                    </textarea>
 
                                 </div>
                                 <!-- /.form group -->
@@ -211,7 +242,9 @@
                                 <div class="form-group">
                                     <label>Data of interest:</label>
 
-                                    <textarea class="form-control" name="data_of_interest" id="data_of_interest" rows="5"></textarea>
+                                    <textarea readonly class="form-control" name="data_of_interest" id="data_of_interest" rows="5">
+                                        {!! $product->data_of_interest !!}
+                                    </textarea>
 
                                 </div>
 
@@ -226,31 +259,31 @@
                 </div>
                 <!-- /.row -->
 
-                <div class="card card-warning">
+                <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Images</h3>
-
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-
-                        <div class="form-group">
-
-                            <label for="images">Add images</label>
-
-                            <input type="file" class="form-control-file" name="images[]" id="images[]" multiple
-                                   accept="image/*" >
-
+                        <div class="card-title">
+                            Galery of images
                         </div>
-
                     </div>
+                    <div class="card-body">
+                        <div class="row">
 
-                    <!-- /.card-body -->
-                    <div class="card-footer">
+                            @foreach ($product->images as $image)
+                                <div class="col-sm-2">
+                                    <a href="{{ $image->url }}" data-toggle="lightbox" data-title="Id:{{ $image->id }}"  data-gallery="gallery">
+                                        <img src="{{ $image->url }}" class="img-fluid mb-2" />
+                                    </a>
+                                    <br>
+                                    <a style="display: none" href="{{ $image->url }}">
+                                        <i class="fas fa-trash-alt" style="color:red"></i>
+                                    </a>
+                                </div>
 
+                                {{ $image->id }}
+                            @endforeach
                     </div>
                 </div>
-                <!-- /.card -->
+            </div>
 
                 <div class="card card-danger">
                     <div class="card-header">
@@ -263,18 +296,18 @@
                             <div class="col-md-6">
                                 <div class="form-group">
 
-
                                     <label>Status</label>
-                                    <select name="status" class="form-control select2" style="width: 100%;">
+                                    <select disabled name="status" class="form-control select2" style="width: 100%;">
                                         @foreach($status_products as $status )
 
-                                            @if ($status == 'New')
+                                            @if ($status == $product->status)
                                                 <option value="{{ $status }}" selected="selected">{{ $status }}</option>
                                             @else
                                                 <option value="{{ $status }}">{{ $status }}</option>
-                                            @endif
-                                        @endforeach
+                                    @endif
+                                    @endforeach
                                     </select>
+
 
                                 </div>
                                 <!-- /.form-group -->
@@ -285,7 +318,13 @@
                                 <!-- checkbox -->
                                 <div class="form-group clearfix">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="active" name="active">
+                                        <input disabled type="checkbox" class="custom-control-input" id="active"
+                                        name="active"
+
+                                            @if($product->active=='SI')
+                                                checked
+                                                @endif
+                                        >
                                         <label class="custom-control-label" for="active">Active</label>
                                     </div>
 
@@ -301,11 +340,8 @@
                                 <div class="form-group">
 
                                     <a class="btn btn-danger" href="{{ route('cancel','admin.product.index') }}">cancel</a>
-                                    <input
-                                        :disabled="disable_button==1"
 
-                                        type="submit" value="Save" class="btn btn-primary">
-
+                                    <a class="btn btn-outline-success " href="{{ route('admin.product.edit',$product->slug) }}">Edit</a>
                                 </div>
                                 <!-- /.form-group -->
 

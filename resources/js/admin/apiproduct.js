@@ -41,6 +41,15 @@ const apiproduct = new Vue({
                         this.disable_button = 1;
                     }
                     this.div_appear = true;
+
+                    if (data.dat.name){
+                        if(data.dat.name===this.name){
+                            this.disable_button = 0;
+                            this.div_messageslug = '';
+                            this.div_class_slug = '';
+                            this.div_appear = false;
+                        }
+                    }
                 })
             }else {
                 this.div_class_slug = 'badge badge-danger';
@@ -51,11 +60,11 @@ const apiproduct = new Vue({
         }
     },
     mounted(){
-        if (document.getElementById('edit')){
-            this.name = document.getElementById('nametemp').innerHTML;
+        if (data.edit=='Si'){
+            this.name = data.dat.name;
             this.disable_button = 0;
         }
-
+        console.log(data);
     }
 
 });
