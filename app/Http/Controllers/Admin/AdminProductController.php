@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use App\MercatodoModels\Product;
 use App\MercatodoModels\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class AdminProductController extends Controller
 {
+    public function __construct() {
+
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,7 @@ class AdminProductController extends Controller
     {
         $name = $request->get('name');
 
-        $products= Product::with('images','category')
+        $products= Product::withTrashed('images','category')
             ->where('name', 'like', "%$name%")->orderBy('name')->paginate(10);
 
         return view('admin.product.index', compact('products'));
@@ -210,7 +215,19 @@ class AdminProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+
+        return redirect()->route('admin.product.index')
+            ->with('data','Record updated successfully!');
+    }
+
+    public function restore(Request $request)
+    {
+        Product::withTrashed()->find($request->id)->restore();
+
+        return redirect()->route('admin.product.index')
+            ->with('data', 'user  enabled');
     }
 
     public function status_products(){

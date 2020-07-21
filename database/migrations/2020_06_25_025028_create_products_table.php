@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             $table->unsignedbigInteger('visits')->default(0);
             $table->unsignedbigInteger('sales')->default(0);
             $table->string('status');
-            $table->char('active',2);
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories');
         });
