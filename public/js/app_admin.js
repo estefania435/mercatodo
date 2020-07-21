@@ -14636,6 +14636,15 @@ var apicategory = new Vue({
           }
 
           _this.div_appear = true;
+
+          if (document.getElementById('edit')) {
+            if (document.getElementById('nametemp').innerHTML === _this.name) {
+              _this.disable_button = 0;
+              _this.div_messageslug = '';
+              _this.div_class_slug = '';
+              _this.div_appear = false;
+            }
+          }
         });
       } else {
         this.div_class_slug = 'badge badge-danger';
@@ -14715,6 +14724,15 @@ var apiproduct = new Vue({
           }
 
           _this.div_appear = true;
+
+          if (data.dat.name) {
+            if (data.dat.name === _this.name) {
+              _this.disable_button = 0;
+              _this.div_messageslug = '';
+              _this.div_class_slug = '';
+              _this.div_appear = false;
+            }
+          }
         });
       } else {
         this.div_class_slug = 'badge badge-danger';
