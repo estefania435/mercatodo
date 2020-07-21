@@ -263,9 +263,18 @@
                             <div class="col-md-6">
                                 <div class="form-group">
 
-                                    <label>Status</label>
-                                    <input  class="form-control" type="text" id="status" name="status" value="New">
 
+                                    <label>Status</label>
+                                    <select name="status" class="form-control select2" style="width: 100%;">
+                                        @foreach($status_products as $status )
+
+                                            @if ($status == 'New')
+                                                <option value="{{ $status }}" selected="selected">{{ $status }}</option>
+                                            @else
+                                                <option value="{{ $status }}">{{ $status }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
 
                                 </div>
                                 <!-- /.form-group -->

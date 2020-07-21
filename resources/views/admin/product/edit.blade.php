@@ -322,8 +322,16 @@
                                 <div class="form-group">
 
                                     <label>Status</label>
-                                    <input  class="form-control" type="text" id="status"
-                                    name="status" value="{{ $product->status }}">
+                                    <select name="status" class="form-control select2" style="width: 100%;">
+                                        @foreach($status_products as $status )
+
+                                            @if ($status == $product->status)
+                                                <option value="{{ $status }}" selected="selected">{{ $status }}</option>
+                                            @else
+                                                <option value="{{ $status }}">{{ $status }}</option>
+                                    @endif
+                                    @endforeach
+                                    </select>
 
 
                                 </div>

@@ -31,9 +31,12 @@ class AdminProductController extends Controller
      */
     public function create()
     {
+        $status_products = $this->status_products();
+
+
         $categories= Category::orderBy('name')->get();
 
-        return view('admin.product.create', compact('categories'));
+        return view('admin.product.create', compact('categories','status_products'));
     }
 
     /**
@@ -121,7 +124,10 @@ class AdminProductController extends Controller
 
         $categories = Category::orderBy('name')->get();
 
-        return view('admin.product.edit', compact('product', 'categories'));
+        $status_products = $this->status_products();
+
+
+        return view('admin.product.edit', compact('product', 'categories','status_products'));
     }
 
     /**
@@ -197,5 +203,14 @@ class AdminProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function status_products(){
+
+        return [
+            '',
+            'New',
+            'Offer'
+        ];
     }
 }
