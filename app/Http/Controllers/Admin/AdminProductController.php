@@ -133,7 +133,59 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:products,name,'.$id,
+            'slug' => 'required|unique:products,slug,'.$id,
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $urlimages = [];
+        if ($request->hasFile('images'))
+        {
+            $images = $request->file('images');
+
+            foreach ($images as $image)
+            {
+                $name = time().'_'.$image->getClientOriginalName();
+
+                $route = public_path().'/images';
+
+                $image->move($route , $name);
+
+                $urlimages[]['url'] = '/images/'.$name;
+            }
+
+            // return $urlimages;
+        }
+
+        $prod = Product::findOrFail($id);
+
+        $prod->name=                  $request->name;
+        $prod->slug=                  $request->slug;
+        $prod->category_id=           $request->category_id;
+        $prod->quantity=              $request->quantity;
+        $prod->price=                 $request->price;
+        $prod->description=           $request->description;
+        $prod->specifications=        $request->specifications;
+        $prod->data_of_interest=      $request->data_of_interest;
+        $prod->status=                $request->status;
+
+        if ($request->active)
+        {
+            $prod->active= 'SI';
+        }
+        else
+        {
+            $prod->active= 'NO';
+        }
+
+        $prod->save();
+
+        $prod->images()->createMany($urlimages);
+
+        return redirect()->route('admin.product.edit',$prod->slug)
+            ->with('data','Record updated successfully!');
+
     }
 
     /**
