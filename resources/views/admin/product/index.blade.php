@@ -80,7 +80,7 @@
                                         <img style="height: 100px; width: 100px"  src="{{ $product->images->random()->url }}" class="rounded-circle">
                                     @endif
                                 </td>
-                                <td>{{$product->slug}}</td>
+                                <td>{{$product->price}}</td>
 
 
                                 <td><a class="btn btn-default"

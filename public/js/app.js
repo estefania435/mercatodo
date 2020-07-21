@@ -49818,10 +49818,12 @@ var apiproduct = new Vue({
     }
   },
   mounted: function mounted() {
-    if (document.getElementById('edit')) {
-      this.name = document.getElementById('nametemp').innerHTML;
+    if (data.edit == 'Si') {
+      this.name = data.dat.name;
       this.disable_button = 0;
     }
+
+    console.log(data);
   }
 });
 
