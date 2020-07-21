@@ -107,9 +107,17 @@ class AdminProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $product = Product::with('images', 'category')->where('slug', $slug)->firstOrFail();
+
+        $categories = Category::orderBy('name')->get();
+
+        $status_products = $this->status_products();
+
+
+        return view('admin.product.show', compact('product', 'categories','status_products'));
+
     }
 
     /**
