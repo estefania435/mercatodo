@@ -67,11 +67,11 @@ class AdminProductController extends Controller
             {
                 $name = time().'_'.$image->getClientOriginalName();
 
-                $route = public_path().'/images';
+                $route = public_path().env('IMAGES_PRODUCTS');
 
                 $image->move($route , $name);
 
-                $urlimages[]['url'] = '/images/'.$name;
+                $urlimages[]['url'] = env('IMAGES_PRODUCTS').$name;
             }
 
            // return $urlimages;
@@ -88,15 +88,6 @@ class AdminProductController extends Controller
         $prod->specifications=        $request->specifications;
         $prod->data_of_interest=      $request->data_of_interest;
         $prod->status=                $request->status;
-
-        if ($request->active)
-        {
-            $prod->active= 'SI';
-        }
-        else
-        {
-            $prod->active= 'NO';
-        }
 
         $prod->save();
 
@@ -167,11 +158,11 @@ class AdminProductController extends Controller
             {
                 $name = time().'_'.$image->getClientOriginalName();
 
-                $route = public_path().'/images';
+                $route = public_path().env('IMAGES_PRODUCTS');
 
                 $image->move($route , $name);
 
-                $urlimages[]['url'] = '/images/'.$name;
+                $urlimages[]['url'] = env('IMAGES_PRODUCTS').$name;
             }
 
             // return $urlimages;
@@ -188,15 +179,6 @@ class AdminProductController extends Controller
         $prod->specifications=        $request->specifications;
         $prod->data_of_interest=      $request->data_of_interest;
         $prod->status=                $request->status;
-
-        if ($request->active)
-        {
-            $prod->active= 'SI';
-        }
-        else
-        {
-            $prod->active= 'NO';
-        }
 
         $prod->save();
 

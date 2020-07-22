@@ -239,7 +239,7 @@
                             <label for="images">Add images</label>
 
                             <input type="file" class="form-control-file" name="images[]" id="images[]" multiple
-                                   accept="image/*" >
+                                   accept="image/products/*" >
 
                         </div>
 

@@ -75,7 +75,7 @@
                                 <td>{{$product->name}}</td>
                                 <td>
                                     @if($product->images->count()<=0)
-                                        <img style="height: 100px; width: 100px" src="/images/avatar.png" class="rounded-circle">
+                                        <img style="height: 100px; width: 100px" src="images/products/collar.jpg" class="rounded-circle">
                                     @else
                                         <img style="height: 100px; width: 100px"  src="{{ $product->images->random()->url }}" class="rounded-circle">
                                     @endif
@@ -108,7 +108,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger"
-                                                    onclick="return confirm('¿Desea eliminar este usuario?');">
+                                                    onclick="return confirm('¿do you want to disable this product?');">
                                                 Inactivate
                                             </button>
                                         </form>
