@@ -75,7 +75,7 @@
                                 <td>{{$product->name}}</td>
                                 <td>
                                     @if($product->images->count()<=0)
-                                        <img style="height: 100px; width: 100px" src="/images/avatar.png" class="rounded-circle">
+                                        <img style="height: 100px; width: 100px" src="images/products/collar.jpg" class="rounded-circle">
                                     @else
                                         <img style="height: 100px; width: 100px"  src="{{ $product->images->random()->url }}" class="rounded-circle">
                                     @endif
@@ -89,10 +89,33 @@
                                 <td><a class="btn btn-info"
                                        href="{{ route('admin.product.edit',$product->slug) }}">Edit</a></td>
 
-                                <td><a class="btn btn-danger"
-                                       href="{{ route('admin.product.index') }}"
-                                       v-on:click.prevent="you_want_to_delete({{$product->id}})"
-                                    >Destroy</a></td>
+                                <td>
+                                    @if($product->trashed())
+                                        <form action=" {{ route('admin.product.restore', ['id'=> $product->id]) }}"
+                                              method="POST">
+                                            @csrf
+                                            <button class="btn btn-success">
+                                                Activate
+                                            </button>
+                                        </form>
+
+
+                                    @else
+
+
+
+                                        <form action="{{ route('admin.product.destroy',$product->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger"
+                                                    onclick="return confirm('¿do you want to disable this product?');">
+                                                Inactivate
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                </td>
+
 
                                 <td> </td>
                                 <td> </td>

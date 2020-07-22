@@ -271,7 +271,7 @@
                             <label for="images">Add images</label>
 
                             <input type="file" class="form-control-file" name="images[]" id="images[]" multiple
-                                   accept="image/*" >
+                                   accept="image/products/*" >
 
                         </div>
 
@@ -339,23 +339,6 @@
 
                             </div>
                             <!-- /.col -->
-                            <div class="col-sm-6">
-                                <!-- checkbox -->
-                                <div class="form-group clearfix">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="active"
-                                        name="active"
-
-                                            @if($product->active=='SI')
-                                                checked
-                                                @endif
-                                        >
-                                        <label class="custom-control-label" for="active">Active</label>
-                                    </div>
-
-                                </div>
-
-                            </div>
 
                         </div>
                         <!-- /.row -->

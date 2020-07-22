@@ -39,6 +39,7 @@ Route::resource('/role', 'RoleController')->names('role');
 
 Route::resource('/user', 'UserController', ['except'=>[
     'create','store']])->names('user');
+
 Route::post('restore/{id}', [ 'as' => 'user.restore', 'uses' => 'UserController@restore']);
 
 Route::get('/admin', function () {
@@ -52,3 +53,5 @@ Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.p
 Route::get('cancel/{ruta}', function($ruta) {
     return redirect()->route($ruta)->with('cancel','Action Canceled!');
 })->name('cancel');
+
+Route::post('restore/{id}', [ 'as' => 'admin.product.restore', 'uses' => 'Admin\AdminProductController@restore']);
