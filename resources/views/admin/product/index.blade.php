@@ -53,7 +53,8 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
-                    <td><a class=" m-2 float-right btn btn-primary" href="{{ route('admin.product.create') }}">Create</a></td>
+                    <td><a class=" m-2 float-right btn btn-primary"
+                           href="{{ route('admin.product.create') }}">Create</a></td>
                     <table class="table1 table-head-fixed text-nowrap">
                         <thead>
                         <tr>
@@ -74,11 +75,8 @@
 
                                 <td>{{$product->name}}</td>
                                 <td>
-                                    @if($product->images->count()<=0)
-                                        <img style="height: 100px; width: 100px" src="images/products/collar.jpg" class="rounded-circle">
-                                    @else
-                                        <img style="height: 100px; width: 100px"  src="{{ $product->images->random()->url }}" class="rounded-circle">
-                                    @endif
+                                    <img style="height: 100px; width: 100px" src="{{ $product->images->random()->url }}"
+                                         class="rounded-circle">
                                 </td>
                                 <td>{{$product->price}}</td>
 
@@ -117,8 +115,8 @@
                                 </td>
 
 
-                                <td> </td>
-                                <td> </td>
+                                <td></td>
+                                <td></td>
 
 
                             </tr>
