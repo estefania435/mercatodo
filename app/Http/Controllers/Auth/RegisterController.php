@@ -50,13 +50,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'minlength:3', 'maxlength:30'],
-            'surname'=>['required','string', 'minlength:4', 'maxlength:30'],
-            'identification'=>['required','int', 'minlength:7' ,'maxlength:10', 'unique:users'],
-            'address'=>['required','string', 'minlength:20', 'maxlength:50'],
-            'phone' =>['required','Integer', 'minlength:7', 'maxlength:10'],
-            'email' => ['required', 'string', 'email', 'minlength:15', 'maxlength:30', 'unique:users'],
-            'password' => ['required', 'string', 'minlength:8',  'maxlength:15', 'confirmed'],
+            'name' => ['required', 'string', 'min:3', 'max:30'],
+            'surname'=>['required', 'string', 'min:4', 'max:30'],
+            'identification'=>['required', 'numeric','digits_between:8,10', 'unique:users'],
+            'address'=>['required','string', 'min:15', 'max:50'],
+            'phone' =>['required', 'numeric','digits_between:7,10'],
+            'email' => ['required', 'string', 'email', 'unique:users', 'min:15', 'max:50'],
+            'password' => ['required', 'string', 'min:8', 'max:15'],
         ]);
     }
 

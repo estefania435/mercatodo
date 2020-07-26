@@ -71,7 +71,7 @@
                                     <input id="address" type="text"
                                            class="form-control @error('address') is-invalid @enderror"
                                            name="address" value="{{ old('address') }}" required
-                                           autocomplete="address" autofocus minlength="20" maxlength="50">
+                                           autocomplete="address" autofocus minlength="15" maxlength="50">
 
                                     @error('address')
                                     <span class="invalid-feedback" role="alert">
