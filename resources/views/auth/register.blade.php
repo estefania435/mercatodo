@@ -16,8 +16,8 @@
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
-                                           class="form-control @error('name') is-invalid @enderror" name="name"
-                                           value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                           class="form-control valSoloTexto valCaracteresRepetidos valCaracteresInvalidos @error('name') is-invalid @enderror" name="name"
+                                           value="{{ old('name') }}" required autocomplete="name" autofocus minlength="3" maxlength="30">
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -33,9 +33,9 @@
 
                                 <div class="col-md-6">
                                     <input id="surname" type="text"
-                                           class="form-control @error('surname') is-invalid @enderror"
+                                           class="form-control valSoloTexto valCaracteresRepetidos valCaracteresInvalidos @error('surname') is-invalid @enderror"
                                            name="surname" value="{{ old('surname') }}" required
-                                           autocomplete="surname" autofocus>
+                                           autocomplete="surname" autofocus minlength="4" maxlength="30">
 
                                     @error('surname')
                                     <span class="invalid-feedback" role="alert">
@@ -51,9 +51,9 @@
 
                                 <div class="col-md-6">
                                     <input id="identification" type="text"
-                                           class="form-control @error('identification') is-invalid @enderror"
+                                           class="form-control valSoloNumero @error('identification') is-invalid @enderror"
                                            name="identification" value="{{ old('identification') }}" required
-                                           autocomplete="identification" autofocus>
+                                           autocomplete="identification" autofocus minlength="8" maxlength="10">
 
                                     @error('identification')
                                     <span class="invalid-feedback" role="alert">
@@ -71,7 +71,7 @@
                                     <input id="address" type="text"
                                            class="form-control @error('address') is-invalid @enderror"
                                            name="address" value="{{ old('address') }}" required
-                                           autocomplete="address" autofocus>
+                                           autocomplete="address" autofocus minlength="15" maxlength="50">
 
                                     @error('address')
                                     <span class="invalid-feedback" role="alert">
@@ -87,9 +87,9 @@
 
                                 <div class="col-md-6">
                                     <input id="phone" type="text"
-                                           class="form-control @error('phone') is-invalid @enderror"
+                                           class="form-control valSoloNumero @error('phone') is-invalid @enderror"
                                            name="phone" value="{{ old('phone') }}" required
-                                           autocomplete="phone" autofocus>
+                                           autocomplete="phone" autofocus minlength="7" maxlength="10">
 
                                     @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -106,7 +106,7 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ old('email') }}" required autocomplete="email">
+                                           value="{{ old('email') }}" required autocomplete="email" minlength="15" maxlength="50">
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -123,7 +123,7 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                            class="form-control @error('password') is-invalid @enderror" name="password"
-                                           required autocomplete="new-password">
+                                           required autocomplete="new-password" minlength="8" maxlength="15">
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">

@@ -21,37 +21,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-
-Route::get('/test', function () {
-    $user=User::find(1);
-    //$user->roles()->sync([8]);
-    Gate::authorize('haveaccess', 'role.show');
-    return $user;
-    //return $user->havePermission('role.create');
-});
-
 Route::resource('/role', 'RoleController')->names('role');
 
-Route::resource('/user', 'UserController', ['except'=>[
-    'create','store']])->names('user');
+Route::resource('/user', 'UserController', ['except' => [
+    'create', 'store']])->names('user');
 
-Route::post('restore/{id}', [ 'as' => 'user.restore', 'uses' => 'UserController@restore']);
+Route::post('restore/{id}', ['as' => 'user.restore', 'uses' => 'UserController@restore']);
 
 Route::get('/admin', function () {
     return view('plantilla.admin');
 })->name('admin');
 
-Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category');
+Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category')
+    ->middleware('auth');
 
-Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product');
+Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product')
+    ->middleware('auth');
 
-Route::get('cancel/{ruta}', function($ruta) {
-    return redirect()->route($ruta)->with('cancel','Action Canceled!');
+Route::get('cancel/{ruta}', function ($ruta) {
+    return redirect()->route($ruta)->with('cancel', 'Action Canceled!');
 })->name('cancel');
 
-Route::post('restore/{id}', [ 'as' => 'admin.product.restore', 'uses' => 'Admin\AdminProductController@restore']);
+Route::post('restore/{id}', ['as' => 'admin.product.restore', 'uses' => 'Admin\AdminProductController@restore']);
