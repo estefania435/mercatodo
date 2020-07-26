@@ -19,6 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('name',20)->unique();
             $table->string('slug')->unique();
             $table->string('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

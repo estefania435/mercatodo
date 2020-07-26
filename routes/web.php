@@ -47,3 +47,5 @@ Route::get('cancel/{ruta}', function ($ruta) {
 })->name('cancel');
 
 Route::post('restore/{id}', ['as' => 'admin.product.restore', 'uses' => 'Admin\AdminProductController@restore']);
+
+Route::post('restore/{id}', ['as' => 'admin.category.restore', 'uses' => 'Admin\AdminCategoryController@restore']);

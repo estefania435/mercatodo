@@ -7,6 +7,9 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script src="{{ asset('jquery-3.5.1.min.js')}}"></script>
+    <script src="{{ asset('/js/validations.js')}}"></script>
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/admin-lte/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->

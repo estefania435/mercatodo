@@ -46,8 +46,6 @@
                             <th>Name</th>
                             <th>Slug</th>
                             <th>Description</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
                             <th colspan="3"></th>
 
                         </tr>
@@ -61,8 +59,6 @@
                             <td>{{$category->name}}</td>
                             <td>{{$category->slug}}</td>
                             <td>{{$category->description}}</td>
-                            <td>{{$category->created_at}}</td>
-                            <td>{{$category->updated_at}}</td>
 
                             <td><a class="btn btn-default"
                                    href="{{ route('admin.category.show',$category->slug) }}">See</a></td>
@@ -70,10 +66,32 @@
                             <td><a class="btn btn-info"
                                    href="{{ route('admin.category.edit',$category->slug) }}">Edit</a></td>
 
-                            <td><a class="btn btn-danger"
-                                   href="{{ route('admin.category.index') }}"
-                                    v-on:click.prevent="you_want_to_delete({{$category->id}})"
-                                >Destroy</a></td>
+                            <td>
+                                @if($category->trashed())
+                                    <form action=" {{ route('admin.category.restore', ['id'=> $category->id]) }}"
+                                          method="POST">
+                                        @csrf
+                                        <button class="btn btn-success">
+                                            Activate
+                                        </button>
+                                    </form>
+
+
+                                @else
+
+
+
+                                    <form action="{{ route('admin.category.destroy',$category->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger"
+                                                onclick="return confirm('¿do you want to disable this category?');">
+                                            Inactivate
+                                        </button>
+                                    </form>
+                                @endif
+
+                            </td>
 
                             <td> </td>
                             <td> </td>

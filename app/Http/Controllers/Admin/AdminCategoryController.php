@@ -18,7 +18,8 @@ class AdminCategoryController extends Controller
     {
         $name = $request->get('name');
 
-        $categories= Category::where('name','like',"%$name%")->orderBy('name')->paginate(2);
+        $categories= Category::withTrashed('category')
+            ->where('name','like',"%$name%")->orderBy('name')->paginate(5);
 
         return view('admin.category.index',compact('categories'));
     }
@@ -100,9 +101,18 @@ class AdminCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $cat= Category::findOrFail($id);
+        $cat= Category::find($id);
         $cat->delete();
+
         return redirect()->route('admin.category.index')
-            ->with('data','Record delete successfully!');
+            ->with('data','Category disabled');
+    }
+
+    public function restore(Request $request)
+    {
+        Category::withTrashed()->find($request->id)->restore();
+
+        return redirect()->route('admin.category.index')
+            ->with('data', 'Category  enabled');
     }
 }
