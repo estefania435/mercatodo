@@ -45,7 +45,7 @@
                                @blur="getCategory"
                                @focus="div_appear= false"
 
-                               class="form-control" type="text" name="name" id="name">
+                               class="form-control valCaracteresRepetidos" type="text" name="name" id="name" maxlength="20">
                         <label for="slug">Slug</label>
                         <input readonly v-model="generateSlug" class="form-control" type="text" name="slug" id="slug">
                         <div v-if="div_appear" v-bind:class="div_class_slug">
@@ -54,7 +54,7 @@
                         <br v-if="div_appear">
                         <label for="description">Description</label>
                         <textarea class="form-control" name="description"
-                        id="description" cols="30" rows="5">{{ $cat ->description}}</textarea>
+                        id="description" cols="30" rows="5" minlength="15">{{ $cat ->description}}</textarea>
 
                     </div>
 
