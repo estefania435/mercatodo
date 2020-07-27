@@ -1,10 +1,19 @@
-@extends('layouts.app')
+@extends('plantilla.admin')
+
+@section('title','Administration of roles')
+
+@section('breadcrumb')
+    <li class="breadcrumb-item active">@yield('title')</li>
+@endsection
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
+    <div id="confirmdelete" class="row">
+
+
+        @include('custom.modal_delete')
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-header"><h2>List of Roles</h2></div>
 
                     <div class="card-body">

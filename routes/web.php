@@ -46,6 +46,6 @@ Route::get('cancel/{ruta}', function ($ruta) {
     return redirect()->route($ruta)->with('cancel', 'Action Canceled!');
 })->name('cancel');
 
-Route::post('restore/{id}', ['as' => 'admin.product.restore', 'uses' => 'Admin\AdminProductController@restore']);
+Route::post('restoreproduct/{id}', ['as' => 'admin.product.restore', 'uses' => 'Admin\AdminProductController@restore']);
 
-Route::post('restore/{id}', ['as' => 'admin.category.restore', 'uses' => 'Admin\AdminCategoryController@restore']);
+Route::post('restorecategory/{id}', ['as' => 'admin.category.restore', 'uses' => 'Admin\AdminCategoryController@restore']);

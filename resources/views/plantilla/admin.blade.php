@@ -43,24 +43,25 @@
         <div id="api_search_autocomplete" style="position:relative">
 
 
-        <!-- SEARCH FORM -->
-        <form class="form-inline ml-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search"
-                       name="name"
-                       v-model="palabra_a_buscar"
-                       v-on:keyup="autoComplete"
-                       v-on:keyup.enter="SubmitForm"
-                >
-                <div class="input-group-append">
-                    <button id="miboton"
-                            ref="SubmitButtonSearch"
-                            class="btn btn-navbar" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
+            <!-- SEARCH FORM -->
+            <form class="form-inline ml-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                           aria-label="Search"
+                           name="name"
+                           v-model="palabra_a_buscar"
+                           v-on:keyup="autoComplete"
+                           v-on:keyup.enter="SubmitForm"
+                    >
+                    <div class="input-group-append">
+                        <button id="miboton"
+                                ref="SubmitButtonSearch"
+                                class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
 
             <div class="panel-footer" v-if="resultados.length"
                  style="position:absolute; z-index:3; left:9px;">
@@ -80,7 +81,6 @@
             </div>
 
 
-
         </div>
 
 
@@ -96,7 +96,8 @@
                     <a href="#" class="dropdown-item">
                         <!-- Message Start -->
                         <div class="media">
-                            <img src="/admin-lte/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                            <img src="/admin-lte/dist/img/user1-128x128.jpg" alt="User Avatar"
+                                 class="img-size-50 mr-3 img-circle">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
                                     Brad Diesel
@@ -112,7 +113,8 @@
                     <a href="#" class="dropdown-item">
                         <!-- Message Start -->
                         <div class="media">
-                            <img src="/admin-lte/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <img src="/admin-lte/dist/img/user8-128x128.jpg" alt="User Avatar"
+                                 class="img-size-50 img-circle mr-3">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
                                     John Pierce
@@ -128,7 +130,8 @@
                     <a href="#" class="dropdown-item">
                         <!-- Message Start -->
                         <div class="media">
-                            <img src="/admin-lte/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <img src="/admin-lte/dist/img/user3-128x128.jpg" alt="User Avatar"
+                                 class="img-size-50 img-circle mr-3">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
                                     Nora Silvester
@@ -205,7 +208,8 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item has-treeview">
@@ -237,7 +241,6 @@
                             </li>
                         </ul>
                     </li>
-
 
 
                     <!-- Categories -->
@@ -293,6 +296,51 @@
                         </ul>
                     </li>
 
+
+                    <!-- Users -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-list-alt"></i>
+                            <p>
+                                Users
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('haveaccess','user.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('user.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List of users</p>
+                                    </a>
+                                </li>
+                            @endcan
+
+                        </ul>
+                    </li>
+
+
+                    <!-- Roles -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-list-alt"></i>
+                            <p>
+                                Roles
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('haveaccess','role.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('role.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List of roles</p>
+                                    </a>
+                                </li>
+                            @endcan
+
+                        </ul>
+                    </li>
 
                     <li class="nav-item">
                         <a href="../widgets.html" class="nav-link">
@@ -824,23 +872,23 @@
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('data') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <spam aria-hidden="true">&times;</spam>
+                        <spam aria-hidden="true">&times;</spam>
                     </button>
                 </div>
 
             @endif
 
-                @if( session('cancel'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('cancel') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <spam aria-hidden="true">&times;</spam>
-                        </button>
-                    </div>
+            @if( session('cancel'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('cancel') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <spam aria-hidden="true">&times;</spam>
+                    </button>
+                </div>
 
-                @endif
+            @endif
 
-          @yield('content')
+            @yield('content')
 
         </section>
         <!-- /.content -->
