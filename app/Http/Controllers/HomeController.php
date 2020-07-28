@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MercatodoModels\Product;
+use App\MercatodoModels\Category;
 
 class HomeController extends Controller
 {
@@ -23,7 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-            return view('home');
+            $products = \App\MercatodoModels\Product::paginate(10);
+            return view('home', compact('products'));
     }
+
 }
