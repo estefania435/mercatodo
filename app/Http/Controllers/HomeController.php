@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MercatodoModels\Product;
+use App\MercatodoModels\Category;
 
 class HomeController extends Controller
 {
@@ -21,9 +23,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        $name = $request->get('name');
 
-            return view('home');
+        $products = Product::with('images', 'category')
+            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(9);
+
+        //$products = \App\MercatodoModels\Product::paginate(10);
+            return view('home', compact('products'));
     }
+
 }

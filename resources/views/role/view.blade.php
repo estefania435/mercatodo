@@ -1,14 +1,16 @@
-@extends('layouts.app')
+@extends('plantilla.admin')
+
+@section('title','Show role')
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('role.index') }}">Roles</a></li>
+    <li class="breadcrumb-item active">@yield('title')</li>
+@endsection
+
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Edit Role</div>
 
-                    <div class="card-body">
-                        @include('custom.message')
+            @include('custom.message')
 
 
                         <form action="{{ route('role.update', $role->id) }}" method="POST">
@@ -16,8 +18,6 @@
                             @method('PUT')
 
                             <div class="container">
-
-                                <h3>Required data</h3>
 
                                 <div class="form-group">
                                     <input type="text" class="form-control"
@@ -124,7 +124,5 @@
 
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+
 @endsection

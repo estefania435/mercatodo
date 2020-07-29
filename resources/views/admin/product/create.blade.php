@@ -116,7 +116,7 @@
                                         </select>
                                         <label>Quantity</label>
                                         <input class="form-control" type="number" id="quantity" name="quantity"
-                                               value="0" min="1">
+                                               value="0" >
                                     </div>
                                     <!-- /.form-group -->
 
