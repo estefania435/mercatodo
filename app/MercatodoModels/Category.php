@@ -9,11 +9,27 @@ class Category extends Model
 {
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
     protected $fillable=['name','slug','description'];
 
-    public function products(){
+    /**
+     * Relationship between product tables and categories.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany('App\MercatodoModels\Product');
     }
 
+    /**
+     * Softdelete category.
+     *
+     * @var string[]
+     */
     protected $dates = ['deleted_at'];
 }

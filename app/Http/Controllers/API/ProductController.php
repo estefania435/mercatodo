@@ -8,12 +8,19 @@ use App\MercatodoModels\Product;
 
 class ProductController extends Controller
 {
-    public function index()
+    /**
+     * @return Product[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function index(): \Illuminate\Database\Eloquent\Collection
     {
         return Product::all();
     }
 
-    public function show($slug)
+    /**
+     * @param string $slug
+     * @return string
+     */
+    public function show(string $slug): string
     {
         if (product::where('slug', $slug)->first()) {
             return 'Slug exist';
