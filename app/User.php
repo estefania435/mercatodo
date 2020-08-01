@@ -9,17 +9,21 @@ use Spatie\Permission\Traits\HasRoles;
 use App\MercatodoPermission\Traits\UserTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, UserTrait, SoftDeletes;
-    //use HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
+    protected $fillable =
+    [
         'name', 'surname','identification','address','phone','email', 'password',
     ];
 
@@ -28,9 +32,13 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $hidden = [
+    protected $hidden =
+    [
         'password', 'remember_token',
     ];
+    /**
+     * @var string[]
+     */
     protected $dates = ['deleted_at'];
 
     /**
@@ -38,12 +46,16 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $casts = [
+    protected $casts =
+    [
         'email_verified_at' => 'datetime',
     ];
 
-    public function image()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
-        return $this->morphOne('App\MercatodoModels\Image','imageable');
+        return $this->morphOne('App\MercatodoModels\Image', 'imageable');
     }
 }

@@ -22,27 +22,29 @@ class AdminProductController extends Controller
     public $statusProducts = array('', 'New', 'Offer');
 
     /**
+     * Display a listing of the resource.
+     *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\View\View
     {
         $name = $request->get('name');
 
         $products = Product::withTrashed('images', 'category')
             ->where('name', 'like', "%$name%")->orderBy('name')->paginate(10);
 
-
         return view('admin.product.index', compact('products'));
     }
 
     /**
+     * Display a listing of the resource.
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
         $statusProducts = $this->statusProducts;
-
 
         $categories = Category::orderBy('name')->get();
 
@@ -50,10 +52,12 @@ class AdminProductController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
      * @param ProductStoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ProductStoreRequest $request)
+    public function store(ProductStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
         $urlimages = [];
         if ($request->hasFile('images')) {
@@ -91,26 +95,29 @@ class AdminProductController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
      * @param string $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(string $slug)
+    public function show(string $slug): \Illuminate\View\View
     {
         $product = Product::with('images', 'category')->where('slug', $slug)->firstOrFail();
 
         $categories = Category::orderBy('name')->get();
 
         $statusProducts = $this->statusProducts;
-
 
         return view('admin.product.show', compact('product', 'categories', 'statusProducts'));
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
      * @param string $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(string $slug)
+    public function edit(string $slug): \Illuminate\View\View
     {
         $product = Product::with('images', 'category')->where('slug', $slug)->firstOrFail();
 
@@ -118,16 +125,17 @@ class AdminProductController extends Controller
 
         $statusProducts = $this->statusProducts;
 
-
         return view('admin.product.edit', compact('product', 'categories', 'statusProducts'));
     }
 
     /**
+     * Update the specified resource in storage.
+     *
      * @param ProductUpdateRequest $request
      * @param string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ProductUpdateRequest $request, string $id)
+    public function update(ProductUpdateRequest $request, string $id): \Illuminate\Http\RedirectResponse
     {
         $urlimages = [];
         if ($request->hasFile('images')) {
@@ -165,10 +173,12 @@ class AdminProductController extends Controller
     }
 
     /**
+     * Remove the specified resource from storage.
+     *
      * @param string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $id)
+    public function destroy(string $id): \Illuminate\Http\RedirectResponse
     {
         $product = Product::find($id);
         $product->delete();
@@ -178,10 +188,12 @@ class AdminProductController extends Controller
     }
 
     /**
+     * Restore the specified resource from storage.
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore(Request $request)
+    public function restore(Request $request): \Illuminate\Http\RedirectResponse
     {
         Product::withTrashed()->find($request->id)->restore();
 

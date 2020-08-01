@@ -7,14 +7,18 @@ use App\MercatodoPermission\Models\Role;
 use App\MercatodoPermission\Models\Permission;
 use Illuminate\Support\Facades\Gate;
 
+/**
+ * Class RoleController
+ * @package App\Http\Controllers
+ */
 class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         Gate::authorize('haveaccess', 'role.index');
 
@@ -23,12 +27,13 @@ class RoleController extends Controller
         return view('role.index', compact('roles'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
         Gate::authorize('haveaccess', 'role.create');
 
@@ -40,10 +45,10 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         Gate::authorize('haveaccess', 'role.create');
         $request->validate([
@@ -53,28 +58,27 @@ class RoleController extends Controller
     ]);
         $role = Role::create($request->all());
 
-        //if ($request->get('permission')){
-
         $role->permissions()->sync($request->get('permission'));
-        //}
+
         return redirect()->route('role.index')
             ->with('status_success', 'Role Saved successfully');
     }
 
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Role $role
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Role $role)
+    public function show(Role $role): \Illuminate\View\View
     {
         $this->authorize('haveaccess', 'role.show');
         $permission_role=[];
         foreach ($role->permissions as $permission) {
             $permission_role[]=$permission->id;
         }
-
 
         $permissions = Permission::get();
 
@@ -84,10 +88,11 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Role $role
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(Role $role)
+    public function edit(Role $role): \Illuminate\View\View
     {
         $this->authorize('haveaccess', 'role.edit');
 
@@ -105,11 +110,12 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Role $role
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Role $role): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('haveaccess', 'role.edit');
 
@@ -120,10 +126,8 @@ class RoleController extends Controller
         ]);
         $role->update($request->all());
 
-        //if ($request->get('permission')){
-
         $role->permissions()->sync($request->get('permission'));
-        //}
+
         return redirect()->route('role.index')
             ->with('status_success', 'Role update successfully');
     }
@@ -131,10 +135,11 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Role $role
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Role $role)
+    public function destroy(Role $role): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('haveaccess', 'role.destroy');
 

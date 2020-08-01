@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified')->middleware('auth');
 
 Route::resource('/role', 'RoleController')->names('role');
 
@@ -36,8 +36,7 @@ Route::get('/admin', function () {
     return view('plantilla.admin');
 })->name('admin');
 
-Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category')
-    ->middleware('auth');
+Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category');
 
 Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product')
     ->middleware('auth');
