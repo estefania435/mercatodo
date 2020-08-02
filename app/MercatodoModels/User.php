@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\MercatodoModels;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-use App\MercatodoPermission\Traits\UserTrait;
+use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**

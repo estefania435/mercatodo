@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\User;
+use App\MercatodoModels\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -12,7 +12,7 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\User  $user
+     * @param  \App\MercatodoModels\User  $user
      * @return mixed
      */
     public function viewAny(User $usera)
@@ -23,8 +23,8 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\MercatodoModels\User  $user
+     * @param  \App\MercatodoModels\User  $model
      * @return mixed
      */
     public function view(User $usera, User $user, $perm=null)
@@ -45,7 +45,7 @@ class UserPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\User  $user
+     * @param  \App\MercatodoModels\User  $user
      * @return mixed
      */
     public function create(User $usera)
@@ -56,8 +56,8 @@ class UserPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\MercatodoModels\User  $user
+     * @param  \App\MercatodoModels\User  $model
      * @return mixed
      */
     public function update(User $usera, User $user, $perm=null)

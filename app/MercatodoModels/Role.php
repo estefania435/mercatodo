@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MercatodoPermission\Models;
+namespace App\MercatodoModels;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,7 +27,7 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\User')->withTimesTamps();
+        return $this->belongsToMany('App\MercatodoModels\User')->withTimesTamps();
     }
 
     /**
@@ -37,6 +37,6 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany('App\MercatodoPermission\Models\Permission')->withTimesTamps();
+        return $this->belongsToMany('App\MercatodoModels\Permission')->withTimesTamps();
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\MercatodoPermission\Models\Role;
-use App\User;
+use App\MercatodoModels\Role;
+use App\MercatodoModels\User;
 
 /**
  * Class UserController

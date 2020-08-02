@@ -1,10 +1,10 @@
 <?php
 
-namespace App\MercatodoPermission\Traits;
+namespace App\Traits;
 
 trait UserTrait{
     public function roles(){
-        return $this->belongsToMany('App\MercatodoPermission\Models\Role')->withTimesTamps();
+        return $this->belongsToMany('App\MercatodoModels\Role')->withTimesTamps();
     }
 
     public function havePermission($permission){

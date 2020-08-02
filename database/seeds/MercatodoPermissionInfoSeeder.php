@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\User;
-use App\MercatodoPermission\Models\Role;
-use App\MercatodoPermission\Models\Permission;
+use App\MercatodoModels\User;
+use App\MercatodoModels\Role;
+use App\MercatodoModels\Permission;
 use Illuminate\Support\Facades\Hash;
 
 class MercatodoPermissionInfoSeeder extends Seeder
