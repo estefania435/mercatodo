@@ -32,7 +32,7 @@ class AdminProductController extends Controller
         $name = $request->get('name');
 
         $products = Product::withTrashed('images', 'category')
-            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(10);
+            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
 
         return view('admin.product.index', compact('products'));
     }

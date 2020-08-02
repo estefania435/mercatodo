@@ -19,7 +19,7 @@ class HomeController extends Controller
         $name = $request->get('name');
 
         $products = Product::with('images', 'category')
-        ->where('name', 'like', "%$name%")->orderBy('name')->paginate(9);
+        ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
 
         return view('home', compact('products'));
     }
