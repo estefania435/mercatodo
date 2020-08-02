@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\User;
-use App\MercatodoPermission\Models\Role;
-use App\MercatodoPermission\Models\Permission;
+use App\MercatodoModels\User;
+use App\MercatodoModels\Role;
+use App\MercatodoModels\Permission;
 use Illuminate\Support\Facades\Gate;
 
 /*

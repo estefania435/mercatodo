@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\MercatodoPermission\Models\Role;
-use App\MercatodoPermission\Models\Permission;
+use App\MercatodoModels\Role;
+use App\MercatodoModels\Permission;
 use Illuminate\Support\Facades\Gate;
 
 /**
