@@ -23,7 +23,7 @@ class AdminCategoryController extends Controller
         $name = $request->get('name');
 
         $categories = Category::withTrashed('category')
-            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(5);
+            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
 
         return view('admin.category.index', compact('categories'));
     }
