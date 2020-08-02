@@ -43,6 +43,16 @@ class MercatodoPermissionInfoSeeder extends Seeder
 
         ]);
 
+        //rol User
+
+        $roluser= Role::create([
+            'name'          =>'User',
+            'slug'          =>'user',
+            'description'   =>'User client',
+            'full-access'   =>'no'
+
+        ]);
+
         //table role_user
         $useradmin->roles()->sync([ $roladmin->id ]);
 
