@@ -54,6 +54,12 @@ return [
             'days' => 14,
         ],
 
+        'contlog' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/controllers.log'),
+            'level' => 'debug'
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
