@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
+use PhpParser\Node\Stmt\TryCatch;
+use ReflectionExtension;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\MercatodoModels\Product;
 use App\MercatodoModels\Category;
@@ -29,12 +33,24 @@ class AdminProductController extends Controller
      */
     public function index(Request $request): \Illuminate\View\View
     {
+        try {
+
         $name = $request->get('name');
 
         $products = Product::withTrashed('images', 'category')
             ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
+            Log::channel('contlog')->info('listar productos');
 
         return view('admin.product.index', compact('products'));
+
+        }catch (\Exception $e) {
+            Log::channel('contlog')->error("Error al listar los productos ".
+                "getMessage: ".$e->getMessage().
+                " - getFile: ".$e->getFile().
+                " - getLine: ".$e->getLine());
+
+            return view('welcome');
+        }
     }
 
     /**
