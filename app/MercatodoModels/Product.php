@@ -32,6 +32,16 @@ class Product extends Model
     }
 
     /**
+     * Relationship between product tables and details.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function details(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany("App\MercatodoModels\Detail");
+    }
+
+    /**
      * Softdelete category.
      *
      * @var string[]

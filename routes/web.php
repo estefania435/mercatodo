@@ -23,7 +23,8 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified')->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified')
+    ->middleware('auth');
 
 Route::resource('/role', 'RoleController')->names('role');
 
@@ -45,8 +46,56 @@ Route::get('cancel/{ruta}', function ($ruta) {
     return redirect()->route($ruta)->with('cancel', 'Action Canceled!');
 })->name('cancel');
 
-Route::post('restoreproduct/{id}', ['as' => 'admin.product.restore', 'uses' => 'Admin\AdminProductController@restore']);
+Route::post('restoreproduct/{id}', ['as' => 'admin.product.restore', 'uses'
+=> 'Admin\AdminProductController@restore']);
 
-Route::post('restorecategory/{id}', ['as' => 'admin.category.restore', 'uses' => 'Admin\AdminCategoryController@restore']);
+Route::post('restorecategory/{id}', ['as' => 'admin.category.restore', 'uses'
+=> 'Admin\AdminCategoryController@restore']);
 
 Route::resource('/product', 'ProductController')->names('product');
+
+
+
+Route::resource('admin/order', 'Admin\AdminOrderController')->names('admin.order');
+
+Route::resource('admin/detail', 'Admin\AdminDetailController')->names('admin.detail');
+
+Route::get('cart/show', [
+    'as' => 'cart.show',
+    'uses' => 'Admin\AdminCartController@show'
+]);
+
+Route::get('cart/add/{id}', [
+    'as' => 'cart.add',
+    'uses' => 'Admin\AdminCartController@add'
+]);
+
+Route::get('cart/store', [
+    'as' => 'cart.store',
+    'uses' => 'Admin\AdminCartController@trash'
+]);
+
+Route::get('cart/delete/{id}', [
+    'as' => 'cart.delete',
+    'uses' => 'Admin\AdminCartController@delete'
+]);
+
+Route::get('cart/trash', [
+    'as' => 'cart.trash',
+    'uses' => 'Admin\AdminCartController@trash'
+]);
+
+Route::get('cart/update/{slug}/{quantity?}', [
+    'as' => 'cart.update',
+    'uses' => 'Admin\AdminCartController@update'
+]);
+
+Route::get('order-detail',[
+    'as' => 'order-detail',
+    'uses' => 'Admin\AdminCartController@orderDetail'
+]);
+
+Route::post('cart/Datesreceive',[
+    'as' => 'cart.Datesreceive',
+    'uses' => 'Admin\AdminCartController@Datesreceive'
+]);
