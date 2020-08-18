@@ -36,6 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail
     [
         'password', 'remember_token',
     ];
+
     /**
      * @var string[]
      */
@@ -57,5 +58,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne('App\MercatodoModels\Image', 'imageable');
+    }
+
+    /**
+     * Relationship between users tables and orders.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo("App\MercatodoModels\Order");
     }
 }

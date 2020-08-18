@@ -50,9 +50,8 @@
                                                 <div class="btn-group">
                                                     <td><a class="btn btn-sm btn-outline-secondary"
                                                            href="{{ route('product.show',$item->id) }}">See</a></td>
-                                                    <button type="button" class="btn btn-sm btn-outline-secondary">Agregar al
-                                                        carrito
-                                                    </button>
+                                                    <td><a class="btn btn-sm btn-outline-secondary"
+                                                           href="{{ route('cart.add',$item->id) }}">Add to cart</a></td>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,27 +79,26 @@
                     <div class="row">
                         @foreach($products as $item)
                             @if($item->quantity>0& $item->status=='New')
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img class="bd-placeholder-img"
-                                     src="{{ $item->images->random()->url }}"
-                                     width="267" height="225" title="Pets">
-                                <div class="card-body">
-                                    <p class="card-text">{{ $item->name }}</p>
-                                    <p class="card-text">{{ $item->description }}</p>
-                                    <p class="card-text">{{ $item->price }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <td><a class="btn btn-sm btn-outline-secondary"
-                                                   href="{{ route('product.show',$item->id) }}">See</a></td>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">Agregar al
-                                                carrito
-                                            </button>
+                                <div class="col-md-4">
+                                    <div class="card mb-4 shadow-sm">
+                                        <img class="bd-placeholder-img"
+                                             src="{{ $item->images->random()->url }}"
+                                             width="267" height="225" title="Pets">
+                                        <div class="card-body">
+                                            <p class="card-text">{{ $item->name }}</p>
+                                            <p class="card-text">{{ $item->description }}</p>
+                                            <p class="card-text">{{ $item->price }}</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="btn-group">
+                                                    <td><a class="btn btn-sm btn-outline-secondary"
+                                                           href="{{ route('product.show',$item->id) }}">See</a></td>
+                                                    <td><a class="btn btn-sm btn-outline-secondary"
+                                                           href="{{ route('cart.add',$item->id) }}">Add to cart</a></td>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
                             @endif
                         @endforeach
 
@@ -111,7 +109,7 @@
 
         </div>
         {{ $products->appends($_GET)->links() }}
-        </div>
+    </div>
     </div>
 @endsection
 
