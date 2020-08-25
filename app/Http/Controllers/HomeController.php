@@ -44,7 +44,7 @@ class HomeController extends Controller
                 ->where('orders.status', '=', '0')->get();
 
             return view('home', compact('products', 'cart'));
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::channel('contlog')->error("Error al listar los productos ".
                  "getMessage: ".$e->getMessage().
                  " - getFile: ".$e->getFile().

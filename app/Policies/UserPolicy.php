@@ -31,12 +31,11 @@ class UserPolicy
     {
         if ($usera->havePermission($perm[0])) {
             return true;
-        } else
-            if ($usera->havePermission($perm[1])) {
-                return $usera->id === $user->id;
-            } else {
-                return false;
-            }
+        } elseif ($usera->havePermission($perm[1])) {
+            return $usera->id === $user->id;
+        } else {
+            return false;
+        }
     }
 
 
@@ -64,13 +63,10 @@ class UserPolicy
     {
         if ($usera->havePermission($perm[0])) {
             return true;
-        } else
-            if ($usera->havePermission($perm[1])) {
-                return $usera->id === $user->id;
-            } else {
-                return false;
-            }
+        } elseif ($usera->havePermission($perm[1])) {
+            return $usera->id === $user->id;
+        } else {
+            return false;
+        }
     }
-
-
 }

@@ -14,7 +14,6 @@ class IndexTest extends TestCase
     /** @test */
     public function aUserCanListCategories()
     {
-
         $response = $this->get(route('admin.category.index'));
 
         $response->assertStatus(200);
@@ -23,6 +22,4 @@ class IndexTest extends TestCase
 
         $responseCategories = $response->getOriginalContent()['categories'];
     }
-
-
 }

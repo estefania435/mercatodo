@@ -25,15 +25,14 @@ class AdminCategoryController extends Controller
     public function index(Request $request): \Illuminate\View\View
     {
         try {
-        $name = $request->get('name');
+            $name = $request->get('name');
 
-        $categories = Category::withTrashed('category')
+            $categories = Category::withTrashed('category')
             ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
             Log::channel('contlog')->info('listar categorias');
 
-        return view('admin.category.index', compact('categories'));
-
-        }catch (\Exception $e) {
+            return view('admin.category.index', compact('categories'));
+        } catch (\Exception $e) {
             Log::channel('contlog')->error("Error al listar los productos ".
                 "getMessage: ".$e->getMessage().
                 " - getFile: ".$e->getFile().
