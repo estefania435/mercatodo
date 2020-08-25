@@ -28,7 +28,7 @@ class Product extends Model
      */
     public function images(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany('App\MercatodoModels\Image','imageable');
+        return $this->morphMany('App\MercatodoModels\Image', 'imageable');
     }
 
     /**

@@ -9,8 +9,7 @@ class Cart extends Model
     /**
      * @var string[]
      */
-    public $fillable = array
-    (
+    public $fillable = array(
         'id','name','price','quantity'
     );
 }

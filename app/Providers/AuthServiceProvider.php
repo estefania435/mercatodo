@@ -28,9 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('haveaccess', function (User $user, $perm){
+        Gate::define('haveaccess', function (User $user, $perm) {
             return $user->havePermission($perm);
-
         });
     }
 }

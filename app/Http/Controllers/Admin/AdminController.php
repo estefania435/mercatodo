@@ -25,7 +25,6 @@ class AdminController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -36,7 +35,6 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-
     }
 
     /**
@@ -58,7 +56,6 @@ class AdminController extends Controller
      */
     public function edit($slug)
     {
-
     }
 
     /**
@@ -70,7 +67,6 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-
     }
 
     /**
