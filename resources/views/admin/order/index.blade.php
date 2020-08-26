@@ -54,17 +54,21 @@
                                 <td>{{$order->create_at}}</td>
                                 <td>{{$order->status}}</td>
 
+                                @can('haveaccess','admin.order.show')
                                 <td>
                                     <a class="btn btn-default"
                                        href="{{ route('admin.order.show',$order->id) }}">See</a>
                                 </td>
+                                @endcan
 
+                                @can('haveaccess','admin.order.edit')
                                 <td>
                                     @if(!$order->status)
                                         <a class="btn btn-info"
                                            href="{{ route('admin.order.edit',$order->id) }}">Edit</a>
                                     @endif
                                 </td>
+                                @endcan
 
                                 <td></td>
                                 <td></td>

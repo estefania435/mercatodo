@@ -34,6 +34,8 @@ class AdminProductController extends Controller
     public function index(Request $request): \Illuminate\View\View
     {
         try {
+            $this->authorize('haveaccess', 'admin.product.index');
+
             $name = $request->get('name');
 
             $products = Product::withTrashed('images', 'category')
@@ -58,6 +60,10 @@ class AdminProductController extends Controller
      */
     public function create(): \Illuminate\View\View
     {
+        $this->authorize('haveaccess', 'admin.product.create');
+
+        $this->authorize('haveaccess', 'admin.category.create');
+
         $statusProducts = $this->statusProducts;
 
         $categories = Category::orderBy('name')->get();
@@ -73,6 +79,8 @@ class AdminProductController extends Controller
      */
     public function store(ProductStoreRequest $request): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.product.create');
+
         $urlimages = [];
         if ($request->hasFile('images')) {
             $images = $request->file('images');
@@ -116,6 +124,8 @@ class AdminProductController extends Controller
      */
     public function show(string $slug): \Illuminate\View\View
     {
+        $this->authorize('haveaccess', 'admin.product.show');
+
         $product = Product::with('images', 'category')->where('slug', $slug)->firstOrFail();
 
         $categories = Category::orderBy('name')->get();
@@ -133,6 +143,8 @@ class AdminProductController extends Controller
      */
     public function edit(string $slug): \Illuminate\View\View
     {
+        $this->authorize('haveaccess', 'admin.product.edit');
+
         $product = Product::with('images', 'category')->where('slug', $slug)->firstOrFail();
 
         $categories = Category::orderBy('name')->get();
@@ -151,6 +163,8 @@ class AdminProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, string $id): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.product.edit');
+
         $urlimages = [];
         if ($request->hasFile('images')) {
             $images = $request->file('images');
@@ -194,6 +208,8 @@ class AdminProductController extends Controller
      */
     public function destroy(string $id): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.product.destroy');
+
         $product = Product::find($id);
         $product->delete();
 

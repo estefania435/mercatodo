@@ -148,7 +148,99 @@ class MercatodoPermissionInfoSeeder extends Seeder
             'description'   =>'A user can edit own user',
         ]);
 
-        //permission role
+        $permission_all[] = $permission->id;
+
+
+        //permission products
+
+        $permission = Permission::create([
+            'name'          =>'List product',
+            'slug'          =>'admin.product.index',
+            'description'   =>'A user can list product',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name'          =>'Show product',
+            'slug'          =>'admin.product.show',
+            'description'   =>'A user can see product',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name'          =>'Edit product',
+            'slug'          =>'admin.product.edit',
+            'description'   =>'A user can edit product',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name'          =>'Destroy product',
+            'slug'          =>'admin.product.destroy',
+            'description'   =>'A user can destroy product',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        //permission category
+
+        $permission = Permission::create([
+            'name'          =>'List category',
+            'slug'          =>'admin.category.index',
+            'description'   =>'A user can list category',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name'          =>'Show category',
+            'slug'          =>'admin.category.show',
+            'description'   =>'A user can see category',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name'          =>'Edit category',
+            'slug'          =>'admin.category.edit',
+            'description'   =>'A user can edit category',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name'          =>'Destroy category',
+            'slug'          =>'admin.category.destroy',
+            'description'   =>'A user can destroy category',
+        ]);
+
+        //permission orders
+
+        $permission = Permission::create([
+            'name'          =>'List order',
+            'slug'          =>'admin.order.index',
+            'description'   =>'A user can list order',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name'          =>'Show order',
+            'slug'          =>'admin.order.show',
+            'description'   =>'A user can see order',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name'          =>'Edit order',
+            'slug'          =>'admin.order.edit',
+            'description'   =>'A user can edit order',
+        ]);
+
         $roladmin->permissions()->sync($permission_all);
     }
 }

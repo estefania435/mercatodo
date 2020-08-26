@@ -21,6 +21,8 @@ class AdminOrderController extends Controller
      */
     public function index(): \Illuminate\View\View
     {
+        $this->authorize('haveaccess', 'admin.order.index');
+
         $orders = Order::all();
 
         return view('admin.order.index', compact('orders'));
@@ -34,6 +36,8 @@ class AdminOrderController extends Controller
      */
     public function edit(int $id): \Illuminate\View\View
     {
+        $this->authorize('haveaccess', 'admin.order.edit');
+
         $order = Order::whereId($id)->first();
 
         return view('admin.order.edit', compact('order'));
@@ -48,6 +52,8 @@ class AdminOrderController extends Controller
      */
     public function update(Request $request, int $id): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.order.edit');
+
         $order = Order::findOrfail($id);
 
         if ($request->status) {
@@ -68,6 +74,8 @@ class AdminOrderController extends Controller
      */
     public function show(string $id): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.order.show');
+
         Session::put('order_id', $id);
 
         return redirect('/admin/detail');
