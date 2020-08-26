@@ -212,6 +212,7 @@
 
 
                     <!-- Categories -->
+                    @can('haveaccess','category.index')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-list-alt"></i>
@@ -227,18 +228,21 @@
                                     <p>List of categories</p>
                                 </a>
                             </li>
+                            @can('haveaccess','category.create')
                             <li class="nav-item">
                                 <a href="{{ route('admin.category.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Create category</p>
                                 </a>
                             </li>
-
+                            @endcan
                         </ul>
                     </li>
+                    @endcan
 
 
                     <!-- Products -->
+                    @can('haveaccess','admin.product.index')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-list-alt"></i>
@@ -248,23 +252,29 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('haveaccess','admin.product.index')
                             <li class="nav-item">
                                 <a href="{{ route('admin.product.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>List of Products</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('haveaccess','admin.product.create')
                             <li class="nav-item">
                                 <a href="{{ route('admin.product.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Create Product</p>
                                 </a>
                             </li>
+                            @endcan
 
                         </ul>
                     </li>
+                    @endcan
 
                     <!-- Orders -->
+                    @can('haveaccess','order.index')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-list-alt"></i>
@@ -283,6 +293,7 @@
 
                         </ul>
                     </li>
+                @endcan
 
 
                     <!-- Users -->

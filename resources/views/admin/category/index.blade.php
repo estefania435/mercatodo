@@ -38,8 +38,10 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
+                    @can('haveaccess','admin.category.create')
                     <td><a class=" m-2 float-right btn btn-primary" href="{{ route('admin.category.create') }}">Create</a></td>
-                    <table class="table table-head-fixed text-nowrap">
+                    @endcan
+                        <table class="table table-head-fixed text-nowrap">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -60,12 +62,17 @@
                             <td>{{$category->slug}}</td>
                             <td>{{$category->description}}</td>
 
+                            @can('haveaccess','admin.category.index')
                             <td><a class="btn btn-default"
                                    href="{{ route('admin.category.show',$category->slug) }}">See</a></td>
+                            @endcan
 
+                            @can('haveaccess','admin.category.edit')
                             <td><a class="btn btn-info"
                                    href="{{ route('admin.category.edit',$category->slug) }}">Edit</a></td>
+                            @endcan
 
+                            @can('haveaccess','admin.category.destroy')
                             <td>
                                 @if($category->trashed())
                                     <form action=" {{ route('admin.category.restore', ['id'=> $category->id]) }}"
@@ -92,6 +99,7 @@
                                 @endif
 
                             </td>
+                            @endcan
 
                             <td> </td>
                             <td> </td>

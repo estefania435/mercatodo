@@ -25,6 +25,7 @@ class AdminCategoryController extends Controller
     public function index(Request $request): \Illuminate\View\View
     {
         try {
+            $this->authorize('haveaccess', 'admin.category.index');
             $name = $request->get('name');
 
             $categories = Category::withTrashed('category')
@@ -49,6 +50,8 @@ class AdminCategoryController extends Controller
      */
     public function create(): \Illuminate\View\View
     {
+        $this->authorize('haveaccess', 'admin.category.create');
+
         return view('admin.category.create');
     }
 
@@ -60,6 +63,8 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.category.create');
+
         Category::create($request->all());
 
         return redirect()->route('admin.category.index')
@@ -74,6 +79,8 @@ class AdminCategoryController extends Controller
      */
     public function show(string $slug): \Illuminate\View\View
     {
+        $this->authorize('haveaccess', 'admin.category.show');
+
         $cat = Category::where('slug', $slug)->firstOrFail();
         $edit = 'Si';
 
@@ -88,6 +95,8 @@ class AdminCategoryController extends Controller
      */
     public function edit(string $slug): \Illuminate\View\View
     {
+        $this->authorize('haveaccess', 'admin.category.edit');
+
         $cat = Category::where('slug', $slug)->firstOrFail();
         $edit = 'Si';
 
@@ -103,6 +112,8 @@ class AdminCategoryController extends Controller
      */
     public function update(Request $request, int $id): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.category.edit');
+
         $cat = Category::findOrFail($id);
         $cat->fill($request->all())->save();
 
@@ -118,6 +129,8 @@ class AdminCategoryController extends Controller
      */
     public function destroy(int $id): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.category.destroy');
+
         $cat = Category::find($id);
         $cat->delete();
 

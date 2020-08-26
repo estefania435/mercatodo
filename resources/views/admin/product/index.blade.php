@@ -8,22 +8,6 @@
 
 @section('content')
 
-    <style type="text/css">
-        .table1 {
-            width: 100%;
-            margin-bottom: 1rem;
-            color: #212529;
-            text-align: center;
-        }
-
-        .table1 td, .table1 th {
-            padding: .75rem;
-            vertical-align: center;
-            border-top: 1px solid #dee2e6;
-        }
-
-    </style>
-
     <div id="confirmdelete" class="row">
 
         <span style="display:none;" id="urlbase">{{route('admin.product.index')}}</span>
@@ -53,10 +37,11 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
+                    @can('haveaccess','admin.product.create')
                     <td><a class=" m-2 float-right btn btn-primary"
                            href="{{ route('admin.product.create') }}">Create</a></td>
-                    <table class="table1 table-head-fixed text-nowrap">
-                        <thead>
+                    @endcan
+                        <table class="table table-head-fixed text-nowrap">                        <thead>
                         <tr>
 
                             <th>Name</th>
@@ -80,13 +65,17 @@
                                 </td>
                                 <td>{{$product->price}}</td>
 
-
+                                @can('haveaccess','admin.product.show')
                                 <td><a class="btn btn-default"
                                        href="{{ route('admin.product.show',$product->slug) }}">See</a></td>
+                                @endcan
 
+                                @can('haveaccess','admin.product.edit')
                                 <td><a class="btn btn-info"
                                        href="{{ route('admin.product.edit',$product->slug) }}">Edit</a></td>
+                                @endcan
 
+                                @can('haveaccess','admin.product.destroy')
                                 <td>
                                     @if($product->trashed())
                                         <form action=" {{ route('admin.product.restore', ['id'=> $product->id]) }}"
@@ -113,7 +102,7 @@
                                     @endif
 
                                 </td>
-
+                                @endcan
 
                                 <td></td>
                                 <td></td>
