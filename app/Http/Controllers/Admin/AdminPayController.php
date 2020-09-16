@@ -229,4 +229,17 @@ class AdminPayController extends Controller
         return redirect()->route('pay.show');
     }
 
+    public function showallorders()
+    {
+        $Payments = Pay::all()->where
+        ('user_id', Auth::user()->id);
+
+        return view('product.payments', compact('Payments'));
+    }
+
+    public function repay()
+    {
+        return redirect()->route('pay.pay');
+    }
+
 }
