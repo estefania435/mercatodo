@@ -26,6 +26,8 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item"><a href="{{route('pay.showallorders')}}" class="nav-link">Payments</a></li>
                         <!-- Authentication Links -->
                         <li class="nav-item">
 
