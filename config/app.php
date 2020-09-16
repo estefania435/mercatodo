@@ -124,6 +124,13 @@ return [
     'cipher' => 'AES-256-CBC',
 
     /*
+     | PlaceToPay credentials
+     */
+    'secretKey' => env('secretKey'),
+
+    'login' => env('login'),
+
+    /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------

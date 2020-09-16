@@ -23,8 +23,8 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified')
-    ->middleware('auth');
+Route::get('/home', 'HomeController@index')->name('home')/*->middleware('verified')
+    ->middleware('auth')*/;
 
 Route::resource('/role', 'RoleController')->names('role');
 
@@ -53,8 +53,6 @@ Route::post('restorecategory/{id}', ['as' => 'admin.category.restore', 'uses'
 => 'Admin\AdminCategoryController@restore']);
 
 Route::resource('/product', 'ProductController')->names('product');
-
-
 
 Route::resource('admin/order', 'Admin\AdminOrderController')->names('admin.order');
 
@@ -98,4 +96,54 @@ Route::get('order-detail',[
 Route::post('cart/Datesreceive',[
     'as' => 'cart.Datesreceive',
     'uses' => 'Admin\AdminCartController@Datesreceive'
+]);
+
+Route::get('pay/pay/{reference?}',[
+    'as' => 'pay.pay',
+    'uses' => 'Admin\AdminPayController@pay'
+]);
+
+Route::get('pay/data',[
+    'as' => 'pay.data',
+    'uses' => 'Admin\AdminPayController@data'
+]);
+
+Route::get('pay/consult/{reference?}',[
+    'as' => 'pay.consult',
+    'uses' => 'Admin\AdminPayController@consult'
+]);
+
+Route::get('pay/status',[
+    'as' => 'pay.status',
+    'uses' => 'Admin\AdminPayController@status'
+]);
+
+Route::get('pay/updatedata',[
+    'as' => 'pay.updatedata',
+    'uses' => 'Admin\AdminPayController@updatedata'
+]);
+
+Route::get('pay/show',[
+    'as' => 'pay.show',
+    'uses' => 'Admin\AdminPayController@show'
+]);
+
+Route::get('pay/updateorderstatus',[
+    'as' => 'pay.updateorderstatus',
+    'uses' => 'Admin\AdminPayController@updateorderstatus'
+]);
+
+Route::get('pay/showallorders',[
+    'as' => 'pay.showallorders',
+    'uses' => 'Admin\AdminPayController@showallorders'
+]);
+
+Route::get('pay/repay',[
+    'as' => 'pay.repay',
+    'uses' => 'Admin\AdminPayController@repay'
+]);
+
+Route::get('pay/reredirection',[
+    'as' => 'pay.reredirection',
+    'uses' => 'Admin\AdminPayController@reredirection'
 ]);
