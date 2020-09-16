@@ -210,4 +210,23 @@ class AdminPayController extends Controller
         $paymen->save();
     }
 
+    public function show()
+    {
+        $payment = Pay::all()->where
+        ('user_id', Auth::user()->id)->last();
+
+        return view('product.estado', compact('payment'));
+    }
+
+    public function updateorderstatus()
+    {
+        $order = Order::where('user_id', Auth::user()->id)->where('status', '0')->Orwhere('status', 'REJECTED')->first();
+        $payer = Pay::all()->where('user_id', Auth::user()->id)->last();
+
+        $order->status = $payer->status;
+        $order->save();
+
+        return redirect()->route('pay.show');
+    }
+
 }
