@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\MercatodoModels\Order;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\MercatodoModels\Pay;
@@ -21,7 +27,7 @@ class AdminPayController extends Controller
      */
     public function pay()
     {
-        $order = Order::where('user_id', Auth::user()->id)->where('status', '0')->Orwhere('status', 'REJECTED')->first();
+        $order = Order::order()->Orwhere('status', 'REJECTED')->first();
 
         if (function_exists('random_bytes')) {
             $nonce = bin2hex(random_bytes(16));
@@ -32,44 +38,44 @@ class AdminPayController extends Controller
         }
 
         $nonceBase64 = base64_encode($nonce);
-
         $seed = date('c');
-        $secretKey = '024h1IlD';
+        $secretKey = config('app.SECRET_KEY','024h1IlD');
         $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
         $reference = $order->id;
         $total = $order->total;
-        $auth = array
-        (
-            'login' => '6dd490faf9cb87a9862245da41170ff2',
+        $auth =
+        [
+
+            'login' => config('app.LOGIN','6dd490faf9cb87a9862245da41170ff2'),
             'seed' => $seed,
             'nonce' => $nonceBase64,
             'tranKey' => $tranKey,
 
-        );
+        ];
 
-        $amount = array
-        (
+        $amount =
+        [
             "currency" => "COP",
             "total" => $total
-        );
+        ];
 
-        $payment = array
-        (
+        $payment =
+        [
             "reference" => $order->id,
             "description" => "Pago básico de prueba",
             'amount' => $amount
-        );
+        ];
 
 
-        $data = array
-        (
+        $data =
+        [
             'auth' => $auth,
             'payment' => $payment,
             "expiration" => date('c', strtotime('+1 hour')),
             "returnUrl" => 'http://127.0.0.1:8000/pay/consult/' . $reference,
             "ipAddress" => "127.0.0.1",
             "userAgent" => "PlacetoPay Sandbox"
-        );
+        ];
         $url = 'https://test.placetopay.com/redirection/api/session/';
 
         $client = new Client([
@@ -88,18 +94,44 @@ class AdminPayController extends Controller
             return redirect()->route('pay.reredirection');
 
 
-        } catch (\Exception $e) {
+        }catch (RequestException $e) {
+            echo Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                echo Psr7\str($e->getResponse());
+            }
+
+        }catch (ClientException $e) {
+                echo Psr7\str($e->getRequest());
+                echo Psr7\str($e->getResponse());
+
+        }catch (TransferException $e) {
+            echo Psr7\str($e->getRequest());
+            echo Psr7\str($e->getResponse());
+
+        }
+        catch (ServerException $e) {
+
+            echo Psr7\str($e->getRequest());
+            echo Psr7\str($e->getResponse());
+        }
+        catch (BadResponseException $e) {
+
+            echo Psr7\str($e->getRequest());
+            echo Psr7\str($e->getResponse());
+        }
+
+
+        /*catch (\Exception $e) {
             Log::channel('contlog')->error("pago" .
                 "getMessage: " . $e->getMessage() .
                 " - getFile: " . $e->getFile() .
                 " - getLine: " . $e->getLine());
-        }
+        }*/
     }
 
     public function reredirection()
     {
-        $pay = Pay::where
-        ('user_id', Auth::user()->id)->where('status', '0')->first();
+        $pay = Pay::pay()->first();
         $url= $pay->process_url;
 
         return redirect()->to($url);
@@ -107,7 +139,7 @@ class AdminPayController extends Controller
 
     public function data($data)
     {
-        $order = Order::where('user_id', Auth::user()->id)->where('status', '0')->Orwhere('status', 'REJECTED')->first();
+        $order = Order::order()->Orwhere('status', 'REJECTED')->first();
 
         $paymen = new Pay();
         $paymen->status;
@@ -129,8 +161,7 @@ class AdminPayController extends Controller
     public function consult($reference)
     {
 
-        $pay = Pay::where('reference', $reference)->where
-        ('user_id', Auth::user()->id)->where('status', '0')->first();
+        $pay = Pay::where('reference', $reference)->pay()->first();
         $pay->reference = $reference;
         $requestId = $pay->requestId;
 
@@ -144,27 +175,26 @@ class AdminPayController extends Controller
         }
 
         $nonceBase64 = base64_encode($nonce);
-
         $seed = date('c');
         $secretKey = '024h1IlD';
         $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
-        $auth = array
-        (
+        $auth =
+        [
             'login' => '6dd490faf9cb87a9862245da41170ff2',
             'seed' => $seed,
             'nonce' => $nonceBase64,
             'tranKey' => $tranKey,
 
-        );
+        ];
 
-        $data = array
-        (
+        $data =
+        [
             'auth' => $auth,
             "expiration" => date('c', strtotime('+1 hour')),
             "returnUrl" => 'http://127.0.0.1:8000/pay/updatedata/' . $reference,
             "ipAddress" => "127.0.0.1",
             "userAgent" => "PlacetoPay Sandbox"
-        );
+        ];
 
         $url = 'https://test.placetopay.com/redirection/api/session/' . $requestId;
 
@@ -184,18 +214,42 @@ class AdminPayController extends Controller
 
             //return response($body);
 
-        } catch (\Exception $e) {
+        } catch (RequestException $e) {
+            echo Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                echo Psr7\str($e->getResponse());
+            }
+
+        }catch (ClientException $e) {
+            echo Psr7\str($e->getRequest());
+            echo Psr7\str($e->getResponse());
+
+        }catch (TransferException $e) {
+            echo Psr7\str($e->getRequest());
+            echo Psr7\str($e->getResponse());
+
+        }
+        catch (ServerException $e) {
+
+            echo Psr7\str($e->getRequest());
+            echo Psr7\str($e->getResponse());
+        }
+        catch (BadResponseException $e) {
+
+            echo Psr7\str($e->getRequest());
+            echo Psr7\str($e->getResponse());
+        }
+        /*catch (\Exception $e) {
             Log::channel('contlog')->error("pago" .
                 "getMessage: " . $e->getMessage() .
                 " - getFile: " . $e->getFile() .
                 " - getLine: " . $e->getLine());
-        }
+        }*/
     }
 
     public function updatedata($dato)
     {
-        $paymen = Pay::where
-        ('user_id', Auth::user()->id)->where('status', '0')->first();
+        $paymen = Pay::pay()->first();
 
         $paymen->status = $dato->status->status;
         $paymen->name = $dato->request->payer->name;
@@ -220,7 +274,7 @@ class AdminPayController extends Controller
 
     public function updateorderstatus()
     {
-        $order = Order::where('user_id', Auth::user()->id)->where('status', '0')->Orwhere('status', 'REJECTED')->first();
+        $order = Order::order()->Orwhere('status', 'REJECTED')->first();
         $payer = Pay::all()->where('user_id', Auth::user()->id)->last();
 
         $order->status = $payer->status;
@@ -241,5 +295,4 @@ class AdminPayController extends Controller
     {
         return redirect()->route('pay.pay');
     }
-
 }
