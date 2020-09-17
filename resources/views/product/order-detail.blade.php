@@ -2,12 +2,10 @@
 
 @section('content')
     <div class="container text-center">
-        <div class="page-header">
-            <h1><i class="fa fa-shopping-cart"> </i>Detalle del pedido</h1>
-        </div>
+
         <div class="page">
             <div class="table-responsive">
-                <h3>Datos del usuario</h3>
+                <h3>Datos de envío</h3>
                 <form action="{{ route('cart.Datesreceive')}}" method="POST">
                     @csrf
 
@@ -21,7 +19,7 @@
                     @error('name_receive')
                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                    </span>
                     @enderror
 
                     <label for="surname"
@@ -35,9 +33,8 @@
                     @error('surname')
                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                    </span>
                     @enderror
-
 
                     <label for="address"
                            class="col-md-4 col-form-label text-centert">{{ __('address') }}</label>
@@ -49,7 +46,7 @@
                     @error('address')
                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                    </span>
                     @enderror
 
                     <label for="phone"
@@ -62,13 +59,12 @@
                     @error('phone')
                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                    </span>
                     @enderror
-
 
                     <br>
                     <div class="table-responsive">
-                        <h3>Datos del pedido</h3>
+                        <h3>Detalle del pedido</h3>
                         <table class="table table-striped table-hover table-bordered">
                             <tr>
                                 <th>Producto</th>
@@ -86,9 +82,6 @@
                             @endforeach
                         </table>
                         <hr>
-                        <h3>
-
-                        </h3>
                         <hr>
                         <p>
                             <a href="{{ route('cart.show') }}" class="btn btn-primary">
@@ -96,8 +89,6 @@
                             </a>
 
                             <input class="btn btn-primary" type="submit" value="Save">
-
-
                         </p>
                     </div>
                 </form>
