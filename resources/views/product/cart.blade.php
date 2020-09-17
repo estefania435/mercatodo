@@ -67,8 +67,7 @@
                 <a href="{{ route('order-detail') }}" class="btn btn-primary">
                     <i class="fa fa-chevron-circle-right"></i> Continuar
                 </a>
-            </p>
-            <p>
+
                 <a href="{{ route('cart.trash') }}" class="btn btn-primary">Vaciar carrito</a>
             </p>
         </div>

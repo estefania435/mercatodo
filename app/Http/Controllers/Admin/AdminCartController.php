@@ -8,6 +8,10 @@ use App\MercatodoModels\Order;
 use App\MercatodoModels\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Illuminate\View\View;
 
 class AdminCartController extends Controller
 {
@@ -16,7 +20,7 @@ class AdminCartController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show(): \Illuminate\View\View
+    public function show(): View
     {
         $cart = Order::join('details', 'orders.id', '=', 'details.order_id')
             ->join('products', 'products.id', '=', 'details.products_id')
@@ -28,9 +32,7 @@ class AdminCartController extends Controller
                 'products.price as price',
                 'details.quantity as quantity',
                 'images.url as image'
-            )
-            ->where('orders.user_id', '=', Auth::user()->id)
-            ->where('orders.status', '=', '0')->get();
+            )->done()->get();
 
         $total = $this->total();
 
@@ -43,17 +45,17 @@ class AdminCartController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add(Request $request): \Illuminate\Http\RedirectResponse
+    public function add(Request $request): RedirectResponse
     {
-        $order = Order::all()->where('user_id', Auth::user()->id)->first();
+        $order = Order::order()->first();
 
-        if ($order != null) {
+        if ($order) {
             $product = Product::find($request->id);
             $product->quantity = 1;
             $cart[$product->slug] = $product;
 
-            $detailproduct = Detail::all()->where('order_id', $order->id)->where('products_id', $product->id)->first();
-            if ($detailproduct == null) {
+            $detailproduct = Detail::where('order_id', $order->id)->where('products_id', $product->id)->first();
+            if (!$detailproduct) {
                 $detail = new Detail();
                 $detail->quantity = 1;
                 $detail->products_id = $product->id;
@@ -61,7 +63,8 @@ class AdminCartController extends Controller
                 $detail->save();
                 $this->updateTotal($order, $this->total());
             }
-        } else {
+        }
+        else {
             $product = Product::find($request->id);
             $product->quantity = 1;
             $cart[$product->slug] = $product;
@@ -96,11 +99,11 @@ class AdminCartController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Request $request): \Illuminate\Http\RedirectResponse
+    public function delete(Request $request): RedirectResponse
     {
         $product = Product::find($request->id);
-        $order = Order::all()->where('status', '0')->where('user_id', Auth::user()->id)->first();
-        $detailproduct = Detail::all()->where('order_id', $order->id)->where('products_id', $product->id)->first();
+        $order = Order::order()->first();
+        $detailproduct = Detail::where('order_id', $order->id)->where('products_id', $product->id)->first();
         $detailproduct->delete();
 
         return redirect()->route('cart.show');
@@ -111,11 +114,11 @@ class AdminCartController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function trash(): \Illuminate\Http\RedirectResponse
+    public function trash(): RedirectResponse
     {
-        $order = Order::all()->where('status', '0')->where('user_id', Auth::user()->id)->first();
+        $order = Order::order()->first();
         Detail::where('order_id', $order->id)->delete();
-        Order::where('status', '0')->where('user_id', Auth::user()->id)->delete();
+        Order::order()->delete();
 
         return redirect()->route('home');
     }
@@ -127,13 +130,12 @@ class AdminCartController extends Controller
      * @param int $quantity
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(string $slug, int $quantity): \Illuminate\Http\RedirectResponse
+    public function update(string $slug, int $quantity): RedirectResponse
     {
         $product = Product::where('slug', $slug)->first();
-        $order = Order::all()->where('status', '0')
-                             ->where('user_id', Auth::user()->id)->first();
-        $detailproduct = Detail::all()->where('order_id', $order->id)
-                                      ->where('products_id', $product->id)->first();
+        $order = Order::order()->first();
+        $detailproduct = Detail::where('order_id', $order->id)
+            ->where('products_id', $product->id)->first();
 
         $detailproduct->quantity = $quantity;
         $detailproduct->save();
@@ -152,9 +154,8 @@ class AdminCartController extends Controller
         $cart = Order::join('details', 'orders.id', '=', 'details.order_id')
             ->join('products', 'products.id', '=', 'details.products_id')
             ->select('products.price as price', 'details.quantity as quantity')
-            ->where('orders.user_id', '=', Auth::user()->id)
-            ->where('orders.status', '=', '0')
-            ->get();
+            ->done()->get();
+
         $total = 0;
         foreach ($cart as $item) {
             $total += $item->price * $item->quantity;
@@ -169,9 +170,9 @@ class AdminCartController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function Datesreceive(Request $request): \Illuminate\View\View
+    public function Datesreceive(Request $request): View
     {
-        $order = Order::all()->where('status', '0')->where('user_id', Auth::user()->id)->first();
+        $order = Order::order()->first();
         $order->name_receive = $request->name_receive;
         $order->surname = $request->surname;
         $order->address = $request->address;
@@ -198,7 +199,7 @@ class AdminCartController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function orderDetail(): \Illuminate\View\View
+    public function orderDetail(): View
     {
         $cart = Order::join('details', 'orders.id', '=', 'details.order_id')
             ->join('products', 'products.id', '=', 'details.products_id')
@@ -207,9 +208,7 @@ class AdminCartController extends Controller
                 'products.name as name',
                 'products.price as price',
                 'details.quantity as quantity'
-            )
-            ->where('orders.user_id', '=', Auth::user()->id)
-            ->where('orders.status', '=', '0')->get();
+            )->done()->get();
 
         return view('product.order-detail', compact('cart'));
     }
