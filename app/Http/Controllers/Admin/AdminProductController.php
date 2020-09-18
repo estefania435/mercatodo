@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductStoreRequest;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\ProductUpdateRequest;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Class AdminProductController
@@ -31,7 +33,7 @@ class AdminProductController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request): \Illuminate\View\View
+    public function index(Request $request): View
     {
         try {
             $this->authorize('haveaccess', 'admin.product.index');
@@ -56,9 +58,9 @@ class AdminProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function create(): \Illuminate\View\View
+    public function create(): View
     {
         $this->authorize('haveaccess', 'admin.product.create');
 
@@ -77,7 +79,7 @@ class AdminProductController extends Controller
      * @param ProductStoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ProductStoreRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(ProductStoreRequest $request): RedirectResponse
     {
         $this->authorize('haveaccess', 'admin.product.create');
 
@@ -120,9 +122,9 @@ class AdminProductController extends Controller
      * Display the specified resource.
      *
      * @param string $slug
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function show(string $slug): \Illuminate\View\View
+    public function show(string $slug): View
     {
         $this->authorize('haveaccess', 'admin.product.show');
 
@@ -139,9 +141,9 @@ class AdminProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param string $slug
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function edit(string $slug): \Illuminate\View\View
+    public function edit(string $slug): View
     {
         $this->authorize('haveaccess', 'admin.product.edit');
 
@@ -161,7 +163,7 @@ class AdminProductController extends Controller
      * @param string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ProductUpdateRequest $request, string $id): \Illuminate\Http\RedirectResponse
+    public function update(ProductUpdateRequest $request, string $id): RedirectResponse
     {
         $this->authorize('haveaccess', 'admin.product.edit');
 
@@ -206,7 +208,7 @@ class AdminProductController extends Controller
      * @param string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $id): \Illuminate\Http\RedirectResponse
+    public function destroy(string $id): RedirectResponse
     {
         $this->authorize('haveaccess', 'admin.product.destroy');
 
@@ -223,7 +225,7 @@ class AdminProductController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore(Request $request): \Illuminate\Http\RedirectResponse
+    public function restore(Request $request): RedirectResponse
     {
         Product::withTrashed()->find($request->id)->restore();
 

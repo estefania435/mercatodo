@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class User
@@ -55,7 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
-    public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    public function image(): MorphOne
     {
         return $this->morphOne('App\MercatodoModels\Image', 'imageable');
     }
@@ -65,7 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function orders(): BelongsTo
     {
         return $this->belongsTo("App\MercatodoModels\Order");
     }

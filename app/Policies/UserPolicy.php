@@ -38,9 +38,6 @@ class UserPolicy
         }
     }
 
-
-
-
     /**
      * Determine whether the user can create models.
      *

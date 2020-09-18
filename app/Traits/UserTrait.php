@@ -4,12 +4,21 @@ namespace App\Traits;
 
 trait UserTrait
 {
+    /**
+     * @return mixed
+     */
     public function roles()
     {
         return $this->belongsToMany('App\MercatodoModels\Role')->withTimesTamps();
     }
 
-    public function havePermission($permission)
+    /**
+     * Permissions for administration of users
+     *
+     * @param $permission
+     * @return bool
+     */
+    public function havePermission($permission): bool
     {
         foreach ($this->roles as $role) {
             if ($role['full-access']=='yes') {
