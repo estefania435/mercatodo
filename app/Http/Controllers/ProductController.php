@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\MercatodoModels\Product;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
@@ -11,9 +12,9 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function show($id): \Illuminate\View\View
+    public function show($id): View
     {
         $product = Product::find($id);
 

@@ -63,8 +63,7 @@ class AdminCartController extends Controller
                 $detail->save();
                 $this->updateTotal($order, $this->total());
             }
-        }
-        else {
+        } else {
             $product = Product::find($request->id);
             $product->quantity = 1;
             $cart[$product->slug] = $product;

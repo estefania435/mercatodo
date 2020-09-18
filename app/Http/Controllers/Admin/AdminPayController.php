@@ -17,15 +17,17 @@ use App\MercatodoModels\Pay;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\View\View;
 
 class AdminPayController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|Response
+     * Method to generate authentication and redirect to place to pay
+     *
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function pay()
+    public function pay(): RedirectResponse
     {
         $order = Order::order()->Orwhere('status', 'REJECTED')->first();
 
@@ -39,14 +41,14 @@ class AdminPayController extends Controller
 
         $nonceBase64 = base64_encode($nonce);
         $seed = date('c');
-        $secretKey = config('app.SECRET_KEY','024h1IlD');
+        $secretKey = config('app.SECRET_KEY', '024h1IlD');
         $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
         $reference = $order->id;
         $total = $order->total;
         $auth =
         [
 
-            'login' => config('app.LOGIN','6dd490faf9cb87a9862245da41170ff2'),
+            'login' => config('app.LOGIN', '6dd490faf9cb87a9862245da41170ff2'),
             'seed' => $seed,
             'nonce' => $nonceBase64,
             'tranKey' => $tranKey,
@@ -82,7 +84,6 @@ class AdminPayController extends Controller
             'headers' => ['Content-Type' => 'application/json']
         ]);
         try {
-
             $response = $client->post($url, [
                 'json' => $data
             ]);
@@ -92,35 +93,24 @@ class AdminPayController extends Controller
             $this->data($result);
 
             return redirect()->route('pay.reredirection');
-
-
-        }catch (RequestException $e) {
+        } catch (RequestException $e) {
             echo Psr7\str($e->getRequest());
             if ($e->hasResponse()) {
                 echo Psr7\str($e->getResponse());
             }
-
-        }catch (ClientException $e) {
-                echo Psr7\str($e->getRequest());
-                echo Psr7\str($e->getResponse());
-
-        }catch (TransferException $e) {
+        } catch (ClientException $e) {
             echo Psr7\str($e->getRequest());
             echo Psr7\str($e->getResponse());
-
-        }
-        catch (ServerException $e) {
-
+        } catch (TransferException $e) {
             echo Psr7\str($e->getRequest());
             echo Psr7\str($e->getResponse());
-        }
-        catch (BadResponseException $e) {
-
+        } catch (ServerException $e) {
+            echo Psr7\str($e->getRequest());
+            echo Psr7\str($e->getResponse());
+        } catch (BadResponseException $e) {
             echo Psr7\str($e->getRequest());
             echo Psr7\str($e->getResponse());
         }
-
-
         /*catch (\Exception $e) {
             Log::channel('contlog')->error("pago" .
                 "getMessage: " . $e->getMessage() .
@@ -129,7 +119,12 @@ class AdminPayController extends Controller
         }*/
     }
 
-    public function reredirection()
+    /**
+     * Method to redirect
+     *
+     * @return RedirectResponse
+     */
+    public function reredirection(): RedirectResponse
     {
         $pay = Pay::pay()->first();
         $url= $pay->process_url;
@@ -137,6 +132,11 @@ class AdminPayController extends Controller
         return redirect()->to($url);
     }
 
+    /**
+     * Method to save payment details
+     *
+     * @param $data
+     */
     public function data($data)
     {
         $order = Order::order()->Orwhere('status', 'REJECTED')->first();
@@ -158,9 +158,15 @@ class AdminPayController extends Controller
         $paymen->save();
     }
 
-    public function consult($reference)
+    /**
+     * Method to obtain the data generated from the payment
+     *
+     * @param $reference
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    public function consult($reference): RedirectResponse
     {
-
         $pay = Pay::where('reference', $reference)->pay()->first();
         $pay->reference = $reference;
         $requestId = $pay->requestId;
@@ -202,7 +208,6 @@ class AdminPayController extends Controller
             'headers' => ['Content-Type' => 'application/json']
         ]);
         try {
-
             $response = $client->post($url, [
                 'json' => $data]);
 
@@ -213,29 +218,21 @@ class AdminPayController extends Controller
             return redirect()->route('pay.updateorderstatus');
 
             //return response($body);
-
         } catch (RequestException $e) {
             echo Psr7\str($e->getRequest());
             if ($e->hasResponse()) {
                 echo Psr7\str($e->getResponse());
             }
-
-        }catch (ClientException $e) {
+        } catch (ClientException $e) {
             echo Psr7\str($e->getRequest());
             echo Psr7\str($e->getResponse());
-
-        }catch (TransferException $e) {
+        } catch (TransferException $e) {
             echo Psr7\str($e->getRequest());
             echo Psr7\str($e->getResponse());
-
-        }
-        catch (ServerException $e) {
-
+        } catch (ServerException $e) {
             echo Psr7\str($e->getRequest());
             echo Psr7\str($e->getResponse());
-        }
-        catch (BadResponseException $e) {
-
+        } catch (BadResponseException $e) {
             echo Psr7\str($e->getRequest());
             echo Psr7\str($e->getResponse());
         }
@@ -247,6 +244,11 @@ class AdminPayController extends Controller
         }*/
     }
 
+    /**
+     * Method to update the payment details
+     *
+     * @param $dato
+     */
     public function updatedata($dato)
     {
         $paymen = Pay::pay()->first();
@@ -264,15 +266,24 @@ class AdminPayController extends Controller
         $paymen->save();
     }
 
-    public function show()
+    /**
+     * Method to see the payment detail
+     *
+     * @return \Illuminate\View\View
+     */
+    public function show(): View
     {
-        $payment = Pay::all()->where
-        ('user_id', Auth::user()->id)->last();
+        $payment = Pay::all()->where('user_id', Auth::user()->id)->last();
 
         return view('product.estado', compact('payment'));
     }
 
-    public function updateorderstatus()
+    /**
+     * Method to update order status
+     *
+     * @return RedirectResponse
+     */
+    public function updateorderstatus(): RedirectResponse
     {
         $order = Order::order()->Orwhere('status', 'REJECTED')->first();
         $payer = Pay::all()->where('user_id', Auth::user()->id)->last();
@@ -283,15 +294,24 @@ class AdminPayController extends Controller
         return redirect()->route('pay.show');
     }
 
-    public function showallorders()
+    /**
+     * method to see all purchases made
+     *
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
+    public function showallorders(): View
     {
-        $Payments = Pay::all()->where
-        ('user_id', Auth::user()->id);
+        $Payments = Pay::all()->where('user_id', Auth::user()->id);
 
         return view('product.payments', compact('Payments'));
     }
 
-    public function repay()
+    /**
+     * method to retry failed payments
+     *
+     * @return RedirectResponse
+     */
+    public function repay(): RedirectResponse
     {
         return redirect()->route('pay.pay');
     }

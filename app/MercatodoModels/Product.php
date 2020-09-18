@@ -4,6 +4,9 @@ namespace App\MercatodoModels;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Product
@@ -18,7 +21,7 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo('App\MercatodoModels\Category');
     }
@@ -26,7 +29,7 @@ class Product extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function images(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function images(): MorphMany
     {
         return $this->morphMany('App\MercatodoModels\Image', 'imageable');
     }
@@ -36,7 +39,7 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function details(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function details(): HasMany
     {
         return $this->hasMany("App\MercatodoModels\Detail");
     }

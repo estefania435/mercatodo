@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\MercatodoModels\Role;
 use App\MercatodoModels\Permission;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Class RoleController
@@ -16,9 +18,9 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function index(): \Illuminate\View\View
+    public function index(): View
     {
         Gate::authorize('haveaccess', 'role.index');
 
@@ -31,9 +33,9 @@ class RoleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function create(): \Illuminate\View\View
+    public function create(): View
     {
         Gate::authorize('haveaccess', 'role.create');
 
@@ -48,7 +50,7 @@ class RoleController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         Gate::authorize('haveaccess', 'role.create');
         $request->validate([
@@ -69,10 +71,10 @@ class RoleController extends Controller
      * Display the specified resource.
      *
      * @param Role $role
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Role $role): \Illuminate\View\View
+    public function show(Role $role): View
     {
         $this->authorize('haveaccess', 'role.show');
         $permission_role=[];
@@ -89,10 +91,10 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Role $role
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(Role $role): \Illuminate\View\View
+    public function edit(Role $role): View
     {
         $this->authorize('haveaccess', 'role.edit');
 
@@ -115,7 +117,7 @@ class RoleController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Role $role): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, Role $role): RedirectResponse
     {
         $this->authorize('haveaccess', 'role.edit');
 
@@ -139,7 +141,7 @@ class RoleController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Role $role): \Illuminate\Http\RedirectResponse
+    public function destroy(Role $role): RedirectResponse
     {
         $this->authorize('haveaccess', 'role.destroy');
 

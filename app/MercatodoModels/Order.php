@@ -4,7 +4,8 @@ namespace App\MercatodoModels;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Relations;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
@@ -28,7 +29,7 @@ class Order extends Model
     /**
      * Relationship between orders and details
      *
-     * @return Relations\HasMany
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function details(): HasMany
     {

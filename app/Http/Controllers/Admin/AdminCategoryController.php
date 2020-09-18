@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\MercatodoModels\Category;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Class AdminCategoryController
@@ -22,7 +24,7 @@ class AdminCategoryController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request): \Illuminate\View\View
+    public function index(Request $request): View
     {
         try {
             $this->authorize('haveaccess', 'admin.category.index');
@@ -48,7 +50,7 @@ class AdminCategoryController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create(): \Illuminate\View\View
+    public function create(): View
     {
         $this->authorize('haveaccess', 'admin.category.create');
 
@@ -61,7 +63,7 @@ class AdminCategoryController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('haveaccess', 'admin.category.create');
 
@@ -75,9 +77,9 @@ class AdminCategoryController extends Controller
      * Display the specified resource.
      *
      * @param string $slug
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function show(string $slug): \Illuminate\View\View
+    public function show(string $slug): View
     {
         $this->authorize('haveaccess', 'admin.category.show');
 
@@ -91,9 +93,9 @@ class AdminCategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param string $slug
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function edit(string $slug): \Illuminate\View\View
+    public function edit(string $slug): View
     {
         $this->authorize('haveaccess', 'admin.category.edit');
 
@@ -110,7 +112,7 @@ class AdminCategoryController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, int $id): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
         $this->authorize('haveaccess', 'admin.category.edit');
 
@@ -127,7 +129,7 @@ class AdminCategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $id): \Illuminate\Http\RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $this->authorize('haveaccess', 'admin.category.destroy');
 
@@ -144,7 +146,7 @@ class AdminCategoryController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore(Request $request): \Illuminate\Http\RedirectResponse
+    public function restore(Request $request): RedirectResponse
     {
         Category::withTrashed()->find($request->id)->restore();
 

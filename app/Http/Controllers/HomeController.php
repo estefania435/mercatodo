@@ -11,6 +11,7 @@ use App\MercatodoModels\Order;
 use Illuminate\Support\Facades\Auth;
 use App\MercatodoModels\Product;
 use App\MercatodoModels\Category;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -18,9 +19,9 @@ class HomeController extends Controller
      * Show the application dashboard.
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request): \Illuminate\View\View
+    public function index(Request $request): View
     {
         try {
             $name = $request->get('name');

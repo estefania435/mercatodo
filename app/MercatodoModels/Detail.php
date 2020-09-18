@@ -3,6 +3,7 @@
 namespace App\MercatodoModels;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Detail extends Model
 {
@@ -20,7 +21,7 @@ class Detail extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function orders():\Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function orders():BelongsTo
     {
         return $this->belongsTo("App\MercatodoModels\Order");
     }
@@ -30,7 +31,7 @@ class Detail extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function products(): BelongsTo
     {
         return $this->belongsTo("App\MercatodoModels\Product");
     }

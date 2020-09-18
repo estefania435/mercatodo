@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MercatodoModels\Role;
 use App\MercatodoModels\User;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Class UserController
@@ -15,10 +17,10 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function index(): \Illuminate\View\View
+    public function index(): View
     {
         $this->authorize('haveaccess', 'user.index');
 
@@ -52,10 +54,10 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(User $user): \Illuminate\View\View
+    public function show(User $user): View
     {
         $this->authorize('view', [$user, ['user.show','userown.show']]);
         $roles= Role::orderBy('name')->get();
@@ -67,10 +69,10 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param User $user
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(User $user): \Illuminate\View\View
+    public function edit(User $user): View
     {
         $this->authorize('update', [$user, ['user.edit','userown.edit']]);
 
@@ -86,7 +88,7 @@ class UserController extends Controller
      * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, User $user): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, User $user): RedirectResponse
     {
         $request->validate([
             'name'           => 'required|max:50|unique:users,name,'.$user->id,
@@ -112,7 +114,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(User $user): \Illuminate\Http\RedirectResponse
+    public function destroy(User $user): RedirectResponse
     {
         $this->authorize('haveaccess', 'user.destroy');
 
@@ -128,7 +130,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore(Request $request): \Illuminate\Http\RedirectResponse
+    public function restore(Request $request): RedirectResponse
     {
         User::withTrashed()->find($request->id)->restore();
 
