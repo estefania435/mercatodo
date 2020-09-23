@@ -23,8 +23,8 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home')/*->middleware('verified')
-    ->middleware('auth')*/;
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified')
+    ->middleware('auth');
 
 Route::resource('/role', 'RoleController')->names('role');
 
@@ -37,7 +37,7 @@ Route::get('/admin', function () {
     return view('plantilla.admin');
 })->name('admin');
 
-Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category');
+Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category')->middleware('auth');
 
 Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product')
     ->middleware('auth');
@@ -61,17 +61,12 @@ Route::resource('admin/detail', 'Admin\AdminDetailController')->names('admin.det
 Route::get('cart/show', [
     'as' => 'cart.show',
     'uses' => 'Admin\AdminCartController@show'
-]);
+])->middleware('auth');
 
 Route::get('cart/add/{id}', [
     'as' => 'cart.add',
     'uses' => 'Admin\AdminCartController@add'
-]);
-
-Route::get('cart/store', [
-    'as' => 'cart.store',
-    'uses' => 'Admin\AdminCartController@trash'
-]);
+])->middleware('auth');
 
 Route::get('cart/delete/{id}', [
     'as' => 'cart.delete',
