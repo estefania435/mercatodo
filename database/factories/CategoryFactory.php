@@ -9,8 +9,8 @@ use Illuminate\Support\Str;
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'name' => $faker->sentence(2),
-        'slug' => $faker->sentence,
-        'description' => $faker->sentence,
+        'name' => $faker->unique()->text(20),
+        'slug' => $faker->text(20),
+        'description' => $faker->text(150),
     ];
 });

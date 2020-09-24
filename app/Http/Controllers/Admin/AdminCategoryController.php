@@ -52,7 +52,7 @@ class AdminCategoryController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('haveaccess', 'admin.category.create');
+        /*$this->authorize('haveaccess', 'admin.category.create');*/
 
         return view('admin.category.create');
     }
