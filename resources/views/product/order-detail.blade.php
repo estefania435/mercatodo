@@ -72,12 +72,12 @@
                                 <th>Cantidad</th>
                                 <th>Subtotal</th>
                             </tr>
-                            @foreach($cart as $item)
+                            @foreach($cart->details as $item)
                                 <tr>
-                                    <td>{{ $item->name }}</td>
-                                    <td>${{ number_format($item->price,2) }}</td>
+                                    <td>{{ $item->products->name}}</td>
+                                    <td>${{ number_format($item->products->price,2) }}</td>
                                     <td>{{ $item->quantity }}</td>
-                                    <td>${{ number_format($item->price * $item->quantity,2) }}</td>
+                                    <td>${{ number_format($item->products->price * $item->quantity,2) }}</td>
                                 </tr>
                             @endforeach
                         </table>

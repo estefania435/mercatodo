@@ -39,50 +39,6 @@
 
         <!-- Main content -->
             <section class="content">
-                <div class="container-fluid">
-                    <!-- SELECT2 EXAMPLE -->
-
-                    <div class="card card-success">
-                        <div class="card-header">
-                            <h3 class="card-title">Automatically generated data</h3>
-
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-
-                                        <label>Visits</label>
-                                        <input class="form-control" type="number" id="visits" name="visits"
-                                               readonly value="{{ $product->visits }}">
-                                    </div>
-                                    <!-- /.form-group -->
-
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-
-                                        <label>Sales</label>
-                                        <input class="form-control" type="number" id="sales" name="sales"
-                                               readonly value="{{ $product->sales }}">
-                                    </div>
-                                    <!-- /.form-group -->
-
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-
-                        </div>
-                    </div>
-                    <!-- /.card -->
 
                     <div class="card card-info">
                         <div class="card-header">
@@ -125,17 +81,9 @@
                                     <div class="form-group">
 
                                         <label>category</label>
-                                        <select name="category_id" class="form-control select2" style="width: 100%;">
-                                            @foreach($categories as $category)
-
-                                                @if ($category->id == $product->category_id )
-                                                    <option value="{{ $category->id }}"
-                                                            selected="selected">{{ $category->name }}</option>
-                                                @else
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endif
-                                            @endforeach
-
+                                        <select disabled name="category_id" class="form-control select2"
+                                                style="width: 100%;">
+                                            <option selected="selected">{{ $product->category->name }}</option>
                                         </select>
                                         <label>Quantity</label>
                                         <input class="form-control" type="number" id="quantity" name="quantity"

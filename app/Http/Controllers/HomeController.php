@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use PhpParser\Node\Stmt\TryCatch;
-use ReflectionExtension;
-use Illuminate\Support\Facades\Log;
+use App\Repositories\cart\CartRepository;
+use App\Repositories\product\ProductRepository;
 use Illuminate\Http\Request;
-use App\MercatodoModels\Order;
-use Illuminate\Support\Facades\Auth;
-use App\MercatodoModels\Product;
-use App\MercatodoModels\Category;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
+    protected $cartShowRepo;
+    protected $prodRepo;
+
+    /**
+     * AdminCategoryController constructor.
+     * @param ProductRepository $prodRepository
+     */
+    public function __construct(ProductRepository $prodRepository, CartRepository $cartRepository)
+    {
+        $this->prodRepo = $prodRepository;
+        $this->cartShowRepo = $cartRepository;
+    }
     /**
      * Show the application dashboard.
      *
@@ -23,35 +29,9 @@ class HomeController extends Controller
      */
     public function index(Request $request): View
     {
-        try {
-            $name = $request->get('name');
+        $products = $this->prodRepo->getAllProduct($request);
+        $cart = $this->cartShowRepo->getProductsOfCart();
 
-            $products = Product::with('images', 'category')
-                ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
-            Log::channel('contlog')->info('listar productos');
-
-            $cart = Order::join('details', 'orders.id', '=', 'details.order_id')
-                ->join('products', 'products.id', '=', 'details.products_id')
-                ->join('images', 'images.imageable_id', '=', 'products.id')
-                ->select(
-                    'products.id as id',
-                    'products.name as name',
-                    'products.slug as slug',
-                    'products.price as price',
-                    'details.quantity as quantity',
-                    'images.url as image'
-                )
-                ->where('orders.user_id', '=', Auth::user()->id)
-                ->where('orders.status', '=', '0')->get();
-
-            return view('home', compact('products', 'cart'));
-        } catch (\Exception $e) {
-            Log::channel('contlog')->error("Error al listar los productos ".
-                 "getMessage: ".$e->getMessage().
-                 " - getFile: ".$e->getFile().
-                 " - getLine: ".$e->getLine());
-
-            return view('welcome');
-        }
+        return view('home', compact('products', 'cart'));
     }
 }

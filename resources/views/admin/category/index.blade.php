@@ -110,7 +110,7 @@
 
                         </tbody>
                     </table>
-                    {{ $categories->appends($_GET)->links() }}
+
                 </div>
                 <!-- /.card-body -->
             </div>

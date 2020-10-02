@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Exception;
-use PhpParser\Node\Stmt\TryCatch;
-use ReflectionExtension;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\MercatodoModels\Category;
-use Illuminate\View\View;
+use App\Repositories\category\CategoryRepository;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 /**
  * Class AdminCategoryController
@@ -18,6 +14,16 @@ use Illuminate\Http\RedirectResponse;
  */
 class AdminCategoryController extends Controller
 {
+    protected $categoryRepo;
+
+    /**
+     * AdminCategoryController constructor.
+     * @param CategoryRepository $categoryRepository
+     */
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepo = $categoryRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,23 +32,9 @@ class AdminCategoryController extends Controller
      */
     public function index(Request $request): View
     {
-        try {
-            $this->authorize('haveaccess', 'admin.category.index');
-            $name = $request->get('name');
+        $categories = $this->categoryRepo->getAllCategories($request);
 
-            $categories = Category::withTrashed('category')
-            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
-            Log::channel('contlog')->info('listar categorias');
-
-            return view('admin.category.index', compact('categories'));
-        } catch (\Exception $e) {
-            Log::channel('contlog')->error("Error al listar los productos ".
-                "getMessage: ".$e->getMessage().
-                " - getFile: ".$e->getFile().
-                " - getLine: ".$e->getLine());
-
-            return view('welcome');
-        }
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -67,7 +59,7 @@ class AdminCategoryController extends Controller
     {
         $this->authorize('haveaccess', 'admin.category.create');
 
-        Category::create($request->all());
+        $this->categoryRepo->createCategory($request->all());
 
         return redirect()->route('admin.category.index')
             ->with('data', 'Record created successfully!');
@@ -83,7 +75,7 @@ class AdminCategoryController extends Controller
     {
         $this->authorize('haveaccess', 'admin.category.show');
 
-        $cat = Category::where('slug', $slug)->firstOrFail();
+        $cat = $this->categoryRepo->findCategory($slug);
         $edit = 'Si';
 
         return view('admin.category.show', compact('cat', 'edit'));
@@ -99,7 +91,7 @@ class AdminCategoryController extends Controller
     {
         $this->authorize('haveaccess', 'admin.category.edit');
 
-        $cat = Category::where('slug', $slug)->firstOrFail();
+        $cat = $this->categoryRepo->findCategory($slug);
         $edit = 'Si';
 
         return view('admin.category.edit', compact('cat', 'edit'));
@@ -116,8 +108,8 @@ class AdminCategoryController extends Controller
     {
         $this->authorize('haveaccess', 'admin.category.edit');
 
-        $cat = Category::findOrFail($id);
-        $cat->fill($request->all())->save();
+        $cat = $this->categoryRepo->findId($id);
+        $this->categoryRepo->updateCategory($cat, $request->all());
 
         return redirect()->route('admin.category.index')
             ->with('data', 'Record updated successfully!');
@@ -133,8 +125,8 @@ class AdminCategoryController extends Controller
     {
         $this->authorize('haveaccess', 'admin.category.destroy');
 
-        $cat = Category::find($id);
-        $cat->delete();
+        $cat = $this->categoryRepo->findId($id);
+        $this->categoryRepo->delete($cat);
 
         return redirect()->route('admin.category.index')
             ->with('data', 'Category disabled');
@@ -148,7 +140,7 @@ class AdminCategoryController extends Controller
      */
     public function restore(Request $request): RedirectResponse
     {
-        Category::withTrashed()->find($request->id)->restore();
+        $this->categoryRepo->restore($request);
 
         return redirect()->route('admin.category.index')
             ->with('data', 'Category  enabled');

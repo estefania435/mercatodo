@@ -29,7 +29,7 @@ class ProductUpdateRequest extends FormRequest
     {
         return [
                 'name' => 'required|unique:products,name',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }
