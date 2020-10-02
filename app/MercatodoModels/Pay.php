@@ -4,7 +4,6 @@ namespace App\MercatodoModels;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Relations;
 
 class Pay extends Model
 {
@@ -12,7 +11,7 @@ class Pay extends Model
      * @var string[]
      */
     protected $fillable = [
-        'reference','total','status','user_id','order_id'
+        'reference','total','status','user_id','order_id',
     ];
 
     /**

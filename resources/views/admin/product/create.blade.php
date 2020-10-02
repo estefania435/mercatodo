@@ -17,48 +17,6 @@
         <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <!-- SELECT2 EXAMPLE -->
-
-                    <div class="card card-success">
-                        <div class="card-header">
-                            <h3 class="card-title">Automatically generated data</h3>
-
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-
-                                        <label>Visits</label>
-                                        <input class="form-control " type="number" id="visits" name="visits">
-
-                                    </div>
-                                    <!-- /.form-group -->
-
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-
-                                        <label>Sales</label>
-                                        <input class="form-control" type="number" id="sales" name="sales">
-                                    </div>
-                                    <!-- /.form-group -->
-
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-
-                        </div>
-                    </div>
-                    <!-- /.card -->
 
                     <div class="card card-info">
                         <div class="card-header">

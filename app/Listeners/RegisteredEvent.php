@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class RegisteredEvent
 {
@@ -26,6 +24,6 @@ class RegisteredEvent
      */
     public function handle(Registered $event): void
     {
-        $event->user->roles()->sync([ 2 ]);
+        $event->user->roles()->sync([2]);
     }
 }

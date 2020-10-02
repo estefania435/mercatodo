@@ -31,6 +31,7 @@ trait UserTrait
                 }
             }
         }
+
         return false;
     }
 }

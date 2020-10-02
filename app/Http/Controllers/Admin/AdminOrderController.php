@@ -3,67 +3,35 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\MercatodoModels\Order;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use App\Repositories\Order\OrderRepository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AdminOrderController extends Controller
 {
-    /**
-     * @var string[]
-     */
-    public $statusOrders = ['entregado', 'no entregado'];
+    protected $orders;
 
+    /**
+     * AdminPayController constructor.
+     *
+     * @param OrderRepository $OrdersRepository
+     *
+     */
+    public function __construct(OrderRepository $OrdersRepository)
+    {
+        $this->orders = $OrdersRepository;
+    }
     /**
      *list all orders
      *
      * @return \Illuminate\View\View
      */
-    public function index(): \Illuminate\View\View
+    public function index(): View
     {
         $this->authorize('haveaccess', 'admin.order.index');
-
-        $orders = Order::all();
+        $orders = $this->orders->getAllOrders();
 
         return view('admin.order.index', compact('orders'));
-    }
-
-    /**
-     * edit order
-     *
-     * @param int $id
-     * @return \Illuminate\View\View
-     */
-    public function edit(int $id): \Illuminate\View\View
-    {
-        $this->authorize('haveaccess', 'admin.order.edit');
-
-        $order = Order::whereId($id)->first();
-
-        return view('admin.order.edit', compact('order'));
-    }
-
-    /**
-     * update order
-     *
-     * @param Request $request
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, int $id): \Illuminate\Http\RedirectResponse
-    {
-        $this->authorize('haveaccess', 'admin.order.edit');
-
-        $order = Order::findOrfail($id);
-
-        if ($request->status) {
-            $order->status = 1;
-        } else {
-            $order->status = 0;
-        }
-        $order->save();
-
-        return redirect()->route('admin.order.index');
     }
 
     /**
@@ -72,11 +40,10 @@ class AdminOrderController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function show(string $id): \Illuminate\Http\RedirectResponse
+    public function show(int $id): RedirectResponse
     {
         $this->authorize('haveaccess', 'admin.order.show');
-
-        Session::put('order_id', $id);
+        $this->orders->seeOrder($id);
 
         return redirect('/admin/detail');
     }

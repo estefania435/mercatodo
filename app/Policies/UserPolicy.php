@@ -25,6 +25,7 @@ class UserPolicy
      *
      * @param  \App\MercatodoModels\User  $user
      * @param  \App\MercatodoModels\User  $model
+     * @param null|mixed $perm
      * @return mixed
      */
     public function view(User $usera, User $user, $perm=null)
@@ -54,6 +55,7 @@ class UserPolicy
      *
      * @param  \App\MercatodoModels\User  $user
      * @param  \App\MercatodoModels\User  $model
+     * @param null|mixed $perm
      * @return mixed
      */
     public function update(User $usera, User $user, $perm=null)

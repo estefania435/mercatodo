@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\MercatodoModels\Product;
+use App\Repositories\product\ProductRepository;
 use Illuminate\View\View;
 
 class ProductController extends Controller
 {
+    protected $productsRepo;
+
+    /**
+     * AdminCategoryController constructor.
+     * @param ProductRepository $productsRepository
+     */
+    public function __construct(ProductRepository $productsRepository)
+    {
+        $this->productsRepo = $productsRepository;
+    }
     /**
      * Display the specified resource.
      *
@@ -16,7 +25,7 @@ class ProductController extends Controller
      */
     public function show($id): View
     {
-        $product = Product::find($id);
+        $product = $this->productsRepo->findId($id);
 
         return view('product.show', compact('product'));
     }

@@ -33,8 +33,10 @@
 
                             <?php
                             $suma = 0;
+
                             if (!empty($cart)) {
-                                foreach ($cart as $item) {
+
+                                foreach ($cart->details as $item) {
                                     $suma += $item->quantity;
                                 }
                             }

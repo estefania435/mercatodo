@@ -211,7 +211,7 @@
                          with font-awesome or any other icon font library -->
 
 
-                    <!-- Categories -->
+                    <!-- CategoryRepository -->
                     @can('haveaccess','category.index')
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">

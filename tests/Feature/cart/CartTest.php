@@ -4,12 +4,9 @@ namespace Tests\Feature\cart;
 
 use App\MercatodoModels\Category;
 use App\MercatodoModels\Order;
-use App\MercatodoModels\Detail;
 use App\MercatodoModels\Product;
 use App\MercatodoModels\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class CartTest extends TestCase
@@ -22,7 +19,6 @@ class CartTest extends TestCase
         $response = $this->get(route('cart.show'));
 
         $response->assertRedirect('login');
-
     }
 
     /** @test */
@@ -31,17 +27,18 @@ class CartTest extends TestCase
         $this->withoutExceptionHandling();
         factory(Category::class)->create();
         $product=factory(Product::class)->create([
-            'quantity' => 1
+            'quantity' => 1,
         ]);
         $user = factory(User::class)->create();
         factory(Order::class)->create();
 
-        $response = $this->actingAs($user)->get(route('cart.add', $user),
+        $response = $this->actingAs($user)->get(
+            route('cart.add', $user),
             [
                 'product_id' => $product->product_id,
-                'quantity' => 1
-            ]);
-
+                'quantity' => 1,
+            ]
+        );
 
         $response->assertRedirect(route('cart.show'));
     }

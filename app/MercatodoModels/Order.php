@@ -3,9 +3,9 @@
 namespace App\MercatodoModels;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
@@ -13,7 +13,7 @@ class Order extends Model
      * @var string[]
      */
     protected $fillable = [
-        'code','subtotal','iva','total','status','user_id'
+        'code','subtotal','iva','total','status','user_id',
     ];
 
     /**
