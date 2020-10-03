@@ -6,6 +6,11 @@ use App\MercatodoModels\Order;
 use App\MercatodoModels\Pay;
 use App\Repositories\BaseRepository;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Psr7;
+use Illuminate\Support\Facades\Log;
 
 class PlaceToPayRepository extends BaseRepository
 {
@@ -22,6 +27,7 @@ class PlaceToPayRepository extends BaseRepository
      *
      * @return object
      */
+
     public function conectionPlaceToPay(): object
     {
         $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
@@ -36,14 +42,14 @@ class PlaceToPayRepository extends BaseRepository
 
         $nonceBase64 = base64_encode($nonce);
         $seed = date('c');
-        $secretKey = config('app.SECRET_KEY', '024h1IlD');
+        $secretKey = config('app.SECRET_KEY');
         $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
         $reference = $order->id;
         $total = $order->total;
         $auth =
             [
 
-                'login' => config('app.LOGIN', '6dd490faf9cb87a9862245da41170ff2'),
+                'login' => config('app.LOGIN'),
                 'seed' => $seed,
                 'nonce' => $nonceBase64,
                 'tranKey' => $tranKey,
@@ -77,15 +83,25 @@ class PlaceToPayRepository extends BaseRepository
         $client = new Client([
             'headers' => ['Content-Type' => 'application/json'],
         ]);
+        try {
+            $response = $client->post($url, [
+                'json' => $data,
+            ]);
 
-        $response = $client->post($url, [
-            'json' => $data,
-        ]);
+            $body = $response->getBody();
+            $result = json_decode($response->getBody());
 
-        $body = $response->getBody();
-        $result = json_decode($response->getBody());
-
-        return $result;
+            return $result;
+        } catch (RequestException $e) {
+            Log::channel('contlog')->error("RequestException" .
+                Psr7\str($e->getResponse()));
+        } catch (ServerException $e) {
+            Log::channel('contlog')->error("ServerException" .
+                Psr7\str($e->getResponse()));
+        } catch (BadResponseException $e) {
+            Log::channel('contlog')->error("BadResponseException" .
+                Psr7\str($e->getResponse()));
+        }
     }
 
     /**
@@ -110,11 +126,11 @@ class PlaceToPayRepository extends BaseRepository
 
         $nonceBase64 = base64_encode($nonce);
         $seed = date('c');
-        $secretKey = '024h1IlD';
+        $secretKey = config('app.SECRET_KEY');
         $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
         $auth =
             [
-                'login' => '6dd490faf9cb87a9862245da41170ff2',
+                'login' => config('app.LOGIN'),
                 'seed' => $seed,
                 'nonce' => $nonceBase64,
                 'tranKey' => $tranKey,

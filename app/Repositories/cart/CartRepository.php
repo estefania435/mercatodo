@@ -8,6 +8,7 @@ use App\MercatodoModels\Product;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CartRepository extends BaseRepository
 {
@@ -67,6 +68,9 @@ class CartRepository extends BaseRepository
                 $this->updateTotal($order, $this->total());
             }
         }
+        Log::channel('contlog')->info("El producto de id: " .
+            $detail->products_id ." ". "ha sido agregado al carrito de: " ." ".
+            $order->name_receive ." ". $order->surname);
     }
 
     /**
@@ -101,7 +105,6 @@ class CartRepository extends BaseRepository
         foreach ($cart as $item) {
             foreach ($item->details as $i) {
                 $total += $i->products->price * $i->quantity;
-                ;
             }
         }
 
