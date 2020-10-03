@@ -8,6 +8,7 @@ use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PayRepository extends BaseRepository
 {
@@ -78,6 +79,9 @@ class PayRepository extends BaseRepository
             $paymen->payment_method = $d->paymentMethod;
         }
         $paymen->save();
+        Log::channel('contlog')->info("pago realizado por: " .
+            $paymen->name ." ". $paymen->surname ." ".
+            "Con identificación" ." ". $paymen->document);
     }
 
     /**
@@ -102,6 +106,10 @@ class PayRepository extends BaseRepository
 
         $order->status = $payer->status;
         $order->save();
+        /*if ($order->status == 'REJECTED'){
+            Log::info('Response could not be parsed', ['json' => $result]);
+            Log::info('Response could not be parsed', ['json' => $result]);
+        }*/
 
         return $order;
     }

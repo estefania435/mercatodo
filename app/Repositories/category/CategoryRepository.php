@@ -6,6 +6,8 @@ use App\MercatodoModels\Category;
 use App\Repositories\BaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CategoryRepository extends BaseRepository
 {
@@ -64,6 +66,9 @@ class CategoryRepository extends BaseRepository
     {
         $object->fill($data);
         $object->save();
+        Log::channel('contlog')->info("La categoria: " .
+            $object->name ." ". "ha sido editada por: " ." ".
+            Auth::user()->name ." ". Auth::user()->surname);
 
         return $object;
     }

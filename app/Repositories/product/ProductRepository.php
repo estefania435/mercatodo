@@ -7,6 +7,8 @@ use App\MercatodoModels\Product;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProductRepository extends BaseRepository
 {
@@ -55,6 +57,10 @@ class ProductRepository extends BaseRepository
         $prod->save();
 
         $prod->images()->createMany($urlimages);
+
+        Log::channel('contlog')->info("El producto: " .
+            $prod->name ." ". "ha sido creado por: " ." ".
+            Auth::user()->name ." ". Auth::user()->surname);
     }
 
     /**
@@ -107,6 +113,10 @@ class ProductRepository extends BaseRepository
         $prod->save();
 
         $prod->images()->createMany($urlimages);
+
+        Log::channel('contlog')->info("El producto: " .
+            $prod->name ." ". "ha sido editado por: " ." ".
+            Auth::user()->name ." ". Auth::user()->surname);
     }
 
     /**
