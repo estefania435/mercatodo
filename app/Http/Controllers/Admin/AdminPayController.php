@@ -64,12 +64,11 @@ class AdminPayController extends Controller
      * Method to obtain the data generated from the payment
      *
      * @param $reference
-     * @throws \Exception
      * @return RedirectResponse
      */
     public function consult(int $reference): RedirectResponse
     {
-        $res= $this->conection->consultPay($reference);
+        $res = $this->conection->consultPay($reference);
         $this->updatedata($res);
 
         return redirect()->route('pay.updateorderstatus');
@@ -112,7 +111,7 @@ class AdminPayController extends Controller
     /**
      * method to see all purchases made
      *
-     * @return \Illuminate\Contracts\View\Factory|View
+     * @return View
      */
     public function showallorders(): View
     {
