@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Pay;
 
+use App\Jobs\UpdateStatusPay;
 use App\MercatodoModels\Order;
 use App\MercatodoModels\Pay;
 use App\Repositories\BaseRepository;
@@ -75,10 +76,51 @@ class PayRepository extends BaseRepository
         $paymen->document = $dato->request->payer->document;
         $paymen->email = $dato->request->payer->email;
         $paymen->phone = $dato->request->payer->mobile;
-        foreach ($dato->payment as $d) {
-            $paymen->payment_method = $d->paymentMethod;
+
+        if ($dato->status->status == 'PENDING') {
+            $paymen->payment_method = 'PENDING';
+
+            UpdateStatusPay::dispatch($paymen);
+        } else {
+            foreach ($dato->payment as $d) {
+                $paymen->payment_method = $d->paymentMethod;
+            }
         }
         $paymen->save();
+
+        Log::channel('contlog')->info("pago realizado por: " .
+            $paymen->name ." ". $paymen->surname ." ".
+            "Con identificación" ." ". $paymen->document);
+    }
+
+    /**
+     * function to update the payment details after executing the job
+     *
+     * @param object $dato
+     */
+    public function updateDatesJob(object $dato)
+    {
+        $paymen = Pay::where('status', 'PENDING')->first();
+
+        $paymen->status = $dato->status->status;
+        $paymen->name = $dato->request->payer->name;
+        $paymen->surname = $dato->request->payer->surname;
+        $paymen->document_type = $dato->request->payer->documentType;
+        $paymen->document = $dato->request->payer->document;
+        $paymen->email = $dato->request->payer->email;
+        $paymen->phone = $dato->request->payer->mobile;
+
+        if ($dato->status->status == 'PENDING') {
+            $paymen->payment_method = 'PENDING';
+
+            UpdateStatusPay::dispatch($paymen)->delay(now()->addMinutes(10));
+        } else {
+            foreach ($dato->payment as $d) {
+                $paymen->payment_method = $d->paymentMethod;
+            }
+        }
+        $paymen->save();
+
         Log::channel('contlog')->info("pago realizado por: " .
             $paymen->name ." ". $paymen->surname ." ".
             "Con identificación" ." ". $paymen->document);
@@ -106,10 +148,6 @@ class PayRepository extends BaseRepository
 
         $order->status = $payer->status;
         $order->save();
-        /*if ($order->status == 'REJECTED'){
-            Log::info('Response could not be parsed', ['json' => $result]);
-            Log::info('Response could not be parsed', ['json' => $result]);
-        }*/
 
         return $order;
     }
