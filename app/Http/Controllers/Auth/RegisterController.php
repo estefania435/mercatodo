@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
+    use RegistersUsers;
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -22,7 +23,6 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -51,10 +51,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'min:3', 'max:30'],
-            'surname'=>['required', 'string', 'min:4', 'max:30'],
-            'identification'=>['required', 'numeric','digits_between:8,10', 'unique:users'],
-            'address'=>['required','string', 'min:15', 'max:50'],
-            'phone' =>['required', 'numeric','digits_between:7,10'],
+            'surname' => ['required', 'string', 'min:4', 'max:30'],
+            'identification' => ['required', 'numeric','digits_between:8,10', 'unique:users'],
+            'address' => ['required','string', 'min:15', 'max:50'],
+            'phone' => ['required', 'numeric','digits_between:7,10'],
             'email' => ['required', 'string', 'email', 'unique:users', 'min:15', 'max:50'],
             'password' => ['required', 'string', 'min:8', 'max:15'],
         ]);
@@ -70,7 +70,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'surname' =>$data['surname'],
+            'surname' => $data['surname'],
             'identification' => $data['identification'],
             'address' => $data['address'],
             'phone' => $data['phone'],

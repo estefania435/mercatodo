@@ -16,7 +16,9 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, UserTrait, SoftDeletes;
+    use Notifiable;
+    use UserTrait;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

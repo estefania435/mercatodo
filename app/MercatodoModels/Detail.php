@@ -21,7 +21,7 @@ class Detail extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function orders():BelongsTo
+    public function orders(): BelongsTo
     {
         return $this->belongsTo("App\MercatodoModels\Order");
     }

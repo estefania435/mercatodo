@@ -91,9 +91,9 @@ class AdminCartController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function Datesreceive(Request $request): View
+    public function datesReceive(Request $request): View
     {
-        $order = $this->cartRepo->DatesreceiveOrder($request);
+        $order = $this->cartRepo->datesReceiveOrder($request);
 
         return view('product.pay', compact('order'));
     }

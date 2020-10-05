@@ -29,12 +29,12 @@ class UserUpdateRequest extends FormRequest
     public function rules(User $user): array
     {
         return [
-            'name'           => 'required|max:50|unique:users,name,'.$user->id,
-            'surname'        => 'required|max:50,'.$user->id,
-            'identification' => 'required|max:50|unique:users,identification,'.$user->id,
-            'address'        => 'required|max:50,'.$user->id,
-            'phone'          => 'required|max:50,'.$user->id,
-            'email'          => 'required|max:50|unique:users,email,'.$user->id,
+            'name'           => 'required|max:50|unique:users,name,' . $user->id,
+            'surname'        => 'required|max:50,' . $user->id,
+            'identification' => 'required|max:50|unique:users,identification,' . $user->id,
+            'address'        => 'required|max:50,' . $user->id,
+            'phone'          => 'required|max:50,' . $user->id,
+            'email'          => 'required|max:50|unique:users,email,' . $user->id,
         ];
     }
 }

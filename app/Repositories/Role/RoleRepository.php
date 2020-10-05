@@ -61,9 +61,9 @@ class RoleRepository extends BaseRepository
      */
     public function showrole(Role $role): array
     {
-        $permission_role=[];
+        $permission_role = [];
         foreach ($role->permissions as $permission) {
-            $permission_role[]=$permission->id;
+            $permission_role[] = $permission->id;
         }
 
         return $permission_role;

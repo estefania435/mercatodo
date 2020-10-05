@@ -15,7 +15,7 @@ class Category extends Model
      *
      * @var string[]
      */
-    protected $fillable=['name','slug','description'];
+    protected $fillable = ['name','slug','description'];
 
     /**
      * Relationship between product tables and categories.

@@ -29,7 +29,7 @@ class PayRepository extends BaseRepository
     public function redirect(): string
     {
         $pay = Pay::pay()->first();
-        $url= $pay->process_url;
+        $url = $pay->process_url;
 
         return $url;
     }
@@ -47,7 +47,7 @@ class PayRepository extends BaseRepository
         $paymen->status;
         $paymen->reference = $order->id;
         $paymen->requestId = $data->requestId;
-        $paymen->process_url =$data->processUrl;
+        $paymen->process_url = $data->processUrl;
         $paymen->user_id = Auth::user()->id;
         $paymen->name;
         $paymen->surname;
@@ -89,8 +89,8 @@ class PayRepository extends BaseRepository
         $paymen->save();
 
         Log::channel('contlog')->info("pago realizado por: " .
-            $paymen->name ." ". $paymen->surname ." ".
-            "Con identificación" ." ". $paymen->document);
+            $paymen->name . " " . $paymen->surname . " " .
+            "Con identificación" . " " . $paymen->document);
     }
 
     /**
@@ -122,8 +122,8 @@ class PayRepository extends BaseRepository
         $paymen->save();
 
         Log::channel('contlog')->info("pago realizado por: " .
-            $paymen->name ." ". $paymen->surname ." ".
-            "Con identificación" ." ". $paymen->document);
+            $paymen->name . " " . $paymen->surname . " " .
+            "Con identificación" . " " . $paymen->document);
     }
 
     /**

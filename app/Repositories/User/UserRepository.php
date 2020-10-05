@@ -35,7 +35,7 @@ class UserRepository extends BaseRepository
      */
     public function roleToUser(): Collection
     {
-        $roles= Role::orderBy('name')->get();
+        $roles = Role::orderBy('name')->get();
 
         return $roles;
     }
