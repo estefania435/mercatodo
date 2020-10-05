@@ -21,7 +21,7 @@ class AutocompleteController extends Controller
         $Productos = Product::where('name', 'like', '%' . $palabraabuscar . '%')->orderBy('name')
             ->get();
 
-        $resultados=[];
+        $resultados = [];
 
         foreach ($Productos as $prod) {
             $encontrartexto =  stristr($prod->name, $palabraabuscar);
