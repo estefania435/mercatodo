@@ -18,7 +18,7 @@ class AutocompleteController extends Controller
     {
         $palabraabuscar = $request->get('palabraabuscar');
 
-        $Productos = Product::where('name', 'like', '%'.$palabraabuscar .'%')->orderBy('name')
+        $Productos = Product::where('name', 'like', '%' . $palabraabuscar . '%')->orderBy('name')
             ->get();
 
         $resultados=[];

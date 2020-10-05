@@ -28,9 +28,9 @@ class RoleStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'       => 'required|max:50|unique:roles,name',
-            'slug'       => 'required|max:50|unique:roles,slug',
-            'full-access'=> 'required|in:yes,no',
+            'name'        => 'required|max:50|unique:roles,name',
+            'slug'        => 'required|max:50|unique:roles,slug',
+            'full-access' => 'required|in:yes,no',
         ];
     }
 }

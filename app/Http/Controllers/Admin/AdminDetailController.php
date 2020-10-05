@@ -27,7 +27,7 @@ class AdminDetailController extends Controller
      */
     public function index(): View
     {
-        $details = $this->details->SeeDetail();
+        $details = $this->details->seeDetail();
 
         return view('admin.detail.index', compact('details'));
     }

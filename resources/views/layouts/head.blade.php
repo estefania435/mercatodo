@@ -1,4 +1,3 @@
-
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <meta charset="utf-8">

@@ -21,7 +21,7 @@ class DetailRepository extends BaseRepository
      *
      * @return object
      */
-    public function SeeDetail(): object
+    public function seeDetail(): object
     {
         if (!empty(Session::get('order_id'))) {
             $details = Detail::whereOrder_id(Session::get('order_id'))->get();

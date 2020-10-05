@@ -69,8 +69,8 @@ class CartRepository extends BaseRepository
             }
         }
         Log::channel('contlog')->info("El producto de id: " .
-            $detail->products_id ." ". "ha sido agregado al carrito de: " ." ".
-            $order->name_receive ." ". $order->surname);
+            $detail->products_id . " " . "ha sido agregado al carrito de: " . " " .
+            $order->name_receive . " " . $order->surname);
     }
 
     /**
@@ -152,7 +152,7 @@ class CartRepository extends BaseRepository
      * @param object $data
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function DatesreceiveOrder(object $data): Model
+    public function datesReceiveOrder(object $data): Model
     {
         $order = $this->getModel()->order()->first();
         $order->name_receive = $data->name_receive;

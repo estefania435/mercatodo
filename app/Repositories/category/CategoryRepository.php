@@ -67,8 +67,8 @@ class CategoryRepository extends BaseRepository
         $object->fill($data);
         $object->save();
         Log::channel('contlog')->info("La categoria: " .
-            $object->name ." ". "ha sido editada por: " ." ".
-            Auth::user()->name ." ". Auth::user()->surname);
+            $object->name . " " . "ha sido editada por: " . " " .
+            Auth::user()->name . " " . Auth::user()->surname);
 
         return $object;
     }

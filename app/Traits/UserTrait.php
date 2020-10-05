@@ -21,7 +21,7 @@ trait UserTrait
     public function havePermission($permission): bool
     {
         foreach ($this->roles as $role) {
-            if ($role['full-access']=='yes') {
+            if ($role['full-access'] == 'yes') {
                 return true;
             }
 

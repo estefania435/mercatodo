@@ -158,7 +158,7 @@ class PlaceToPayRepository extends BaseRepository
 
             $body = $response->getBody();
             $res = json_decode($response->getBody());
-            Log::channel('contlog')->info("respuesta pago: ".$body);
+            Log::channel('contlog')->info("respuesta pago: " . $body);
 
             return $res;
         } catch (RequestException $e) {
@@ -227,7 +227,7 @@ class PlaceToPayRepository extends BaseRepository
 
             $body = $response->getBody();
             $res = json_decode($response->getBody());
-            Log::channel('contlog')->info("respuesta pago: ".$body);
+            Log::channel('contlog')->info("respuesta pago: " . $body);
 
             return $res;
         } catch (RequestException $e) {

@@ -29,9 +29,9 @@ class RoleUpdateRequest extends FormRequest
     public function rules(Role $role): array
     {
         return [
-            'name'       => 'required|max:50|unique:roles,name,'.$role->id,
-            'slug'       => 'required|max:50|unique:roles,slug,'.$role->id,
-            'full-access'=> 'required|in:yes,no',
+            'name'        => 'required|max:50|unique:roles,name,' . $role->id,
+            'slug'        => 'required|max:50|unique:roles,slug,' . $role->id,
+            'full-access' => 'required|in:yes,no',
         ];
     }
 }

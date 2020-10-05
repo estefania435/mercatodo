@@ -22,11 +22,11 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function AnuserCanAddProductToCart(): void
+    public function anuserCanAddProductToCart(): void
     {
         $this->withoutExceptionHandling();
         factory(Category::class)->create();
-        $product=factory(Product::class)->create([
+        $product = factory(Product::class)->create([
             'quantity' => 1,
         ]);
         $user = factory(User::class)->create();

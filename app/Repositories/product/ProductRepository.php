@@ -59,8 +59,8 @@ class ProductRepository extends BaseRepository
         $prod->images()->createMany($urlimages);
 
         Log::channel('contlog')->info("El producto: " .
-            $prod->name ." ". "ha sido creado por: " ." ".
-            Auth::user()->name ." ". Auth::user()->surname);
+            $prod->name . " " . "ha sido creado por: " . " " .
+            Auth::user()->name . " " . Auth::user()->surname);
     }
 
     /**
@@ -115,8 +115,8 @@ class ProductRepository extends BaseRepository
         $prod->images()->createMany($urlimages);
 
         Log::channel('contlog')->info("El producto: " .
-            $prod->name ." ". "ha sido editado por: " ." ".
-            Auth::user()->name ." ". Auth::user()->surname);
+            $prod->name . " " . "ha sido editado por: " . " " .
+            Auth::user()->name . " " . Auth::user()->surname);
     }
 
     /**

@@ -25,10 +25,10 @@ class UserPolicy
      *
      * @param  \App\MercatodoModels\User  $user
      * @param  \App\MercatodoModels\User  $model
-     * @param null|mixed $perm
+     * @param null $perm
      * @return mixed
      */
-    public function view(User $usera, User $user, $perm=null)
+    public function view(User $usera, User $user, $perm = null)
     {
         if ($usera->havePermission($perm[0])) {
             return true;
@@ -43,9 +43,9 @@ class UserPolicy
      * Determine whether the user can create models.
      *
      * @param  \App\MercatodoModels\User  $user
-     * @return mixed
+     * @return int
      */
-    public function create(User $usera)
+    public function create(User $usera): int
     {
         return $usera->id > 0;
     }
@@ -55,10 +55,10 @@ class UserPolicy
      *
      * @param  \App\MercatodoModels\User  $user
      * @param  \App\MercatodoModels\User  $model
-     * @param null|mixed $perm
+     * @param null $perm
      * @return mixed
      */
-    public function update(User $usera, User $user, $perm=null)
+    public function update(User $usera, User $user, $perm = null)
     {
         if ($usera->havePermission($perm[0])) {
             return true;
