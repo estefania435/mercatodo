@@ -1,5 +1,3 @@
-
-
 const confirmdelete = new Vue({
     el: '#confirmdelete',
     data: {

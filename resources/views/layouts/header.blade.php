@@ -27,7 +27,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <li class="nav-item"><a href="{{route('pay.showallorders')}}" class="nav-link">Payments</a></li>
+                        <li class="nav-item"><a href="{{route('pay.showallorders')}}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i>Payments</a></li>
                         <!-- Authentication Links -->
                         <li class="nav-item">
 
@@ -40,8 +40,10 @@
                             }
                             ?>
 
-                            <a class="nav-link" href="{{route('cart.show')}}">Car
-                                <?php echo ($suma > 0) ? '(' . $suma . ')' : '' ?></a>
+                            <a class="nav-link" href="{{route('cart.show')}}"><i class="fas fa-shopping-cart"></i>
+                                <?php echo ($suma > 0) ? '(' . $suma . ')' : '' ?>
+
+                            </a>
 
                         </li>
                         @guest

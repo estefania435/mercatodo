@@ -49,9 +49,9 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="btn-group">
                                                     <td><a class="btn btn-sm btn-outline-secondary"
-                                                           href="{{ route('product.show',$item->id) }}">See</a></td>
+                                                           href="{{ route('product.show',$item->id) }}"><i class="far fa-eye"></i></a></td>
                                                     <td><a class="btn btn-sm btn-outline-secondary"
-                                                           href="{{ route('cart.add',$item->id) }}">Add to cart</a></td>
+                                                           href="{{ route('cart.add',$item->id) }}"><i class="fas fa-cart-plus"></i></a></td>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,9 +91,9 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="btn-group">
                                                     <td><a class="btn btn-sm btn-outline-secondary"
-                                                           href="{{ route('product.show',$item->id) }}">See</a></td>
+                                                           href="{{ route('product.show',$item->id) }}"><i class="far fa-eye"></i></a></td>
                                                     <td><a class="btn btn-sm btn-outline-secondary"
-                                                           href="{{ route('cart.add',$item->id) }}">Add to cart</a></td>
+                                                           href="{{ route('cart.add',$item->id) }}"><i class="fas fa-cart-plus"></i></a></td>
                                                 </div>
                                             </div>
                                         </div>

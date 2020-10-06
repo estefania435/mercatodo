@@ -3,7 +3,7 @@
 @section('content')
     <div class="container text-center">
         <div class="page-header">
-            <h1><i class="fa fa-shopping-cart"> </i>Historial de pagos</h1>
+            <h1><i class="fas fa-file-invoice-dollar"></i> Historial de pagos</h1>
 
             <div class="table-responsive">
 
@@ -29,7 +29,7 @@
                     <th>{{ $pay->name }}</th>
                     <th>{{ $pay->surname }}</th>
                     <th>{{ $pay->order_total }}</th>
-                        @if($pay->status== 'REJECTED')
+                        @if($pay->status == 'REJECTED')
                         <td>
                             <a href="{{ route('pay.repay', $pay->reference) }}" class="btn btn-info">
                                 Reintentar pago
