@@ -3,7 +3,7 @@
 @section('content')
 <div class="container text-center">
     <div class="page-header">
-        <h1><i class="fa fa-shopping-cart"> </i>Estado del pago</h1>
+        <h1><i class="fas fa-money-check-alt"></i>Estado del pago</h1>
 
         <span style="display:none;" id="urlbase">{{route('pay.show')}}</span>
         <div class="table-responsive">

@@ -7,7 +7,7 @@
             <div class="table-responsive">
                 <div class="container text-center">
                     <div class="page-header">
-                        <h1><i class="fa fa-shopping-cart"> </i>Confirmación datos de envío</h1>
+                        <h1><i class="fas fa-shipping-fast"></i>Confirmación datos de envío</h1>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover table-bordered">
                                 <tr>
@@ -29,7 +29,9 @@
                                 <a href="{{ route('order-detail') }}" class="btn btn-primary">
                                     <i class="fa fa-chevron-circle-left"></i> Regresar
                                 </a>
-                                <a href="{{ route('pay.pay') }}" class="btn btn-primary">pagar</a>
+                                <a href="{{ route('pay.pay') }}" class="btn btn-primary">pagar
+                                    <i class="fas fa-money-check-alt"></i>
+                                </a>
                             </p>
 
                         </div>

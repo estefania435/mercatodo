@@ -68,9 +68,6 @@ class CartRepository extends BaseRepository
                 $this->updateTotal($order, $this->total());
             }
         }
-        Log::channel('contlog')->info("El producto de id: " .
-            $detail->products_id . " " . "ha sido agregado al carrito de: " . " " .
-            $order->name_receive . " " . $order->surname);
     }
 
     /**

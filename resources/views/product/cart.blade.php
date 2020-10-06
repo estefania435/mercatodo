@@ -46,7 +46,8 @@
                                     <td>
                                         <a href="{{ route('cart.delete', $item->products->id) }}"
                                            class="btn btn-danger">
-                                            <i class="fa fa-remove"></i>
+                                            <i class="fas fa-trash-alt"></i>
+
                                         </a>
                                     </td>
                                 </tr>
@@ -72,11 +73,14 @@
                 </a>
 
                 <a href="{{ route('order-detail') }}" class="btn btn-primary">
-                    <i class="fa fa-chevron-circle-right"></i> Continuar
+                     Continuar
+                    <i class="fa fa-chevron-circle-right"></i>
                 </a>
 
-                <a href="{{ route('cart.trash') }}" class="btn btn-primary">Vaciar carrito</a>
             </p>
+                    <a href="{{ route('cart.trash') }}" class="btn btn-danger">Vaciar carrito
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
         </div>
     </div>
 @stop
