@@ -8,7 +8,6 @@
 
 @section('content')
 
-
     <div id="confirmdelete" class="row">
 
         <span style="display:none;" id="urlbase">{{route('admin.category.index')}}</span>
@@ -82,12 +81,7 @@
                                             Activate
                                         </button>
                                     </form>
-
-
                                 @else
-
-
-
                                     <form action="{{ route('admin.category.destroy',$category->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -104,7 +98,6 @@
                             <td> </td>
                             <td> </td>
 
-
                         </tr>
                             @endforeach
 
@@ -117,6 +110,4 @@
             <!-- /.card -->
         </div>
     </div>
-
-
 @endsection
