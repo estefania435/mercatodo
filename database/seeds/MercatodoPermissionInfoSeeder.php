@@ -15,7 +15,7 @@ class MercatodoPermissionInfoSeeder extends Seeder
      */
     public function run(): void
     {
-        $useradmin= User::create([
+        $useradmin = User::create([
 
             'name'                  =>'admin',
             'surname'               =>'Eladmin',

@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\MercatodoModels\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-
 class UserUpdateRequest extends FormRequest
 {
     /**
