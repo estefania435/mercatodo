@@ -5,10 +5,7 @@ namespace App\Http\Requests;
 use App\MercatodoModels\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class ProductStoreRequest
- * @package App\Http\Requests
- */
+
 class RoleUpdateRequest extends FormRequest
 {
     /**
@@ -24,6 +21,7 @@ class RoleUpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * @param Role $role
      * @return array
      */
     public function rules(Role $role): array

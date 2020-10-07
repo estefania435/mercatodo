@@ -2,6 +2,7 @@
 
 namespace App\MercatodoModels;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,9 +29,9 @@ class Pay extends Model
      * scope to search for the order with state zero and belonging to the authenticated user
      *
      * @param $query
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopepay($query)
+    public function scopepay($query): Builder
     {
         return $query->where('user_id', Auth::user()->id)->where('status', '0');
     }

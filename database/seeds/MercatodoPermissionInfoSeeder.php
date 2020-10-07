@@ -13,16 +13,9 @@ class MercatodoPermissionInfoSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        //user admin
-
-        /* $useradmin= User::where('email','admin@admin.com' )->first();
-         if ($useradmin) {
-             $useradmin->delete();
-         }*/
-
-        $useradmin = User::create([
+        $useradmin= User::create([
 
             'name' => 'admin',
             'surname' => 'Eladmin',
@@ -98,7 +91,6 @@ class MercatodoPermissionInfoSeeder extends Seeder
 
         $permission_all[] = $permission->id;
 
-
         //permission user
         $permission = Permission::create([
             'name' => 'List user',
@@ -147,7 +139,6 @@ class MercatodoPermissionInfoSeeder extends Seeder
         ]);
 
         $permission_all[] = $permission->id;
-
 
         //permission products
 

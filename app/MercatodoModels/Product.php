@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class Product
- * @package App\MercatodoModels
- */
+
 class Product extends Model
 {
     use SoftDeletes;
@@ -27,6 +24,8 @@ class Product extends Model
     }
 
     /**
+     * Relationship between product tables and images.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function images(): MorphMany

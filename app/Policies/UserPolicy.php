@@ -12,7 +12,7 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\MercatodoModels\User  $user
+     * @param  User  $user
      * @return mixed
      */
     public function viewAny(User $usera)
@@ -23,8 +23,8 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\MercatodoModels\User  $user
-     * @param  \App\MercatodoModels\User  $model
+     * @param  User  $user
+     * @param  User  $model
      * @param null $perm
      * @return mixed
      */
@@ -53,9 +53,9 @@ class UserPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\MercatodoModels\User  $user
-     * @param  \App\MercatodoModels\User  $model
-     * @param null $perm
+     * @param  User  $user
+     * @param  User  $model
+     * @param  null $perm
      * @return mixed
      */
     public function update(User $usera, User $user, $perm = null)

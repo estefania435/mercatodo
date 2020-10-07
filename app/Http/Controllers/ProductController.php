@@ -11,19 +11,21 @@ class ProductController extends Controller
 
     /**
      * AdminCategoryController constructor.
+     *
      * @param ProductRepository $productsRepository
      */
     public function __construct(ProductRepository $productsRepository)
     {
         $this->productsRepo = $productsRepository;
     }
+
     /**
      * Display the specified resource.
      *
-     * @param $id
+     * @param int $id
      * @return \Illuminate\View\View
      */
-    public function show($id): View
+    public function show(int $id): View
     {
         $product = $this->productsRepo->findId($id);
 

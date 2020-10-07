@@ -27,7 +27,6 @@ class PlaceToPayRepository extends BaseRepository
      *
      * @return object
      */
-
     public function conectionPlaceToPay(): object
     {
         $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();

@@ -14,6 +14,7 @@ class HomeController extends Controller
 
     /**
      * AdminCategoryController constructor.
+     *
      * @param ProductRepository $prodRepository
      */
     public function __construct(ProductRepository $prodRepository, CartRepository $cartRepository)
@@ -21,6 +22,7 @@ class HomeController extends Controller
         $this->prodRepo = $prodRepository;
         $this->cartShowRepo = $cartRepository;
     }
+
     /**
      * Show the application dashboard.
      *

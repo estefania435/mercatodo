@@ -4,10 +4,23 @@
 
 use App\MercatodoModels\Detail;
 use Faker\Generator as Faker;
-use Illuminate\Database\Eloquent\Factory;
-use Illuminate\Support\Str;
 
-$factory->define(Detail::class, function (Faker $faker) {
+/*
+|--------------------------------------------------------------------------
+| Model Factories
+|--------------------------------------------------------------------------
+|
+| This directory should contain each of the model factory definitions for
+| your application. Factories provide a convenient way to generate new
+| model instances for testing / seeding your application's database.
+|
+*/
+
+/**
+ * @param Faker $faker
+ * @return array
+ */
+$factory->define(Detail::class, function (Faker $faker): array {
     return [
         'quantity' => '2',
         'products_id' => '1',

@@ -5,10 +5,7 @@ namespace App\MercatodoModels;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Image
- * @package App\MercatodoModels
- */
+
 class Image extends Model
 {
     /**

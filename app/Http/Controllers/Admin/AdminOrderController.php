@@ -15,12 +15,12 @@ class AdminOrderController extends Controller
      * AdminPayController constructor.
      *
      * @param OrderRepository $OrdersRepository
-     *
      */
     public function __construct(OrderRepository $OrdersRepository)
     {
         $this->orders = $OrdersRepository;
     }
+
     /**
      *list all orders
      *

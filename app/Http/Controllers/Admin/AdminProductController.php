@@ -10,10 +10,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class AdminProductController
- * @package App\Http\Controllers\Admin
- */
 class AdminProductController extends Controller
 {
     protected $productRepo;
@@ -26,6 +22,7 @@ class AdminProductController extends Controller
     {
         $this->productRepo = $productRepository;
     }
+
     /**
      * @var string[]
      */
