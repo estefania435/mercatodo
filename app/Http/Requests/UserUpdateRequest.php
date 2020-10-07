@@ -5,10 +5,7 @@ namespace App\Http\Requests;
 use App\MercatodoModels\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class ProductStoreRequest
- * @package App\Http\Requests
- */
+
 class UserUpdateRequest extends FormRequest
 {
     /**
@@ -24,6 +21,7 @@ class UserUpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * @param User $user
      * @return array
      */
     public function rules(User $user): array

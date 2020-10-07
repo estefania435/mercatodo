@@ -14,12 +14,12 @@ class AdminDetailController extends Controller
      * AdminPayController constructor.
      *
      * @param DetailRepository $DetailsRepository
-     *
      */
     public function __construct(DetailRepository $DetailsRepository)
     {
         $this->details = $DetailsRepository;
     }
+
     /**
      * list all details of orders
      *

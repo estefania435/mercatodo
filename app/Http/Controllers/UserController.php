@@ -9,26 +9,24 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class UserController
- * @package App\Http\Controllers
- */
+
 class UserController extends Controller
 {
     protected $usersRepo;
 
     /**
      * AdminCategoryController constructor.
+     *
      * @param UserRepository $usersRepository
      */
     public function __construct(UserRepository $usersRepository)
     {
         $this->usersRepo = $usersRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @return \Illuminate\View\View
      */
     public function index(): View
@@ -59,7 +57,6 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param User $user
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @return \Illuminate\View\View
      */
     public function edit(User $user): View
@@ -90,7 +87,6 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param User $user
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(User $user): RedirectResponse

@@ -18,12 +18,14 @@ class AdminCategoryController extends Controller
 
     /**
      * AdminCategoryController constructor.
+     *
      * @param CategoryRepository $categoryRepository
      */
     public function __construct(CategoryRepository $categoryRepository)
     {
         $this->categoryRepo = $categoryRepository;
     }
+
     /**
      * Display a listing of the resource.
      *

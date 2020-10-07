@@ -14,6 +14,11 @@ return [
     */
 
     'name' => env('APP_NAME', 'Mercatodo'),
+
+    /*
+     *Credentials of webcheckout
+     */
+
     'LOGIN' => env('LOGIN_PLACETOPAY', '6dd490faf9cb87a9862245da41170ff2'),
     'SECRET_KEY' =>env('SECRET_KEY ','024h1IlD'),
 

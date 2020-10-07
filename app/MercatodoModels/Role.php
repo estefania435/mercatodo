@@ -5,10 +5,7 @@ namespace App\MercatodoModels;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * Class Role
- * @package App\MercatodoPermission\Models
- */
+
 class Role extends Model
 {
     /**

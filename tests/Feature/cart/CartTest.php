@@ -42,30 +42,4 @@ class CartTest extends TestCase
 
         $response->assertRedirect(route('cart.show'));
     }
-
-    /*public function testAnuserCanRemoveitemToCart(): void
-    {
-        $this->withoutExceptionHandling();
-        factory(Category::class)->create();
-        $user = factory(User::class)->create([
-            'email_verified_at' => now()
-        ]);
-
-        factory(Order::class)->create([
-            'user_id' => $user->id
-        ]);
-
-        $product = factory(Product::class)->create([
-            'quantity' => 10
-        ]);
-
-        $response = $this->actingAs($user)->get(route('cart.delete', $user),
-            [
-                'product_id' => $product->product_id,
-                'quantity' => 1
-            ]);
-
-        $response->assertStatus(302);
-
-    }*/
 }

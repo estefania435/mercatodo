@@ -11,22 +11,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-/**
- * Class RoleController
- * @package App\Http\Controllers
- */
+
 class RoleController extends Controller
 {
     protected $rolesRepo;
 
     /**
      * AdminCategoryController constructor.
+     *
      * @param RoleRepository $rolesRepository
      */
     public function __construct(RoleRepository $rolesRepository)
     {
         $this->rolesRepo = $rolesRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +57,7 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param RoleStoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(RoleStoreRequest $request): RedirectResponse
@@ -75,7 +74,6 @@ class RoleController extends Controller
      * Display the specified resource.
      *
      * @param Role $role
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @return \Illuminate\View\View
      */
     public function show(Role $role): View
@@ -93,7 +91,6 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Role $role
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @return \Illuminate\View\View
      */
     public function edit(Role $role): View
@@ -111,8 +108,6 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Role $role
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(RoleUpdateRequest $request, Role $role): RedirectResponse
@@ -129,7 +124,6 @@ class RoleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Role $role
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Role $role): RedirectResponse

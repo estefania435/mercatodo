@@ -2,12 +2,14 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 trait UserTrait
 {
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany('App\MercatodoModels\Role')->withTimesTamps();
     }

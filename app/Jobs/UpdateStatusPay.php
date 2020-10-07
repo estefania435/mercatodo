@@ -19,9 +19,11 @@ class UpdateStatusPay implements ShouldQueue
     use SerializesModels;
 
     protected $paymen;
+
     /**
      * Create a new job instance.
      *
+     * @param Pay $payment
      * @return void
      */
     public function __construct(Pay $payment)
