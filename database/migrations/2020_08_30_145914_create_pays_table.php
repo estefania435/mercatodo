@@ -16,7 +16,7 @@ class CreatePaysTable extends Migration
         Schema::create('pays', function (Blueprint $table) {
             $table->id();
             $table->string('status')->default(0);
-            $table->string('reference',10);
+            $table->string('reference', 10);
             $table->bigInteger('requestId')->unique();
             $table->string('process_url');
             $table->unsignedBigInteger('user_id');
