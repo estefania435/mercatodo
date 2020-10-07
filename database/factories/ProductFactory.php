@@ -17,11 +17,7 @@ use Faker\Generator as Faker;
 |
 */
 
-/**
- * @param Faker $faker
- * @return array
- */
-$factory->define(Product::class, function (Faker $faker): array {
+$factory->define(Product::class, function (Faker $faker) {
     return [
         'name' => $faker->unique()->text(20),
         'slug' => $faker->text(20),

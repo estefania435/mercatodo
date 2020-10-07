@@ -5,6 +5,7 @@ namespace App\Repositories\Pay;
 use App\MercatodoModels\Order;
 use App\MercatodoModels\Pay;
 use App\Repositories\BaseRepository;
+use App\Repositories\Pay\ConectionPTPRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\RequestException;
@@ -22,6 +23,19 @@ class PlaceToPayRepository extends BaseRepository
         return new Order();
     }
 
+    protected $conection;
+
+    /**
+     * AdminPayController constructor.
+     *
+     * @param ConectionPTPRepository $conectionP
+     * @param PayRepository $pay
+     */
+    public function __construct(ConectionPTPRepository $conection)
+    {
+        $this->conection = $conection;
+    }
+
     /**
      * function to connect to the payment gateway of place to pay
      *
@@ -31,29 +45,9 @@ class PlaceToPayRepository extends BaseRepository
     {
         $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
 
-        if (function_exists('random_bytes')) {
-            $nonce = bin2hex(random_bytes(16));
-        } elseif (function_exists('openssl_random_pseudo_bytes')) {
-            $nonce = bin2hex(openssl_random_pseudo_bytes(16));
-        } else {
-            $nonce = mt_rand();
-        }
-
-        $nonceBase64 = base64_encode($nonce);
-        $seed = date('c');
-        $secretKey = config('app.SECRET_KEY');
-        $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
         $reference = $order->id;
         $total = $order->total;
-        $auth =
-            [
-
-                'login' => config('app.LOGIN'),
-                'seed' => $seed,
-                'nonce' => $nonceBase64,
-                'tranKey' => $tranKey,
-
-            ];
+        $auth = $this->conection->conectioPlaceToPay();
 
         $amount =
             [
@@ -115,26 +109,7 @@ class PlaceToPayRepository extends BaseRepository
         $pay->reference = $reference;
         $requestId = $pay->requestId;
 
-        if (function_exists('random_bytes')) {
-            $nonce = bin2hex(random_bytes(16));
-        } elseif (function_exists('openssl_random_pseudo_bytes')) {
-            $nonce = bin2hex(openssl_random_pseudo_bytes(16));
-        } else {
-            $nonce = mt_rand();
-        }
-
-        $nonceBase64 = base64_encode($nonce);
-        $seed = date('c');
-        $secretKey = config('app.SECRET_KEY');
-        $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
-        $auth =
-            [
-                'login' => config('app.LOGIN'),
-                'seed' => $seed,
-                'nonce' => $nonceBase64,
-                'tranKey' => $tranKey,
-
-            ];
+        $auth = $this->conection->conectioPlaceToPay();
 
         $data =
             [
@@ -184,26 +159,7 @@ class PlaceToPayRepository extends BaseRepository
         $pay->reference = $reference;
         $requestId = $pay->requestId;
 
-        if (function_exists('random_bytes')) {
-            $nonce = bin2hex(random_bytes(16));
-        } elseif (function_exists('openssl_random_pseudo_bytes')) {
-            $nonce = bin2hex(openssl_random_pseudo_bytes(16));
-        } else {
-            $nonce = mt_rand();
-        }
-
-        $nonceBase64 = base64_encode($nonce);
-        $seed = date('c');
-        $secretKey = config('app.SECRET_KEY');
-        $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
-        $auth =
-            [
-                'login' => config('app.LOGIN'),
-                'seed' => $seed,
-                'nonce' => $nonceBase64,
-                'tranKey' => $tranKey,
-
-            ];
+        $auth = $this->conection->conectioPlaceToPay();
 
         $data =
             [

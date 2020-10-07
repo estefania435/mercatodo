@@ -17,12 +17,7 @@ use Illuminate\Support\Str;
 |
 */
 
-/**
- * @param Faker $faker
- * @return array
- */
-
-$factory->define(User::class, function (Faker $faker): array {
+$factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'surname' => $faker->lastName,

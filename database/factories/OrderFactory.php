@@ -16,11 +16,7 @@ use Faker\Generator as Faker;
 |
 */
 
-/**
- * @param Faker $faker
- * @return array
- */
-$factory->define(Order::class, function (Faker $faker): array {
+$factory->define(Order::class, function (Faker $faker) {
     return [
         'code' => 'ac3456',
         'total' => '200000',

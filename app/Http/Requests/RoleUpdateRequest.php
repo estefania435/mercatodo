@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\MercatodoModels\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
-
 class RoleUpdateRequest extends FormRequest
 {
     /**
