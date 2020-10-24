@@ -13,8 +13,7 @@ class CreateDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('details', function (Blueprint $table)
-        {
+        Schema::create('details', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity')->default(0);
             $table->unsignedBigInteger('products_id');

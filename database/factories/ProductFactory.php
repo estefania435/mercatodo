@@ -21,12 +21,12 @@ $factory->define(Product::class, function (Faker $faker) {
     return [
         'name' => $faker->unique()->text(20),
         'slug' => $faker->text(20),
-        'category_id'=> Category::all()->first(),
-        'quantity'=> '20',
-        'price'=> '5000',
-        'description'=> $faker->text(150),
-        'specifications'=> $faker->text(150),
-        'data_of_interest'=> $faker->text(150),
-        'status'=> 'New',
+        'category_id' => Category::all()->first(),
+        'quantity' => '20',
+        'price' => '5000',
+        'description' => $faker->text(150),
+        'specifications' => $faker->text(150),
+        'data_of_interest' => $faker->text(150),
+        'status' => 'New',
     ];
 });
