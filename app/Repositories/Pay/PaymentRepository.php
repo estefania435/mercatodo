@@ -6,12 +6,14 @@ use App\Jobs\UpdateStatusPay;
 use App\MercatodoModels\Order;
 use App\MercatodoModels\Pay;
 use App\Repositories\BaseRepository;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Expr\Cast\Object_;
 
-class PayRepository extends BaseRepository
+class PaymentRepository extends BaseRepository
 {
     /**
      * @return Pay
@@ -28,7 +30,7 @@ class PayRepository extends BaseRepository
      */
     public function redirect(): string
     {
-        $pay = Pay::pay()->first();
+        $pay = Pay::inProcess()->first();
         $url = $pay->process_url;
 
         return $url;
@@ -39,7 +41,7 @@ class PayRepository extends BaseRepository
      *
      * @param object $data
      */
-    public function datas(object $data)
+    public function ordersData(object $data): void
     {
         $order = Order::order()->Orwhere('status', 'REJECTED')->first();
 
@@ -54,7 +56,7 @@ class PayRepository extends BaseRepository
         $paymen->document_type;
         $paymen->document;
         $paymen->email;
-        $paymen->phone;
+        $paymen->phone = Auth::user()->phone;
         $paymen->payment_method;
         $paymen->order_total = $order->total;
         $paymen->save();
@@ -65,9 +67,10 @@ class PayRepository extends BaseRepository
      *
      * @param object $dato
      */
-    public function updateDates(object $dato)
+    public function updatePay(object $dato): void
     {
-        $paymen = Pay::pay()->first();
+
+        $paymen = Pay::inProcess()->first();
 
         $paymen->status = $dato->status->status;
         $paymen->name = $dato->request->payer->name;
@@ -75,12 +78,13 @@ class PayRepository extends BaseRepository
         $paymen->document_type = $dato->request->payer->documentType;
         $paymen->document = $dato->request->payer->document;
         $paymen->email = $dato->request->payer->email;
-        $paymen->phone = $dato->request->payer->mobile;
+        $paymen->phone = Auth::user()->phone;
 
         if ($dato->status->status == 'PENDING') {
             $paymen->payment_method = 'PENDING';
 
             UpdateStatusPay::dispatch($paymen);
+
         } else {
             foreach ($dato->payment as $d) {
                 $paymen->payment_method = $d->paymentMethod;
@@ -98,7 +102,7 @@ class PayRepository extends BaseRepository
      *
      * @param object $dato
      */
-    public function updateDatesJob(object $dato)
+    public function updateDatesJob(object $dato): void
     {
         $paymen = Pay::where('status', 'PENDING')->first();
 
@@ -108,7 +112,7 @@ class PayRepository extends BaseRepository
         $paymen->document_type = $dato->request->payer->documentType;
         $paymen->document = $dato->request->payer->document;
         $paymen->email = $dato->request->payer->email;
-        $paymen->phone = $dato->request->payer->mobile;
+        $paymen->phone = Auth::user()->phone;
 
         if ($dato->status->status == 'PENDING') {
             $paymen->payment_method = 'PENDING';
@@ -144,7 +148,8 @@ class PayRepository extends BaseRepository
     public function updateStatusOfOrder(): string
     {
         $order = Order::order()->Orwhere('status', 'REJECTED')->first();
-        $payer = Pay::all()->where('user_id', Auth::user()->id)->last();
+        $payer = Pay::all()->where('reference', $order->id)->last();
+
 
         $order->status = $payer->status;
         $order->save();

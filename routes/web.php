@@ -93,19 +93,29 @@ Route::post('cart/datesReceive', [
     'uses' => 'Admin\AdminCartController@Datesreceive'
 ]);
 
-Route::get('pay/pay/{reference?}', [
-    'as' => 'pay.pay',
-    'uses' => 'Admin\AdminPayController@pay'
+Route::get('pay/createPay/{reference?}', [
+    'as' => 'pay.createPay',
+    'uses' => 'Admin\AdminPayController@createPay'
 ]);
 
-Route::get('pay/data', [
-    'as' => 'pay.data',
-    'uses' => 'Admin\AdminPayController@data'
+Route::get('pay/payAgain/{reference?}', [
+    'as' => 'pay.payAgain',
+    'uses' => 'Admin\AdminPayController@payAgain'
 ]);
 
-Route::get('pay/consult/{reference?}', [
-    'as' => 'pay.consult',
-    'uses' => 'Admin\AdminPayController@consult'
+Route::get('pay/dataOfOrder', [
+    'as' => 'pay.dataOfOrder',
+    'uses' => 'Admin\AdminPayController@dataOfOrder'
+]);
+
+Route::get('pay/dataOfOrderrejected', [
+    'as' => 'pay.dataOfOrderrejected',
+    'uses' => 'Admin\AdminPayController@dataOfOrderrejected'
+]);
+
+Route::get('pay/consultPayment/{reference?}', [
+    'as' => 'pay.consultPayment',
+    'uses' => 'Admin\AdminPayController@consultPayment'
 ]);
 
 Route::get('pay/status', [
@@ -113,9 +123,9 @@ Route::get('pay/status', [
     'uses' => 'Admin\AdminPayController@status'
 ]);
 
-Route::get('pay/updatedata', [
-    'as' => 'pay.updatedata',
-    'uses' => 'Admin\AdminPayController@updatedata'
+Route::get('pay/updateDataOfPay', [
+    'as' => 'pay.updateDataOfPay',
+    'uses' => 'Admin\AdminPayController@updateDataOfPay'
 ]);
 
 Route::get('pay/show', [
@@ -123,22 +133,22 @@ Route::get('pay/show', [
     'uses' => 'Admin\AdminPayController@show'
 ]);
 
-Route::get('pay/updateorderstatus', [
-    'as' => 'pay.updateorderstatus',
-    'uses' => 'Admin\AdminPayController@updateorderstatus'
+Route::get('pay/updateOrderStatus', [
+    'as' => 'pay.updateOrderStatus',
+    'uses' => 'Admin\AdminPayController@updateOrderStatus'
 ]);
 
-Route::get('pay/showallorders', [
-    'as' => 'pay.showallorders',
-    'uses' => 'Admin\AdminPayController@showallorders'
+Route::get('pay/showAllOrders', [
+    'as' => 'pay.showAllOrders',
+    'uses' => 'Admin\AdminPayController@showAllOrders'
 ]);
 
-Route::get('pay/repay', [
-    'as' => 'pay.repay',
-    'uses' => 'Admin\AdminPayController@repay'
+Route::get('pay/retryPayment', [
+    'as' => 'pay.retryPayment',
+    'uses' => 'Admin\AdminPayController@retryPayment'
 ]);
 
-Route::get('pay/reredirection', [
-    'as' => 'pay.reredirection',
-    'uses' => 'Admin\AdminPayController@reredirection'
+Route::get('pay/redirection', [
+    'as' => 'pay.redirection',
+    'uses' => 'Admin\AdminPayController@redirection'
 ]);

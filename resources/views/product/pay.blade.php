@@ -29,7 +29,7 @@
                                 <a href="{{ route('order-detail') }}" class="btn btn-primary">
                                     <i class="fa fa-chevron-circle-left"></i> Regresar
                                 </a>
-                                <a href="{{ route('pay.pay') }}" class="btn btn-primary">pagar
+                                <a href="{{ route('pay.createPay') }}" class="btn btn-primary">pagar
                                     <i class="fas fa-money-check-alt"></i>
                                 </a>
                             </p>

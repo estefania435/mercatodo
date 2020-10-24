@@ -5,6 +5,7 @@ namespace App\Repositories\User;
 use App\MercatodoModels\Role;
 use App\MercatodoModels\User;
 use App\Repositories\BaseRepository;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -43,11 +44,11 @@ class UserRepository extends BaseRepository
     /**
      * function for update a user
      *
-     * @param object $data
+     * @param Request $data
      * @param User $user
      * @return User
      */
-    public function updateUser(object $data, User $user): User
+    public function updateUser(Request $data, User $user): User
     {
         $user->update($data->all());
 

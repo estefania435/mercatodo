@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('code',10)->unique();
             $table->decimal('total');
-            $table->string('status')->default('abierto');
+            $table->enum('status', ['OPEN', 'PENDING', 'APPROVED', 'REJECTED'])->default('OPEN');
             $table->unsignedBigInteger('user_id');
             $table->string('name_receive');
             $table->string('surname');
