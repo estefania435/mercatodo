@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 abstract class BaseRepository
 {
@@ -29,7 +30,7 @@ abstract class BaseRepository
      * @param object $data
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllProduct(object $data): LengthAwarePaginator
+    public function getAllProduct(Request $data): LengthAwarePaginator
     {
         $name = $data->get('name');
 
@@ -64,7 +65,7 @@ abstract class BaseRepository
      * @param $data
      * @return bool
      */
-    public function restore(object $data): bool
+    public function restore(Request $data): bool
     {
         return $this->getModel()->withTrashed()->find($data->id)->restore();
     }

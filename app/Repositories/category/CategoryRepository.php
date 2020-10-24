@@ -8,6 +8,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class CategoryRepository extends BaseRepository
 {
@@ -36,7 +37,7 @@ class CategoryRepository extends BaseRepository
      * @param object $data
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllCategories(object $data): LengthAwarePaginator
+    public function getAllCategories(Request $data): LengthAwarePaginator
     {
         $name = $data->get('name');
 

@@ -45,7 +45,7 @@ class Order extends Model
      */
     public function scopeorder($query): Builder
     {
-        return $query->where('user_id', Auth::user()->id)->where('status', '0');
+        return $query->where('user_id', Auth::user()->id)->where('status', 'OPEN');
     }
 
     /**
@@ -57,6 +57,6 @@ class Order extends Model
     public function scopeDone($query): Builder
     {
         return $query->where('orders.user_id', '=', Auth::user()->id)
-            ->where('orders.status', '=', '0');
+            ->where('orders.status', '=', 'OPEN');
     }
 }

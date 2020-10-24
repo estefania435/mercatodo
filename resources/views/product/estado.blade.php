@@ -35,7 +35,7 @@
             </table>
             @if($payment->status== 'REJECTED')
             <p>
-                <a href="{{ route('pay.repay', $payment->reference) }}" class="btn btn-info">
+                <a href="{{ route('pay.retryPayment', $payment->reference) }}" class="btn btn-info">
                     Reintentar pago
                 </a>
             </p>

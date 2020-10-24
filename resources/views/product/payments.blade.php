@@ -31,7 +31,7 @@
                     <th>{{ $pay->order_total }}</th>
                         @if($pay->status == 'REJECTED')
                         <td>
-                            <a href="{{ route('pay.repay', $pay->reference) }}" class="btn btn-info">
+                            <a href="{{ route('pay.retryPayment', $pay->reference) }}" class="btn btn-info">
                                 Reintentar pago
                             </a>
                         </td>

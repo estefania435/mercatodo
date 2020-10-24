@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Pay\PayRepository;
+use App\Repositories\Pay\PaymentRepository;
 use App\Repositories\Pay\PlaceToPayRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -17,9 +17,9 @@ class AdminPayController extends Controller
      * AdminPayController constructor.
      *
      * @param PlaceToPayRepository $conectionP
-     * @param PayRepository $pay
+     * @param PaymentRepository $pay
      */
-    public function __construct(PlaceToPayRepository $conectionP, PayRepository $pay)
+    public function __construct(PlaceToPayRepository $conectionP, PaymentRepository $pay)
     {
         $this->conection = $conectionP;
         $this->pays = $pay;
@@ -30,12 +30,12 @@ class AdminPayController extends Controller
      *
      * @return RedirectResponse
      */
-    public function pay(): RedirectResponse
+    public function createPay(): RedirectResponse
     {
         $result = $this->conection->conectionPlaceToPay();
-        $this->data($result);
+        $this->dataOfOrder($result);
 
-        return redirect()->route('pay.reredirection');
+        return redirect()->route('pay.redirection');
     }
 
     /**
@@ -43,7 +43,7 @@ class AdminPayController extends Controller
      *
      * @return RedirectResponse
      */
-    public function reredirection(): RedirectResponse
+    public function redirection(): RedirectResponse
     {
         $url = $this->pays->redirect();
 
@@ -55,9 +55,9 @@ class AdminPayController extends Controller
      *
      * @param object $data
      */
-    public function data(object $data)
+    public function dataOfOrder(object $data)
     {
-        $this->pays->datas($data);
+        $this->pays->ordersData($data);
     }
 
     /**
@@ -66,12 +66,12 @@ class AdminPayController extends Controller
      * @param $reference
      * @return RedirectResponse
      */
-    public function consult(int $reference): RedirectResponse
+    public function consultPayment(int $reference): RedirectResponse
     {
         $res = $this->conection->consultPay($reference);
-        $this->updatedata($res);
+        $this->updateDataOfPay($res);
 
-        return redirect()->route('pay.updateorderstatus');
+        return redirect()->route('pay.updateOrderStatus');
     }
 
     /**
@@ -79,9 +79,9 @@ class AdminPayController extends Controller
      *
      * @param $dato
      */
-    public function updatedata(object $dato)
+    public function updateDataOfPay(object $dato)
     {
-        $this->pays->updateDates($dato);
+        $this->pays->updatePay($dato);
     }
 
     /**
@@ -101,7 +101,7 @@ class AdminPayController extends Controller
      *
      * @return RedirectResponse
      */
-    public function updateorderstatus(): RedirectResponse
+    public function updateOrderStatus(): RedirectResponse
     {
         $this->pays->updateStatusOfOrder();
 
@@ -113,7 +113,7 @@ class AdminPayController extends Controller
      *
      * @return View
      */
-    public function showallorders(): View
+    public function showAllOrders(): View
     {
         $Payments = $this->pays->seeAllOrders();
 
@@ -125,8 +125,8 @@ class AdminPayController extends Controller
      *
      * @return RedirectResponse
      */
-    public function repay(): RedirectResponse
+    public function retryPayment(): RedirectResponse
     {
-        return redirect()->route('pay.pay');
+        return redirect()->route('pay.createPay');
     }
 }

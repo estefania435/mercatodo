@@ -6,9 +6,10 @@ use App\MercatodoModels\Detail;
 use App\MercatodoModels\Order;
 use App\MercatodoModels\Product;
 use App\Repositories\BaseRepository;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+
 
 class CartRepository extends BaseRepository
 {
@@ -23,9 +24,9 @@ class CartRepository extends BaseRepository
     /**
      * Function for add producst to cart
      *
-     * @param object $data
+     * @param Request $data
      */
-    public function addToCart(object $data)
+    public function addToCart(Request $data): void
     {
         $order = Order::order()->first();
 
@@ -39,6 +40,7 @@ class CartRepository extends BaseRepository
                 $detail = new Detail();
                 $detail->quantity = 1;
                 $detail->products_id = $product->id;
+                $detail->unit_price = $product->price;
                 $detail->order_id = $order->id;
                 $detail->save();
                 $this->updateTotal($order, $this->total());
@@ -51,7 +53,7 @@ class CartRepository extends BaseRepository
             $order = new Order();
             $order->code = time();
             $order->total = $this->total();
-            $order->status = 0;
+            $order->status = 'OPEN';
             $order->user_id = Auth::user()->id;
             $order->name_receive = Auth::user()->name;
             $order->surname = Auth::user()->surname;
@@ -63,6 +65,7 @@ class CartRepository extends BaseRepository
                 $detail = new Detail();
                 $detail->quantity = $r->quantity;
                 $detail->products_id = $r->id;
+                $detail->unit_price = $r->price;
                 $detail->order_id = $order->id;
                 $detail->save();
                 $this->updateTotal($order, $this->total());
@@ -76,7 +79,7 @@ class CartRepository extends BaseRepository
      * @param string $slug
      * @param int $quantity
      */
-    public function updateQuantity(string $slug, int $quantity)
+    public function updateQuantity(string $slug, int $quantity): void
     {
         $product = Product::where('slug', $slug)->first();
         $order = Order::order()->first();
@@ -114,7 +117,7 @@ class CartRepository extends BaseRepository
      * @param Order $order
      * @param float $total
      */
-    public function updateTotal(Order $order, float $total)
+    public function updateTotal(Order $order, float $total): void
     {
         $order->total = $total;
         $order->save();
@@ -123,9 +126,9 @@ class CartRepository extends BaseRepository
     /**
      * Function for delete product of cart
      *
-     * @param object $data
+     * @param Request $data
      */
-    public function deleteProductOfCart(object $data)
+    public function deleteProductOfCart(Request $data): void
     {
         $product = Product::find($data->id);
         $order = Order::order()->first();
@@ -136,7 +139,7 @@ class CartRepository extends BaseRepository
     /**
      *Function for empty cart
      */
-    public function emptyCart()
+    public function emptyCart(): void
     {
         $order = Order::order()->first();
         Detail::where('order_id', $order->id)->delete();
@@ -146,10 +149,10 @@ class CartRepository extends BaseRepository
     /**
      * function to receive delivery data
      *
-     * @param object $data
+     * @param Request $data
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function datesReceiveOrder(object $data): Model
+    public function datesReceiveOrder(Request $data): Model
     {
         $order = $this->getModel()->order()->first();
         $order->name_receive = $data->name_receive;

@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\MercatodoModels\Pay;
-use App\Repositories\Pay\PayRepository;
+use App\Repositories\Pay\PaymentRepository;
 use App\Repositories\Pay\PlaceToPayRepository;
 use App\Repositories\Pay\ConectionPTPRepository;
 use Illuminate\Bus\Queueable;
@@ -46,7 +46,7 @@ class UpdateStatusPay implements ShouldQueue
 
         $res = $paymen->consultPayJob($reference);
 
-        $actualiza = new PayRepository();
+        $actualiza = new PaymentRepository();
         $actualiza->updateDatesJob($res);
     }
 }
