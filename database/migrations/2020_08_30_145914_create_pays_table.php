@@ -15,6 +15,9 @@ class CreatePaysTable extends Migration
     {
         Schema::create('pays', function (Blueprint $table) {
             $table->id();
+
+            $table->enum('status', ['OPEN', 'PENDING', 'APPROVED', 'REJECTED'])->default('OPEN');
+            $table->string('reference',10);
             $table->string('status')->default(0);
             $table->string('reference', 10);
             $table->bigInteger('requestId')->unique();

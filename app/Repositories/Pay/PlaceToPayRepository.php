@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class PlaceToPayRepository extends BaseRepository
@@ -29,7 +30,7 @@ class PlaceToPayRepository extends BaseRepository
      * AdminPayController constructor.
      *
      * @param ConectionPTPRepository $conectionP
-     * @param PayRepository $pay
+     * @param PaymentRepository $pay
      */
     public function __construct(ConectionPTPRepository $conection)
     {
@@ -43,10 +44,24 @@ class PlaceToPayRepository extends BaseRepository
      */
     public function conectionPlaceToPay(): object
     {
-        $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
+        $p = Pay::inProcess()->first();
 
-        $reference = $order->id;
-        $total = $order->total;
+        if ($p)
+        {
+            $p->delete();
+            $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
+            $total = $order->total;
+            $reference = $order->id;
+        }
+        else {
+            $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
+
+            $total = $order->total;
+            $reference = $order->id;
+        }
+
+
+
         $auth = $this->conection->conectioPlaceToPay();
 
         $amount =
@@ -57,7 +72,7 @@ class PlaceToPayRepository extends BaseRepository
 
         $payment =
             [
-                "reference" => $order->id,
+                "reference" => $reference,
                 "description" => "Pago básico de prueba",
                 'amount' => $amount,
             ];
@@ -67,7 +82,7 @@ class PlaceToPayRepository extends BaseRepository
                 'auth' => $auth,
                 'payment' => $payment,
                 "expiration" => date('c', strtotime("+15 minutes")),
-                "returnUrl" => 'http://127.0.0.1:8000/pay/consult/' . $reference,
+                "returnUrl" => 'http://127.0.0.1:8000/pay/consultPayment/' . $reference,
                 "ipAddress" => "127.0.0.1",
                 "userAgent" => "PlacetoPay Sandbox",
             ];
@@ -105,7 +120,7 @@ class PlaceToPayRepository extends BaseRepository
      */
     public function consultPay(int $reference): object
     {
-        $pay = Pay::where('reference', $reference)->pay()->OrWhere('status', 'PENDING')->first();
+        $pay = Pay::where('reference', $reference)->inProcess()->OrWhere('status', 'PENDING')->first();
         $pay->reference = $reference;
         $requestId = $pay->requestId;
 

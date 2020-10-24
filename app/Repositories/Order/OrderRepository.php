@@ -34,7 +34,7 @@ class OrderRepository extends BaseRepository
      *
      * @param int $id
      */
-    public function seeOrder(int $id)
+    public function seeOrder(int $id): void
     {
         Session::put('order_id', $id);
     }

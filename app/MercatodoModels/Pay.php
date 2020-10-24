@@ -31,8 +31,8 @@ class Pay extends Model
      * @param $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopepay($query): Builder
+    public function scopeinProcess($query): Builder
     {
-        return $query->where('user_id', Auth::user()->id)->where('status', '0');
+        return $query->where('user_id', Auth::user()->id)->where('status', 'OPEN');
     }
 }

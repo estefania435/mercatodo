@@ -5,6 +5,7 @@ namespace App\Repositories\product;
 use App\MercatodoModels\Category;
 use App\MercatodoModels\Product;
 use App\Repositories\BaseRepository;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ class ProductRepository extends BaseRepository
      *
      * @param array $data
      */
-    public function createProduct(object $data)
+    public function createProduct(Request $data): void
     {
         $urlimages = [];
         if ($data->hasFile('images')) {
@@ -81,7 +82,7 @@ class ProductRepository extends BaseRepository
      * @param $data
      * @param string $id
      */
-    public function updateProduct(object $data, string $id)
+    public function updateProduct(Request $data, string $id): void
     {
         $urlimages = [];
         if ($data->hasFile('images')) {

@@ -5,6 +5,7 @@ namespace App\Repositories\Role;
 use App\MercatodoModels\Permission;
 use App\MercatodoModels\Role;
 use App\Repositories\BaseRepository;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -41,10 +42,10 @@ class RoleRepository extends BaseRepository
     /**
      * function for save the role
      *
-     * @param object $data
+     * @param Request $data
      * @return object
      */
-    public function storeRole(object $data): object
+    public function storeRole(Request $data): object
     {
         $role = $this->getModel()->create($data->all());
 
@@ -72,11 +73,11 @@ class RoleRepository extends BaseRepository
     /**
      * function for update role
      *
-     * @param object $data
+     * @param Request $data
      * @param Role $role
      * @return Role
      */
-    public function updateRole($data, Role $role): Role
+    public function updateRole(Request $data, Role $role): Role
     {
         $role->update($data->all());
 
