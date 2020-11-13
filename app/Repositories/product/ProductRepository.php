@@ -2,6 +2,7 @@
 
 namespace App\Repositories\product;
 
+use App\Imports\importMultipleSheets;
 use App\MercatodoModels\Category;
 use App\MercatodoModels\Product;
 use App\Repositories\BaseRepository;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductRepository extends BaseRepository
 {
@@ -53,6 +55,7 @@ class ProductRepository extends BaseRepository
         $prod->description = $data->description;
         $prod->specifications = $data->specifications;
         $prod->data_of_interest = $data->data_of_interest;
+
         $prod->status = $data->status;
 
         $prod->save();
@@ -128,5 +131,16 @@ class ProductRepository extends BaseRepository
     public function categoryForProduct(): Collection
     {
         return Category::orderBy('name')->get();
+    }
+
+    /**
+     * Import products and images in bulk
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function ImportProduct(Request $request): void
+    {
+        Excel::import(new importMultipleSheets, $request->file('importFile'));
     }
 }

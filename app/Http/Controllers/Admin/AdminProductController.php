@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Products\ImportRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Imports\ProductImport;
+use App\Imports\importMultipleSheets;
 use App\Repositories\product\ProductRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminProductController extends Controller
 {
@@ -37,6 +41,7 @@ class AdminProductController extends Controller
     public function index(Request $request): View
     {
         $products = $this->productRepo->getAllProduct($request);
+
 
         return view('admin.product.index', compact('products'));
     }
@@ -153,5 +158,18 @@ class AdminProductController extends Controller
 
         return redirect()->route('admin.product.index')
             ->with('data', 'Product  enabled');
+    }
+
+    /**
+     * Import products and images in bulk
+     *
+     * @param ImportRequest $request
+     * @return RedirectResponse
+     */
+    public function import(ImportRequest $request): RedirectResponse
+    {
+        $this->productRepo->ImportProduct($request);
+
+        return redirect()->back()->with('data', 'Se han importado los productos de manera correcta');
     }
 }

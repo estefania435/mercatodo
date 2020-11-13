@@ -152,3 +152,10 @@ Route::get('pay/redirection', [
     'as' => 'pay.redirection',
     'uses' => 'Admin\AdminPayController@redirection'
 ]);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('products/import', 'Admin\AdminProductController@import')
+    ->name('products.import');

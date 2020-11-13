@@ -30,7 +30,16 @@
 
                         <li class="nav-item"><a href="{{route('pay.showAllOrders')}}" class="nav-link">
 
+
+
                                 <i class="fas fa-file-invoice-dollar"></i>Payments</a></li>
+
+
+
+
+
+                                <i class="fas fa-file-invoice-dollar"></i>Payments</a></li>
+
 
 
                         <!-- Authentication Links -->
