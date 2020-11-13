@@ -35,12 +35,17 @@
 
                     </div>
                 </div>
+
+
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
                     @can('haveaccess','admin.product.create')
                     <td><a class=" m-2 float-right btn btn-primary"
                            href="{{ route('admin.product.create') }}">Create</a></td>
                     @endcan
+
+                   @include('custom.modal_import')
+
                         <table class="table table-head-fixed text-nowrap">                        <thead>
                         <tr>
 
@@ -60,6 +65,7 @@
 
                                 <td>{{$product->name}}</td>
                                 <td>
+
                                     <img style="height: 100px; width: 100px" src="{{ $product->images->random()->url }}"
                                          class="rounded-circle">
                                 </td>
@@ -120,6 +126,5 @@
             <!-- /.card -->
         </div>
     </div>
-
 
 @endsection

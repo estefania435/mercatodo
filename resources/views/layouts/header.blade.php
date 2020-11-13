@@ -31,15 +31,9 @@
                         <li class="nav-item"><a href="{{route('pay.showAllOrders')}}" class="nav-link">
 
 
-                        <li class="nav-item"><a href="{{route('pay.showallorders')}}" class="nav-link">
-
                                 <i class="fas fa-file-invoice-dollar"></i>Payments</a></li>
 
 
-                        <li class="nav-item"><a href="{{route('pay.showallorders')}}"
-                                                class="nav-link">Payments</a></li>
-
-                        <li class="nav-item"><a href="{{route('pay.showallorders')}}" class="nav-link"><i class="fas fa-file-invoice-dollar"></i>Payments</a></li>
 
 
                         <!-- Authentication Links -->

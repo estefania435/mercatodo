@@ -23,8 +23,7 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->text('specifications')->nullable();
             $table->text('data_of_interest')->nullable();
-            $table->unsignedbigInteger('visits')->default(0);
-            $table->unsignedbigInteger('sales')->default(0);
+
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();

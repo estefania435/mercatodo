@@ -12,6 +12,11 @@ class Product extends Model
 {
     use SoftDeletes;
 
+    protected $fillable =
+        [
+            'name', 'slug', 'category_id','quantity','price',
+            'description', 'specifications', 'data_of_interest', 'status'
+        ];
     /**
      * Relationship between product tables and categories.
      *
@@ -40,6 +45,12 @@ class Product extends Model
     public function details(): HasMany
     {
         return $this->hasMany("App\MercatodoModels\Detail");
+    }
+
+    public function scopeisInactive($query)
+    {
+        return $query->where('deleted_at', !'');
+
     }
 
     /**

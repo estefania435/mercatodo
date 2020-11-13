@@ -14,7 +14,7 @@ class Image extends Model
      */
     protected $fillable =
     [
-        'url',
+        'url','imageable_type','imageable_id'
     ];
 
     /**
