@@ -46,6 +46,8 @@
 
                    @include('custom.modal_import')
 
+                   @include('custom.modal_export')
+
                         <table class="table table-head-fixed text-nowrap">                        <thead>
                         <tr>
 

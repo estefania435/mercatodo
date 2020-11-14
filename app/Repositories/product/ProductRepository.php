@@ -2,6 +2,8 @@
 
 namespace App\Repositories\product;
 
+use App\Exports\ProductExport;
+use App\Http\Requests\Products\ExportRequest;
 use App\Imports\importMultipleSheets;
 use App\MercatodoModels\Category;
 use App\MercatodoModels\Product;
@@ -142,5 +144,17 @@ class ProductRepository extends BaseRepository
     public function ImportProduct(Request $request): void
     {
         Excel::import(new importMultipleSheets, $request->file('importFile'));
+    }
+
+    /**
+     * Export products and images in bulk
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function productExport(Request $request): void
+    {
+        $extension = $request->input('extension');
+        (new ProductExport())->store('products.' . $extension);
     }
 }

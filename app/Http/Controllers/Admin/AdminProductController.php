@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Products\ExportRequest;
 use App\Http\Requests\Products\ImportRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
@@ -171,5 +173,18 @@ class AdminProductController extends Controller
         $this->productRepo->ImportProduct($request);
 
         return redirect()->back()->with('data', 'Se han importado los productos de manera correcta');
+    }
+
+    /**
+     * Export products and images in bulk
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function exportProduct(Request $request): RedirectResponse
+    {
+        $this->productRepo->productExport($request);
+
+        return redirect()->back()->with('success', 'Se han exportado los productos de manera correcta');
     }
 }

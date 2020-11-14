@@ -3,7 +3,6 @@
 
 namespace App\Concerns;
 
-
 trait ProductValidations
 {
     /**
