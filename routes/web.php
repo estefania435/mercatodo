@@ -1,10 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\MercatodoModels\User;
-use App\MercatodoModels\Role;
-use App\MercatodoModels\Permission;
-use Illuminate\Support\Facades\Gate;
 
 /*
 |--------------------------------------------------------------------------
@@ -159,3 +155,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::post('products/import', 'Admin\AdminProductController@import')
     ->name('products.import');
+
+Route::get('products/export', 'Admin\AdminProductController@exportProduct')
+    ->name('products.export');

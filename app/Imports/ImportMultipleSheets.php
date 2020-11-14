@@ -13,7 +13,6 @@ class importMultipleSheets implements WithMultipleSheets
      */
     public function sheets(): array
     {
-
         return [
             'Worksheet' => new ProductImport(),
         ];

@@ -50,7 +50,6 @@ class Product extends Model
     public function scopeisInactive($query)
     {
         return $query->where('deleted_at', !'');
-
     }
 
     /**
