@@ -4,22 +4,7 @@
     <div class="container">
 
         <!-- SEARCH FORM -->
-        <div class="card-tools">
-            <form>
-
-                <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="name" class="form-control float-right"
-                           placeholder="Buscar"
-                           value="{{ request()->get('name') }}"
-                    >
-
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-
-        </div>
+        @include('custom.modal_search-product')
         <!-- -->
         <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <h1 class="display-4">Ofertas</h1>

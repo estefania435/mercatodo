@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ReportOrders;
 use App\Http\Controllers\Controller;
 use App\Repositories\Order\OrderRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class AdminOrderController extends Controller
 {
@@ -26,12 +28,16 @@ class AdminOrderController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         $this->authorize('haveaccess', 'admin.order.index');
-        $orders = $this->orders->getAllOrders();
 
-        return view('admin.order.index', compact('orders'));
+        $orders = $this->orders->getAllOrders($request);
+
+        $request = $request->all();
+
+
+        return view('admin.order.index', compact('orders', 'request'));
     }
 
     /**
@@ -46,5 +52,18 @@ class AdminOrderController extends Controller
         $this->orders->seeOrder($id);
 
         return redirect('/admin/detail');
+    }
+
+    /**
+     * report of products
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function reportOrder(Request $request): RedirectResponse
+    {
+        $this->orders->orderReport($request);
+
+        return redirect()->back()->with('data', 'Reporte generado correctamente');
     }
 }

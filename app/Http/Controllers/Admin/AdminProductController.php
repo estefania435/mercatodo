@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\ProductExport;
+use App\Exports\ReportProducts;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Products\ExportRequest;
 use App\Http\Requests\Products\ImportRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Imports\ProductImport;
 use App\Imports\importMultipleSheets;
+use App\MercatodoModels\Category;
 use App\Repositories\product\ProductRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,10 +43,12 @@ class AdminProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $products = $this->productRepo->getAllProduct($request);
+        $products = $this->productRepo->getAllProductAdmin($request);
+        $category = Category::orderBy('name')->get();
 
+        $request = $request->all();
 
-        return view('admin.product.index', compact('products'));
+        return view('admin.product.index', compact('products', 'category', 'request'));
     }
 
     /**
@@ -186,5 +189,18 @@ class AdminProductController extends Controller
         $this->productRepo->productExport($request);
 
         return redirect()->back()->with('success', 'Se han exportado los productos de manera correcta');
+    }
+
+    /**
+     * report of products
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function reportProduct(Request $request): RedirectResponse
+    {
+        $this->productRepo->productReport($request);
+
+        return redirect()->back()->with('data', 'Reporte generado correctamente');
     }
 }

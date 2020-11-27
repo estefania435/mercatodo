@@ -37,6 +37,7 @@ class Order extends Model
         return $this->hasMany("App\MercatodoModels\Detail");
     }
 
+
     /**
      * scope to search for the order with state zero and belonging to the authenticated user
      *
@@ -58,5 +59,20 @@ class Order extends Model
     {
         return $query->where('orders.user_id', '=', Auth::user()->id)
             ->where('orders.status', '=', 'OPEN');
+    }
+
+    public function scopeStatusOrder($query, $status)
+    {
+        if ($status){
+            return $query->where('status','like', "%$status%");
+        }
+    }
+
+    public function scopeDateOrder($query, $date)
+    {
+        if ($date){
+            return $query->where('updated_at','like', "%$date%");
+        }
+
     }
 }

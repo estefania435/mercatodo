@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,8 @@ Route::get('/admin', function () {
     return view('plantilla.admin');
 })->name('admin');
 
-Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category')->middleware('auth');
+Route::resource('admin/category', 'Admin\AdminCategoryController')
+    ->names('admin.category')->middleware('auth');
 
 Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product')
     ->middleware('auth');
@@ -149,12 +151,20 @@ Route::get('pay/redirection', [
     'uses' => 'Admin\AdminPayController@redirection'
 ]);
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('products/import', 'Admin\AdminProductController@import')
     ->name('products.import');
 
 Route::get('products/export', 'Admin\AdminProductController@exportProduct')
     ->name('products.export');
+
+Route::get('orders/report', 'Admin\AdminOrderController@reportOrder')
+    ->name('report.orders');
+
+Route::get('report/products', 'Admin\AdminProductController@reportProduct')
+    ->name('report.products');
+
+Route::get('markAsRead', function(){
+    auth()->user()->unreadNotifications->markAsRead();
+    return redirect()->back();
+})->name('markAsRead');

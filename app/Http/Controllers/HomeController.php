@@ -6,6 +6,7 @@ use App\Repositories\cart\CartRepository;
 use App\Repositories\product\ProductRepository;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\MercatodoModels\Category;
 
 class HomeController extends Controller
 {
@@ -33,7 +34,8 @@ class HomeController extends Controller
     {
         $products = $this->prodRepo->getAllProduct($request);
         $cart = $this->cartShowRepo->getProductsOfCart();
+        $category = Category::orderBy('name')->get();
 
-        return view('home', compact('products', 'cart'));
+        return view('home', compact('products', 'cart', 'category'));
     }
 }
