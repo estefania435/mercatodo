@@ -47,9 +47,38 @@ class Product extends Model
         return $this->hasMany("App\MercatodoModels\Detail");
     }
 
-    public function scopeisInactive($query)
+    public function scopeIsInactive($query, $deleted)
     {
-        return $query->where('deleted_at', !'');
+        if ($deleted == 'inactive')
+        {
+            return $query->where('deleted_at', '!=', null);
+        }
+        else{
+            return $query->where('deleted_at', '=', null);
+        }
+    }
+
+    public function scopePrice($query, $price)
+    {
+        if ($price){
+            return $query->where('price', '>=', "$price");
+        }
+    }
+
+    public function scopeName($query, $name)
+    {
+        if ($name){
+            return $query->where('name','like', "%$name%");
+        }
+    }
+
+    public function scopeCategory($query, $category)
+    {
+        if ($category){
+
+                 return $query->where('category_id', 'like', "%$category%");
+        }
+
     }
 
     /**

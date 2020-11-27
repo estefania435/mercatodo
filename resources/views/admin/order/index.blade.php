@@ -18,24 +18,20 @@
                     <h3 class="card-title">Section of orders</h3>
 
                     <div class="card-tools">
-                        <form>
-
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="name" class="form-control float-right"
-                                       placeholder="Search"
-                                       value="{{ request()->get('name') }}"
-                                >
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
+                        <nav class="navbar navbar-light bg-light">
+                            @include('custom.modal_search-orders')
+                        </nav>
 
                     </div>
+
+
                 </div>
 
                 <div class="card-body table-responsive p-0" style="height: 300px;">
+
+                    <td><a class=" m-2 float-right btn btn-success"
+                           href="{{ route('report.orders', $request) }}">Report</a></td>
+
                     <table class="table table-head-fixed text-nowrap">
                         <thead>
                         <tr>
