@@ -193,7 +193,7 @@ class ProductRepository extends BaseRepository
      */
     public function productReport(Request $request): void
     {
-        (new ReportProducts($request->all()))->queue('ReporOfproducts.xlsx')->chain([
+        (new ReportProducts($request->all()))->queue('ReportOfproducts.xlsx')->chain([
             new NotifyUserOfCompletedReport(request()->user()),
         ]);
     }
