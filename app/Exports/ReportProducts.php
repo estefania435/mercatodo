@@ -9,8 +9,11 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ReportProducts implements FromCollection, WithHeadings, WithMapping, ShouldQueue
+class ReportProducts implements FromCollection, WithHeadings, WithMapping, ShouldQueue, ShouldAutoSize, WithStyles
 {
     use Exportable;
     protected $request;
@@ -79,6 +82,13 @@ class ReportProducts implements FromCollection, WithHeadings, WithMapping, Shoul
             'updated',
 
         ] ;
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1    => ['font' => ['bold' => true]],
+        ];
     }
 
 }

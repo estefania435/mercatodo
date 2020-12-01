@@ -3,6 +3,7 @@
 namespace App\Repositories\Order;
 
 use App\Exports\ReportOrders;
+use App\Exports\ReportSales;
 use App\Jobs\NotifyUserOfCompletedReport;
 use App\MercatodoModels\Order;
 use App\Repositories\BaseRepository;
@@ -52,7 +53,15 @@ class OrderRepository extends BaseRepository
      */
     public function orderReport(Request $request): void
     {
-        (new ReportOrders($request->all()))->queue('orders.xlsx')->chain([
+       (new ReportOrders($request->all()))->queue('reportOrders.xlsx')->chain([
+            new NotifyUserOfCompletedReport(request()->user()),
+        ]);
+    }
+
+    public function saleReport(Request $request): void
+    {
+        //(new ReportSales($request->all()))->store('reportSales.xlsx');
+        (new ReportSales($request->all()))->queue('reportSales.xlsx')->chain([
             new NotifyUserOfCompletedReport(request()->user()),
         ]);
     }

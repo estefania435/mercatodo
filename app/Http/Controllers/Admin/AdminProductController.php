@@ -188,7 +188,7 @@ class AdminProductController extends Controller
     {
         $this->productRepo->productExport($request);
 
-        return redirect()->back()->with('success', 'Se han exportado los productos de manera correcta');
+        return redirect()->back()->with('data', 'Se han exportado los productos de manera correcta');
     }
 
     /**

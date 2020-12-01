@@ -9,8 +9,11 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Illuminate\Support\Collection;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
 
-class ProductExport implements FromCollection, WithMapping, WithHeadings
+class ProductExport implements FromCollection, WithMapping, WithHeadings, WithStyles, ShouldAutoSize
 {
     use Exportable;
 
@@ -72,5 +75,12 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings
             'image',
             'imageabletype'
         ] ;
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1    => ['font' => ['bold' => true]],
+        ];
     }
 }

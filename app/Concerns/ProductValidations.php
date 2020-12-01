@@ -13,9 +13,9 @@ trait ProductValidations
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:products,name',
+            'name' => 'required|string',
             'slug' => 'required|string',
-            'category' => 'required|numeric|exists:categories,id',
+            'category' => 'required|exists:categories,name',
             'quantity' => 'required|numeric',
             'price' => 'required|numeric',
             'description' => 'required|string',
