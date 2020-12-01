@@ -164,6 +164,9 @@ Route::get('orders/report', 'Admin\AdminOrderController@reportOrder')
 Route::get('report/products', 'Admin\AdminProductController@reportProduct')
     ->name('report.products');
 
+Route::get('report/sales', 'Admin\AdminOrderController@saleReport')
+    ->name('report.sales');
+
 Route::get('markAsRead', function(){
     auth()->user()->unreadNotifications->markAsRead();
     return redirect()->back();

@@ -66,4 +66,13 @@ class AdminOrderController extends Controller
 
         return redirect()->back()->with('data', 'Reporte generado correctamente');
     }
+
+    public function saleReport(Request $request)
+    {
+
+        $this->orders->saleReport($request);
+
+        return redirect()->back()->with('data', 'Reporte de ventas generado correctamente');
+
+    }
 }

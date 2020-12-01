@@ -30,7 +30,10 @@
                 <div class="card-body table-responsive p-0" style="height: 300px;">
 
                     <td><a class=" m-2 float-right btn btn-success"
-                           href="{{ route('report.orders', $request) }}">Report</a></td>
+                           href="{{ route('report.orders', $request) }}">Report orders</a></td>
+
+                    <a class=" m-2 float-right btn btn-success"
+                       href="{{ route('report.sales', $request) }}">Report sales</a>
 
                     <table class="table table-head-fixed text-nowrap">
                         <thead>

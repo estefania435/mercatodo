@@ -12,8 +12,12 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\MercatodoModels\User;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ReportOrders implements FromCollection, ShouldQueue//, WithMapping, WithHeadings
+class ReportOrders implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithStyles, ShouldQueue
 {
     use Exportable;
     protected $request;
@@ -49,41 +53,48 @@ class ReportOrders implements FromCollection, ShouldQueue//, WithMapping, WithHe
         }
     }
 
-   /* public function map($order) : array
+   public function map($order) : array
     {
-            foreach ($order->details as $detail)
-            {
-                //dd($detail->products);
-                $category = Category::where('id', $detail->products->category_id)->get();
-                        return [
-                            $order->code,
-                            $detail->product->name,
-                            $category->name,
-                            $detail->product->price,
-                            $detail->product->description,
-                            $detail->product->status,
-                            $detail->quantity,
-                            $order->total,
-                            $order->updated_at,
+        $user = User::where('id', $order->user_id)->first();
 
-                        ];
-                }
+             return [
+                      $order->code,
+                      $order->total,
+                      $order->status,
+                      $user->name,
+                      $user->surname,
+                      $order->name_receive,
+                      $order->surname,
+                      $order->address,
+                      $order->phone,
+                      $order->created_at,
+                      $order->updated_at,
 
+             ];
     }
 
     public function headings() : array
     {
         return [
             'code',
-            'product',
-            'category',
-            'priceproduct',
-            'description',
-            'status',
-            'quantitysold',
             'total',
-            'date'
+            'status',
+            'name',
+            'surname',
+            'namereceive',
+            'surname',
+            'address',
+            'phone',
+            'created',
+            'updated_at'
         ] ;
-    }*/
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1    => ['font' => ['bold' => true]],
+        ];
+    }
 
 }
