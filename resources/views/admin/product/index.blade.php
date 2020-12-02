@@ -8,7 +8,6 @@
 
 @section('content')
 
-
     <div id="confirmdelete" class="row">
 
         <span style="display:none;" id="urlbase">{{route('admin.product.index')}}</span>

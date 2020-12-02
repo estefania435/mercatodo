@@ -62,6 +62,8 @@ class AdminOrderController extends Controller
      */
     public function reportOrder(Request $request): RedirectResponse
     {
+        $this->authorize('haveaccess', 'report.orders');
+
         $this->orders->orderReport($request);
 
         return redirect()->back()->with('data', 'Reporte generado correctamente');
@@ -69,6 +71,7 @@ class AdminOrderController extends Controller
 
     public function saleReport(Request $request)
     {
+        $this->authorize('haveaccess', 'report.sales');
 
         $this->orders->saleReport($request);
 

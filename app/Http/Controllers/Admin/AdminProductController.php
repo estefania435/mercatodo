@@ -159,6 +159,8 @@ class AdminProductController extends Controller
      */
     public function restore(Request $request): RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.product.restore');
+
         $this->productRepo->restore($request);
 
         return redirect()->route('admin.product.index')
@@ -173,6 +175,8 @@ class AdminProductController extends Controller
      */
     public function import(ImportRequest $request): RedirectResponse
     {
+        $this->authorize('haveaccess', 'products.import');
+
         $this->productRepo->ImportProduct($request);
 
         return redirect()->back()->with('data', 'Se han importado los productos de manera correcta');
@@ -186,6 +190,8 @@ class AdminProductController extends Controller
      */
     public function exportProduct(Request $request): RedirectResponse
     {
+        $this->authorize('haveaccess', 'products.export');
+
         $this->productRepo->productExport($request);
 
         return redirect()->back()->with('data', 'Se han exportado los productos de manera correcta');
@@ -199,6 +205,8 @@ class AdminProductController extends Controller
      */
     public function reportProduct(Request $request): RedirectResponse
     {
+        $this->authorize('haveaccess', 'report.products');
+
         $this->productRepo->productReport($request);
 
         return redirect()->back()->with('data', 'Reporte generado correctamente');

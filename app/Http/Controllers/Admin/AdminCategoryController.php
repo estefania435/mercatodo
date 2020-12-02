@@ -142,6 +142,8 @@ class AdminCategoryController extends Controller
      */
     public function restore(Request $request): RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.category.restore');
+
         $this->categoryRepo->restore($request);
 
         return redirect()->route('admin.category.index')
