@@ -1,25 +1,26 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\MercatodoModels\Category;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+class CategoryFactory extends Factory
+{
+    /**
+     * @var string
+     */
+    protected $model = Category::class;
 
-$factory->define(Category::class, function (Faker $faker) {
-    return [
-        'name' => $faker->unique()->text(20),
-        'slug' => $faker->text(20),
-        'description' => $faker->text(150),
-    ];
-});
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->unique()->text(20),
+            'slug' => $this->faker->text(20),
+            'description' => $this->faker->text(150),
+        ];
+    }
+}
