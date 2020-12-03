@@ -156,16 +156,16 @@ Route::post('products/import', 'Admin\AdminProductController@import')
     ->name('products.import');
 
 Route::get('products/export', 'Admin\AdminProductController@exportProduct')
-    ->name('products.export');
+    ->name('products.export')->middleware('auth');
 
 Route::get('orders/report', 'Admin\AdminOrderController@reportOrder')
-    ->name('report.orders');
+    ->name('report.orders')->middleware('auth');
 
 Route::get('report/products', 'Admin\AdminProductController@reportProduct')
-    ->name('report.products');
+    ->name('report.products')->middleware('auth');
 
 Route::get('report/sales', 'Admin\AdminOrderController@saleReport')
-    ->name('report.sales');
+    ->name('report.sales')->middleware('auth');
 
 Route::get('markAsRead', function(){
     auth()->user()->unreadNotifications->markAsRead();

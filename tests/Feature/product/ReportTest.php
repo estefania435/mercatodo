@@ -2,90 +2,75 @@
 
 namespace Tests\Feature\product;
 
-use App\Exports\ProductExport;
-use App\Jobs\NotifyUserOfCompletedReport;
-use App\MercatodoModels\Category;
-use App\MercatodoModels\Product;
-use App\MercatodoModels\Role;
+use Database\Factories\CategoryFactory;
+use Database\Factories\PermissionFactory;
+use Database\Factories\ProductFactory;
+use database\factories\RoleFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\MercatodoModels\Permission;
 use Maatwebsite\Excel\Facades\Excel;
-use App\MercatodoModels\User;
-use Illuminate\Support\Facades\Hash;
 
 class ReportTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
-     * A basic feature test example.
+     * test to verify that a user is authenticated to generate a report
      *
+     * @test
      * @return void
      */
-    public function testaUserNotAuthenticatedCanGenerateReport()
+    public function aUserNotAuthenticatedCanGenerateReport(): void
     {
-        $category = Category::create([
-            'name' => 'perros',
-            'slug' => 'perros',
-            'description' => 'dfghfdsdfghfdsdfgfdsdfgdsdfgfdsdfgfdsdfgd'
+        CategoryFactory::new()->create([
+            'name' => 'perros'
         ]);
-        Product::create([
-            'name' => 'collar',
-            'slug' => 'collar',
-            'category_id' => $category->id,
-            'quantity' => 32,
-            'price' => 4000,
-            'description' => 'dsfghfdsadfghfdsdfghfdsdfghfdsdfghfdsadfgdsd',
-            'status' => 'New',
-        ]);
+        ProductFactory::new()->create();
 
         Excel::fake();
         $this->get(route('report.products', ['extension' => 'xlsx']))
             ->assertRedirect(route('login'));
     }
-    public function testExample()
+
+    /**
+     * test to verify if the user has permissions
+     *
+     * @test
+     * @return void
+     */
+    public function anUnauthorizedUserCanGenerateProductReports(): void
+    {
+        CategoryFactory::new()->create([
+            'name' => 'perros'
+        ]);
+        ProductFactory::new()->create();
+        $user = UserFactory::new()->create();
+        Excel::fake();
+
+        $this->actingAs($user)->get(route('report.products', ['extension' => 'xlsx']))
+            ->assertStatus(403);
+    }
+
+    /**
+     * test to verify if an authorized user can generate report of products
+     *
+     * @test
+     * @return void
+     */
+    public function anAuthorizedUserCanGenerateProductReports(): void
      {
-         $category = Category::create([
-             'name' => 'perros',
-             'slug' => 'perros',
-             'description' => 'dfghfdsdfghfdsdfgfdsdfgdsdfgfdsdfgfdsdfgd'
+         CategoryFactory::new()->create();
+         ProductFactory::new()->create();
+         $permission = PermissionFactory::new()->create([
+             'slug' => 'report.products'
          ]);
-         $permission = Permission::create
-         (['name' => 'Generate report of products',
-             'slug' => 'report.products',
-             'description' => 'dsfghgfdsadfghjgfdsdfghjgfdsasdfghjgfdsasdfghgf']);
-         $user = User::create([
-
-             'name' => 'tefa',
-             'surname' => 'Eladmin',
-             'identification' => '1152221843',
-             'address' => 'carrera 76 B # 54 38',
-             'phone' => '3173015098',
-             'email' => 'estefa@admin.com',
-             'password' => Hash::make('1234567890'),
-         ]);
-         $roladmin = Role::create([
-             'name' => 'Admin',
-             'slug' => 'admin',
-             'description' => 'Administrator',
+         $roladmin = RoleFactory::new()->create([
              'full-access' => 'yes'
-
          ]);
-
+         $user = UserFactory::new()->create();
          $user->roles()->sync([$roladmin->id]);
          $roladmin->permissions()->sync($permission->id);
-
-         $product = Product::create([
-             'name' => 'collar',
-             'slug' => 'collar',
-             'category_id' => $category->id,
-             'quantity' => 32,
-             'price' => 4000,
-             'description' => 'dsfghfdsadfghfdsdfghfdsdfghfdsdfghfdsadfgdsd',
-             'status' => 'New',
-         ]);
-
          Excel::fake();
 
          $this->actingAs($user)->from(route('admin.product.index'))
