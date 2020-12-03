@@ -2,65 +2,98 @@
 
 namespace Tests\Feature\product;
 
+
+use Database\Factories\PermissionFactory;
+use database\factories\RoleFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use App\MercatodoModels\Category;
 use Database\Factories\CategoryFactory;
 
 class ImportTest extends TestCase
 {
     use RefreshDatabase;
     use WithoutMiddleware;
+
     /**
-     * A basic feature test example.
+     * test to verify that an authorized person can import products
      *
+     * @test
      * @return void
      */
-    public function testItCanImportProducts()
+    public function itCanImportProducts(): void
     {
+        CategoryFactory::new()->create([
+            'name' => 'perros'
+        ]);
+        $permission = PermissionFactory::new()->create([
+            'slug' => 'products.import'
+        ]);
+        $roladmin = RoleFactory::new()->create([
+            'full-access' => 'yes'
+        ]);
+        $user = UserFactory::new()->create();
 
-        $c = new Category();
-        $c->name = 'perros';
-        $c->slug = 'perros';
-        $c->description = 'ghjkvghjhgfdfghjhgfdfghjhgfdsdfghj';
-        $c->save();
+        $user->roles()->sync([$roladmin->id]);
+        $roladmin->permissions()->sync($permission->id);
 
         $importFile = $this->getUploadedFile('products.xlsx');
 
-        $response = $this->post($this->getRoute(), ['importFile' => $importFile]);
+        $this->actingAs($user)->post($this->getRoute(), ['importFile' => $importFile]);
 
         $this->assertDatabaseHas('products', [
             'name' => 'paseador'
         ]);
-
-        $response->assertRedirect(route('admin.product.index'));
     }
 
-    public function testItCannotProductsDueValidationErrors()
+    /**
+     * test to verify that products are not imported if they do not meet validations
+     *
+     * @test
+     * @return void
+     */
+    public function itCannotImportProductsDueValidationErrors(): void
     {
-        $c = new Category();
-        $c->name = 'perros';
-        $c->slug = 'perros';
-        $c->description = 'ghjkvghjhgfdfghjhgfdfghjhgfdsdfghj';
-        $c->save();
+        CategoryFactory::new()->create([
+            'name' => 'perros'
+        ]);
+        $permission = PermissionFactory::new()->create([
+            'slug' => 'products.import'
+        ]);
+        $roladmin = RoleFactory::new()->create([
+            'full-access' => 'yes'
+        ]);
+        $user = UserFactory::new()->create();
+
+        $user->roles()->sync([$roladmin->id]);
+        $roladmin->permissions()->sync($permission->id);
         $importFile = $this->getUploadedFile('productsnot.xlsx');
 
-        $response = $this->post($this->getRoute(), ['importFile' => $importFile]);
-
+        $response = $this->actingAs($user)->post($this->getRoute(), ['importFile' => $importFile]);
 
         $response->assertSessionHasErrors();
         $this->assertDatabaseCount('products', 0);
-
     }
 
+    /**
+     * function for define to route
+     *
+     *
+     * @return string
+     */
     private function getRoute(): string
     {
         return route('products.import');
     }
 
+    /**
+     * function for define the archive
+     *
+     * @param string $fileName
+     * @return uploadedFile
+     */
     private function getUploadedFile(string $fileName): uploadedFile
     {
         $filePath = base_path('tests/stubs/' . $fileName);

@@ -24,14 +24,14 @@ Route::apiResource('product', 'API\ProductController')->names('api.product');
 
 Route::get('/autocomplete', 'API\AutocompleteController@autocomplete')->name('autocomplete');
 
-Route::get('Product', 'API\ProductController@showAllProducts');
+Route::get('Product', 'API\ProductController@showAllProducts')->name('api.product.index');
 
-Route::get('Product/{slug}', 'API\ProductController@ShowAProduct');
+Route::get('Product/{slug}', 'API\ProductController@ShowAProduct')->name('api.product.show');
 
-Route::post('Product', 'API\ProductController@createProduct');
+Route::post('Product', 'API\ProductController@createProduct')->name('api.product.store');
 
-Route::delete('Product/{id}', 'API\ProductController@deleteProduct');
+Route::delete('Product/{id}', 'API\ProductController@deleteProduct')->name('api.product.delete');
 
-Route::put('Product/{id}', 'API\ProductController@updateProduct');
+Route::put('Product/{id}', 'API\ProductController@updateProduct')->name('api.product.update');
 
-Route::post('Product/{id}', 'API\ProductController@restore');
+Route::post('Product/{id}', 'API\ProductController@restore')->name('api.product.restore');
