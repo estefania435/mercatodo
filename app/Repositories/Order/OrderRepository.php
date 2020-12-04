@@ -53,7 +53,7 @@ class OrderRepository extends BaseRepository
      */
     public function orderReport(Request $request): void
     {
-       (new ReportOrders($request->all()))->queue('reportOrders.xlsx')->chain([
+        (new ReportOrders($request->all()))->queue('reportOrders.xlsx')->chain([
             new NotifyUserOfCompletedReport(request()->user()),
         ]);
     }

@@ -16,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class ReportSales implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithStyles, ShouldQueue
 {
     use Exportable;
+
     protected $request;
 
     public function __construct($request)
@@ -29,24 +30,18 @@ class ReportSales implements FromCollection, WithMapping, WithHeadings, ShouldAu
     public function collection()
     {
 
-        if (empty($this->request['searchbydate']))
-        {
-
+        if (empty($this->request['searchbydate'])) {
             return Order::with('details', 'details.products')->where('status', '=', 'APPROVED')->get();
-
-        }
-        else
-        {
+        } else {
             return Order::with('details', 'details.products')->where('status', '=', 'APPROVED')
             ->dateorder($this->request['searchbydate'])->get();
         }
     }
 
-    public function map($order) : array
+    public function map($order): array
     {
 
-        foreach ($order->details as $detail)
-        {
+        foreach ($order->details as $detail) {
             $category = Category::where('id', $detail->products->category_id)->first();
             return [
                 $order->code,
@@ -63,7 +58,7 @@ class ReportSales implements FromCollection, WithMapping, WithHeadings, ShouldAu
     }
 
 
-    public function headings() : array
+    public function headings(): array
     {
         return [
             'code',

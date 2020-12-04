@@ -31,51 +31,49 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
 
 
 
-            if ($products) {
-                $products->slug = $row['name'];
-                $products->category_id = $category->id;
-                $products->quantity = $row['quantity'];
-                $products->price = $row['price'];
-                $products->description = $row['description'];
-                $products->specifications = $row['specifications'];
-                $products->data_of_interest = $row['data'];
-                $products->status = $row['status'];
-                $products->save();
+        if ($products) {
+            $products->slug = $row['name'];
+            $products->category_id = $category->id;
+            $products->quantity = $row['quantity'];
+            $products->price = $row['price'];
+            $products->description = $row['description'];
+            $products->specifications = $row['specifications'];
+            $products->data_of_interest = $row['data'];
+            $products->status = $row['status'];
+            $products->save();
 
-                $img = str_replace('/images/products/', '', $row['image']);
-                $imagen = '/images/products/' . $img;
+            $img = str_replace('/images/products/', '', $row['image']);
+            $imagen = '/images/products/' . $img;
 
-                $imageExist = Image::where('url', $imagen)->where('imageable_id', $products->id)->first();
+            $imageExist = Image::where('url', $imagen)->where('imageable_id', $products->id)->first();
 
-                if (!$imageExist) {
-                    $image = new Image();
-                    $image->url = $imagen;
-                    $image->imageable_type = $row['imageabletype'];
-                    $image->imageable_id = $products->id;
-                    $image->save();
-                }
-            } else {
-                $product = new Product();
-                $product->name = $row['name'];
-                $product->slug = $row['name'];
-                $product->category_id = $category->id;
-                $product->quantity = $row['quantity'];
-                $product->price = $row['price'];
-                $product->description = $row['description'];
-                $product->specifications = $row['specifications'];
-                $product->data_of_interest = $row['data'];
-                $product->status = $row['status'];
-                $product->save();
-
-                $img = str_replace('/images/products/', '', $row['image']);
-
+            if (!$imageExist) {
                 $image = new Image();
-                $image->url = '/images/products/' . $img;
-                $image->imageable_type = 'App\MercatodoModels\Product';
-                $image->imageable_id = $product->id;
+                $image->url = $imagen;
+                $image->imageable_type = $row['imageabletype'];
+                $image->imageable_id = $products->id;
                 $image->save();
             }
+        } else {
+            $product = new Product();
+            $product->name = $row['name'];
+            $product->slug = $row['name'];
+            $product->category_id = $category->id;
+            $product->quantity = $row['quantity'];
+            $product->price = $row['price'];
+            $product->description = $row['description'];
+            $product->specifications = $row['specifications'];
+            $product->data_of_interest = $row['data'];
+            $product->status = $row['status'];
+            $product->save();
 
+            $img = str_replace('/images/products/', '', $row['image']);
+
+            $image = new Image();
+            $image->url = '/images/products/' . $img;
+            $image->imageable_type = 'App\MercatodoModels\Product';
+            $image->imageable_id = $product->id;
+            $image->save();
+        }
     }
-
 }

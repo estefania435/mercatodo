@@ -20,6 +20,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class ReportOrders implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithStyles, ShouldQueue
 {
     use Exportable;
+
     protected $request;
 
     public function __construct($request)
@@ -32,28 +33,21 @@ class ReportOrders implements FromCollection, WithMapping, WithHeadings, ShouldA
     */
     public function collection()
     {
-        if (empty($this->request))
-        {
+        if (empty($this->request)) {
             return Order::with('details', 'details.products')->get();
-        }
-        else {
-            if (!empty($this->request['searchbystate']) & !empty($this->request['searchbydate']))
-            {
+        } else {
+            if (!empty($this->request['searchbystate']) & !empty($this->request['searchbydate'])) {
                 return Order::with('details', 'details.products')->statusorder($this->request['searchbystate'])
                     ->dateorder($this->request['searchbydate'])->get();
-            }
-            else if(!empty($this->request['searchbystate']))
-            {
+            } elseif (!empty($this->request['searchbystate'])) {
                 return Order::with('details', 'details.products')->statusorder($this->request['searchbystate'])->get();
-            }
-            else
-            {
+            } else {
                 return Order::with('details', 'details.products')->dateorder($this->request['searchbydate'])->get();
             }
         }
     }
 
-   public function map($order) : array
+    public function map($order): array
     {
         $user = User::where('id', $order->user_id)->first();
 
@@ -73,7 +67,7 @@ class ReportOrders implements FromCollection, WithMapping, WithHeadings, ShouldA
              ];
     }
 
-    public function headings() : array
+    public function headings(): array
     {
         return [
             'code',
@@ -96,5 +90,4 @@ class ReportOrders implements FromCollection, WithMapping, WithHeadings, ShouldA
             1    => ['font' => ['bold' => true]],
         ];
     }
-
 }

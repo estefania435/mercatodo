@@ -12,7 +12,10 @@ use App\Notifications\ExportReady;
 
 class NotifyUserOfCompletedReport implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public $user;
     /**

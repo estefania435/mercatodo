@@ -44,7 +44,6 @@ class UpdateProductTest extends TestCase
         ]);
 
         $this->actingAs($user)->putJson(route('api.product.update', $p->id), $product)->assertStatus(403);
-
     }
     /**
      * test to verify if an authorized user can update a product
@@ -82,6 +81,5 @@ class UpdateProductTest extends TestCase
 
         $response = $this->actingAs($user)->putJson(route('api.product.update', $p->id), $product);
         $response->assertStatus(200);
-
     }
 }

@@ -68,6 +68,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function orders(): BelongsTo
     {
-        return $this->belongsTo("App\MercatodoModels\Order");
+        return $this->belongsTo('App\MercatodoModels\Order');
     }
 }

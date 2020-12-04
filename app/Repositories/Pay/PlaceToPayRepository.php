@@ -46,14 +46,12 @@ class PlaceToPayRepository extends BaseRepository
     {
         $p = Pay::inProcess()->first();
 
-        if ($p)
-        {
+        if ($p) {
             $p->delete();
             $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
             $total = $order->total;
             $reference = $order->id;
-        }
-        else {
+        } else {
             $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
 
             $total = $order->total;
@@ -66,14 +64,14 @@ class PlaceToPayRepository extends BaseRepository
 
         $amount =
             [
-                "currency" => "COP",
-                "total" => $total,
+                'currency' => 'COP',
+                'total' => $total,
             ];
 
         $payment =
             [
-                "reference" => $reference,
-                "description" => "Pago básico de prueba",
+                'reference' => $reference,
+                'description' => 'Pago básico de prueba',
                 'amount' => $amount,
             ];
 
@@ -81,10 +79,10 @@ class PlaceToPayRepository extends BaseRepository
             [
                 'auth' => $auth,
                 'payment' => $payment,
-                "expiration" => date('c', strtotime("+15 minutes")),
-                "returnUrl" => 'http://127.0.0.1:8000/pay/consultPayment/' . $reference,
-                "ipAddress" => "127.0.0.1",
-                "userAgent" => "PlacetoPay Sandbox",
+                'expiration' => date('c', strtotime('+15 minutes')),
+                'returnUrl' => 'http://127.0.0.1:8000/pay/consultPayment/' . $reference,
+                'ipAddress' => '127.0.0.1',
+                'userAgent' => 'PlacetoPay Sandbox',
             ];
         $url = 'https://test.placetopay.com/redirection/api/session/';
 
@@ -101,13 +99,13 @@ class PlaceToPayRepository extends BaseRepository
 
             return $result;
         } catch (RequestException $e) {
-            Log::channel('contlog')->error("RequestException" .
+            Log::channel('contlog')->error('RequestException' .
                     Psr7\str($e->getResponse()));
         } catch (ServerException $e) {
-            Log::channel('contlog')->error("ServerException" .
+            Log::channel('contlog')->error('ServerException' .
                     Psr7\str($e->getResponse()));
         } catch (BadResponseException $e) {
-            Log::channel('contlog')->error("BadResponseException" .
+            Log::channel('contlog')->error('BadResponseException' .
                    Psr7\str($e->getResponse()));
         }
     }
@@ -129,10 +127,10 @@ class PlaceToPayRepository extends BaseRepository
         $data =
             [
                 'auth' => $auth,
-                "expiration" => date('c', strtotime("+15 minutes")),
-                "returnUrl" => 'http://127.0.0.1:8000/pay/updatedata/' . $reference,
-                "ipAddress" => "127.0.0.1",
-                "userAgent" => "PlacetoPay Sandbox",
+                'expiration' => date('c', strtotime('+15 minutes')),
+                'returnUrl' => 'http://127.0.0.1:8000/pay/updatedata/' . $reference,
+                'ipAddress' => '127.0.0.1',
+                'userAgent' => 'PlacetoPay Sandbox',
             ];
 
         $url = 'https://test.placetopay.com/redirection/api/session/' . $requestId;
@@ -147,17 +145,17 @@ class PlaceToPayRepository extends BaseRepository
 
             $body = $response->getBody();
             $res = json_decode($response->getBody());
-            Log::channel('contlog')->info("respuesta pago: " . $body);
+            Log::channel('contlog')->info('respuesta pago: ' . $body);
 
             return $res;
         } catch (RequestException $e) {
-            Log::channel('contlog')->error("RequestException" .
+            Log::channel('contlog')->error('RequestException' .
                 Psr7\str($e->getResponse()));
         } catch (ServerException $e) {
-            Log::channel('contlog')->error("ServerException" .
+            Log::channel('contlog')->error('ServerException' .
                 Psr7\str($e->getResponse()));
         } catch (BadResponseException $e) {
-            Log::channel('contlog')->error("BadResponseException" .
+            Log::channel('contlog')->error('BadResponseException' .
                 Psr7\str($e->getResponse()));
         }
     }
@@ -179,10 +177,10 @@ class PlaceToPayRepository extends BaseRepository
         $data =
             [
                 'auth' => $auth,
-                "expiration" => date('c', strtotime("+15 minutes")),
-                "returnUrl" => 'http://127.0.0.1:8000/pay/updatedata/' . $reference,
-                "ipAddress" => "127.0.0.1",
-                "userAgent" => "PlacetoPay Sandbox",
+                'expiration' => date('c', strtotime('+15 minutes')),
+                'returnUrl' => 'http://127.0.0.1:8000/pay/updatedata/' . $reference,
+                'ipAddress' => '127.0.0.1',
+                'userAgent' => 'PlacetoPay Sandbox',
             ];
 
         $url = 'https://test.placetopay.com/redirection/api/session/' . $requestId;
@@ -197,17 +195,17 @@ class PlaceToPayRepository extends BaseRepository
 
             $body = $response->getBody();
             $res = json_decode($response->getBody());
-            Log::channel('contlog')->info("respuesta pago: " . $body);
+            Log::channel('contlog')->info('respuesta pago: ' . $body);
 
             return $res;
         } catch (RequestException $e) {
-            Log::channel('contlog')->error("RequestException" .
+            Log::channel('contlog')->error('RequestException' .
                 Psr7\str($e->getResponse()));
         } catch (ServerException $e) {
-            Log::channel('contlog')->error("ServerException" .
+            Log::channel('contlog')->error('ServerException' .
                 Psr7\str($e->getResponse()));
         } catch (BadResponseException $e) {
-            Log::channel('contlog')->error("BadResponseException" .
+            Log::channel('contlog')->error('BadResponseException' .
                 Psr7\str($e->getResponse()));
         }
     }

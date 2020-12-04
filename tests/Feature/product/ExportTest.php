@@ -14,6 +14,7 @@ use Tests\TestCase;
 class ExportTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * test to verify that a user is authenticated to export product
      *

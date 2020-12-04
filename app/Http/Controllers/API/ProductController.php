@@ -57,7 +57,7 @@ class ProductController extends Controller
      * @param string $slug
      * @return JsonResponse
      */
-    public function ShowAProduct(string $slug): JsonResponse
+    public function showProduct(string $slug): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.show');
 
@@ -73,7 +73,7 @@ class ProductController extends Controller
      * @param ProductStoreRequest $request
      * @return JsonResponse
      */
-    public function createProduct(ProductStoreRequest $request): JsonResponse
+    public function create(ProductStoreRequest $request): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.create');
 
@@ -97,7 +97,7 @@ class ProductController extends Controller
         $image->imageable_id = $prod->id;
         $image->save();
 
-        return response()->json(["message" => "Product create successfully"], 201);
+        return response()->json(['message' => 'Product create successfully'], 201);
     }
 
     /**
@@ -107,7 +107,7 @@ class ProductController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function updateProduct(ProductUpdateRequest $request, int $id): JsonResponse
+    public function update(ProductUpdateRequest $request, int $id): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.edit');
 
@@ -135,7 +135,7 @@ class ProductController extends Controller
             $image->save();
         }
 
-        return response()->json(["message" => "Product successfully updated"], 200);
+        return response()->json(['message' => 'Product successfully updated'], 200);
     }
 
     /**
@@ -144,16 +144,16 @@ class ProductController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function deleteProduct(int $id): JsonResponse
+    public function delete(int $id): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.destroy');
 
         if (Product::where('id', $id)->exists()) {
             $p = Product::find($id);
             $p->delete();
-            return response()->json(["message" => "Product delete successfully"], 200);
+            return response()->json(['message' => 'Product delete successfully'], 200);
         } else {
-            return response()->json(["message" => "Product not exist"], 404);
+            return response()->json(['message' => 'Product not exist'], 404);
         }
     }
 
@@ -169,6 +169,6 @@ class ProductController extends Controller
 
         Product::withTrashed()->find($id)->restore();
 
-        return response()->json(["message" => "Product restore successfully"], 200);
+        return response()->json(['message' => 'Product restore successfully'], 200);
     }
 }

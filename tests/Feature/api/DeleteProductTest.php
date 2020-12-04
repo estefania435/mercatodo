@@ -55,6 +55,5 @@ class DeleteProductTest extends TestCase
         $response = $this->actingAs($user)->deleteJson(route('api.product.delete', $product->id));
 
         $response->assertStatus(200);
-
     }
 }

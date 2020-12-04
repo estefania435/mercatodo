@@ -59,7 +59,7 @@ class ReportTest extends TestCase
      * @return void
      */
     public function anAuthorizedUserCanGenerateProductReports(): void
-     {
+    {
          CategoryFactory::new()->create();
          ProductFactory::new()->create();
          $permission = PermissionFactory::new()->create([
