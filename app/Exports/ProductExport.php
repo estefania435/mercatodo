@@ -34,7 +34,7 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithSt
      * @param mixed $product
      * @return array
      */
-    public function map($product) : array
+    public function map($product): array
     {
         $category = Category::where('id', $product->category_id)->first();
 
@@ -60,7 +60,7 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithSt
      *
      * @return array
      */
-    public function headings() : array
+    public function headings(): array
     {
         return [
             'name',

@@ -36,13 +36,10 @@ class ProductRepository extends BaseRepository
      */
     public function getAllProductAdmin(Request $request): LengthAwarePaginator
     {
-        if (empty($request->all()))
-        {
+        if (empty($request->all())) {
             return $this->getModel()->withTrashed('images', 'category')
                 ->orderBy('name')->paginate(env('PAGINATE'));
-        }
-        else {
-
+        } else {
             $isInactive = $request->get('searchbyisInactive');
 
             $category = $request->get('searchbycategory');
@@ -91,9 +88,9 @@ class ProductRepository extends BaseRepository
 
         $prod->images()->createMany($urlimages);
 
-        Log::channel('contlog')->info("El producto: " .
-            $prod->name . " " . "ha sido creado por: " . " " .
-            Auth::user()->name . " " . Auth::user()->surname);
+        Log::channel('contlog')->info('El producto: ' .
+            $prod->name . ' ' . 'ha sido creado por: ' . ' ' .
+            Auth::user()->name . ' ' . Auth::user()->surname);
     }
 
     /**
@@ -147,9 +144,9 @@ class ProductRepository extends BaseRepository
 
         $prod->images()->createMany($urlimages);
 
-        Log::channel('contlog')->info("El producto: " .
-            $prod->name . " " . "ha sido editado por: " . " " .
-            Auth::user()->name . " " . Auth::user()->surname);
+        Log::channel('contlog')->info('El producto: ' .
+            $prod->name . ' ' . 'ha sido editado por: ' . ' ' .
+            Auth::user()->name . ' ' . Auth::user()->surname);
     }
 
     /**
@@ -168,9 +165,9 @@ class ProductRepository extends BaseRepository
      * @param Request $request
      * @return void
      */
-    public function ImportProduct(Request $request): void
+    public function importProduct(Request $request): void
     {
-        Excel::import(new importMultipleSheets, $request->file('importFile'));
+        Excel::import(new importMultipleSheets(), $request->file('importFile'));
     }
 
     /**

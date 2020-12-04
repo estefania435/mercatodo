@@ -8,5 +8,5 @@ namespace App\Constants;
  */
 class ExportExtensions
 {
-    const EXTENSIONS = ['xlsx', 'csv', 'tsv'];
+    public const EXTENSIONS = ['xlsx', 'csv', 'tsv'];
 }

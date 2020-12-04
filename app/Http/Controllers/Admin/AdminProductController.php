@@ -177,7 +177,7 @@ class AdminProductController extends Controller
     {
         $this->authorize('haveaccess', 'products.import');
 
-        $this->productRepo->ImportProduct($request);
+        $this->productRepo->importProduct($request);
 
         return redirect()->back()->with('data', 'Se han importado los productos de manera correcta');
     }

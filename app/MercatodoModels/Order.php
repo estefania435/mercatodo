@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Order extends Model
 {
     use HasFactory;
+
     /**
      * @var string[]
      */
@@ -26,7 +27,7 @@ class Order extends Model
      */
     public function users(): BelongsTo
     {
-        return $this->belongsTo("App\MercatodoModels\User");
+        return $this->belongsTo('App\MercatodoModels\User');
     }
 
     /**
@@ -36,7 +37,7 @@ class Order extends Model
      */
     public function details(): HasMany
     {
-        return $this->hasMany("App\MercatodoModels\Detail");
+        return $this->hasMany('App\MercatodoModels\Detail');
     }
 
 
@@ -65,16 +66,15 @@ class Order extends Model
 
     public function scopeStatusOrder($query, $status)
     {
-        if ($status){
-            return $query->where('status','like', "%$status%");
+        if ($status) {
+            return $query->where('status', 'like', "%$status%");
         }
     }
 
     public function scopeDateOrder($query, $date)
     {
-        if ($date){
-            return $query->where('updated_at','like', "%$date%");
+        if ($date) {
+            return $query->where('updated_at', 'like', "%$date%");
         }
-
     }
 }

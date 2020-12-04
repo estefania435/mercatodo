@@ -45,7 +45,6 @@ class RestoreProductTest extends TestCase
 
         $this->actingAs($user)->postJson(route('api.product.restore', $p->id), $product)
             ->assertStatus(403);
-
     }
     /**
      * test to verify if an authorized user can restore a product
@@ -84,6 +83,5 @@ class RestoreProductTest extends TestCase
         $response = $this->actingAs($user)->postJson(route('api.product.restore', $p->id), $product);
 
         $response->assertStatus(200);
-
     }
 }

@@ -76,6 +76,5 @@ class AdminOrderController extends Controller
         $this->orders->saleReport($request);
 
         return redirect()->back()->with('data', 'Reporte de ventas generado correctamente');
-
     }
 }

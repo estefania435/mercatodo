@@ -73,9 +73,9 @@ class CategoryRepository extends BaseRepository
         $object->fill($data);
         $object->save();
         Category::flushCache();
-        Log::channel('contlog')->info("La categoria: " .
-            $object->name . " " . "ha sido editada por: " . " " .
-            Auth::user()->name . " " . Auth::user()->surname);
+        Log::channel('contlog')->info('La categoria: ' .
+            $object->name . ' ' . 'ha sido editada por: ' . ' ' .
+            Auth::user()->name . ' ' . Auth::user()->surname);
 
         return $object;
     }
