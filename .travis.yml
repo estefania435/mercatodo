@@ -18,6 +18,6 @@ before_script:
   - npm install
 
 script:
-    - composer phpcs-auto-check-project
-    - npm run lint-check
-    - composer phpunit
+  - composer phpcs-auto-check-project
+  - npm run lint-check
+  - composer phpunit
