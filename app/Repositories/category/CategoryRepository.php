@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use App\Helpers\Paginator;
 
 class CategoryRepository extends BaseRepository
 {
@@ -37,12 +38,14 @@ class CategoryRepository extends BaseRepository
      * @param object $data
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllCategories(Request $data): LengthAwarePaginator
+    public function getAllCategories(Request $request)
     {
-        $name = $data->get('name');
+        /*$name = $data->get('name');
 
         return $this->getModel()->withTrashed('category')
-            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
+            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(1);*/
+
+        return Paginator::paginate($request, Category::cachedCategories());
     }
 
     /**
@@ -53,6 +56,8 @@ class CategoryRepository extends BaseRepository
      */
     public function createCategory(array $data): Model
     {
+        Category::flushCache();
+
         return $this->getModel()->create($data);
     }
 
@@ -67,6 +72,7 @@ class CategoryRepository extends BaseRepository
     {
         $object->fill($data);
         $object->save();
+        Category::flushCache();
         Log::channel('contlog')->info("La categoria: " .
             $object->name . " " . "ha sido editada por: " . " " .
             Auth::user()->name . " " . Auth::user()->surname);

@@ -44,7 +44,7 @@ class AdminProductController extends Controller
     public function index(Request $request): View
     {
         $products = $this->productRepo->getAllProductAdmin($request);
-        $category = Category::orderBy('name')->get();
+        $category = $this->productRepo->categoryForProduct();
 
         $request = $request->all();
 

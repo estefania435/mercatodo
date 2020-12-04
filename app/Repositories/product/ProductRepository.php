@@ -159,7 +159,7 @@ class ProductRepository extends BaseRepository
      */
     public function categoryForProduct(): Collection
     {
-        return Category::orderBy('name')->get();
+        return Category::cachedCategories();
     }
 
     /**

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Paginator;
 use App\Http\Controllers\Controller;
+use App\MercatodoModels\Category;
 use App\Repositories\category\CategoryRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
