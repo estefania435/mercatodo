@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\product;
 
-
 use Database\Factories\PermissionFactory;
 use database\factories\RoleFactory;
 use Database\Factories\UserFactory;

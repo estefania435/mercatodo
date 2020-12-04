@@ -22,7 +22,7 @@ class Pay extends Model
      */
     public function orders(): BelongsTo
     {
-        return $this->belongsTo("App\MercatodoModels\Order");
+        return $this->belongsTo('App\MercatodoModels\Order');
     }
 
     /**

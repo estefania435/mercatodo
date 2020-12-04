@@ -84,7 +84,6 @@ class PaymentRepository extends BaseRepository
             $paymen->payment_method = 'PENDING';
 
             UpdateStatusPay::dispatch($paymen);
-
         } else {
             foreach ($dato->payment as $d) {
                 $paymen->payment_method = $d->paymentMethod;
@@ -92,9 +91,9 @@ class PaymentRepository extends BaseRepository
         }
         $paymen->save();
 
-        Log::channel('contlog')->info("pago realizado por: " .
-            $paymen->name . " " . $paymen->surname . " " .
-            "Con identificación" . " " . $paymen->document);
+        Log::channel('contlog')->info('pago realizado por: ' .
+            $paymen->name . ' ' . $paymen->surname . ' ' .
+            'Con identificación' . ' ' . $paymen->document);
     }
 
     /**
@@ -125,9 +124,9 @@ class PaymentRepository extends BaseRepository
         }
         $paymen->save();
 
-        Log::channel('contlog')->info("pago realizado por: " .
-            $paymen->name . " " . $paymen->surname . " " .
-            "Con identificación" . " " . $paymen->document);
+        Log::channel('contlog')->info('pago realizado por: ' .
+            $paymen->name . ' ' . $paymen->surname . ' ' .
+            'Con identificación' . ' ' . $paymen->document);
     }
 
     /**

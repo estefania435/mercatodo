@@ -12,6 +12,7 @@ class IndexProductTest extends TestCase
 {
     use RefreshDatabase;
     use WithoutMiddleware;
+
     /**
      * test to verify that the response is json
      *
@@ -52,5 +53,4 @@ class IndexProductTest extends TestCase
             ]
         ]);
     }
-
 }

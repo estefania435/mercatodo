@@ -57,7 +57,6 @@ class StoreProductTest extends TestCase
         ]);
 
         $this->actingAs($user)->postJson(route('api.product.store'), $product)->assertStatus(403);
-
     }
     /**
      * test to verify if an authorized user can create a product
@@ -96,6 +95,5 @@ class StoreProductTest extends TestCase
         $response->assertStatus(201);
 
         $this->assertEquals($product['name'], Product::first()->name);
-
     }
 }

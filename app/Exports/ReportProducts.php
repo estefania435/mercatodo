@@ -16,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class ReportProducts implements FromCollection, WithHeadings, WithMapping, ShouldQueue, ShouldAutoSize, WithStyles
 {
     use Exportable;
+
     protected $request;
 
     public function __construct($request)
@@ -23,31 +24,25 @@ class ReportProducts implements FromCollection, WithHeadings, WithMapping, Shoul
         $this->request = $request;
     }
 
-    public function Collection()
+    public function collection()
     {
-        if (empty($this->request))
-        {
+        if (empty($this->request)) {
             return Product::withTrashed('images', 'category')->get();
-        }
-
-        else {
+        } else {
             if (!empty($this->request['searchbyisInactive']) & !empty($this->request['searchbycategory'])) {
                 return Product::withTrashed('images', 'category')
                     ->isinactive($this->request['searchbyisInactive'])
                     ->category($this->request['searchbycategory'])->get();
-            }
-            else if(!empty($this->request['searchbyisInactive']))
-            {
-                return Product::withTrashed('images', 'category')->isinactive($this->request['searchbyisInactive'])->get();
-            }
-            else
-            {
+            } elseif (!empty($this->request['searchbyisInactive'])) {
+                return Product::withTrashed('images', 'category')
+                        ->isinactive($this->request['searchbyisInactive'])->get();
+            } else {
                 return Product::withTrashed('images', 'category')->category($this->request['searchbycategory'])->get();
             }
         }
     }
 
-    public function map($product) : array
+    public function map($product): array
     {
         $category = Category::where('id', $product->category_id)->first();
         return [
@@ -66,7 +61,7 @@ class ReportProducts implements FromCollection, WithHeadings, WithMapping, Shoul
         ];
     }
 
-   public function headings() : array
+    public function headings(): array
     {
         return [
             'name',
@@ -90,5 +85,4 @@ class ReportProducts implements FromCollection, WithHeadings, WithMapping, Shoul
             1    => ['font' => ['bold' => true]],
         ];
     }
-
 }
