@@ -34,7 +34,7 @@ class HomeController extends Controller
     {
         $products = $this->prodRepo->getAllProduct($request);
         $cart = $this->cartShowRepo->getProductsOfCart();
-        $category = Category::orderBy('name')->get();
+        $category = Category::cachedCategories();
 
         return view('home', compact('products', 'cart', 'category'));
     }
