@@ -18,29 +18,26 @@
                 <div class="card-header">
                     <h3 class="card-title">Section of products</h3>
 
-                    <div class="card-tools">
-                        <form>
+                    @include('custom.modal_search-product-admin')
 
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="name" class="form-control float-right"
-                                       placeholder="Search"
-                                       value="{{ request()->get('name') }}"
-                                >
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
                 </div>
+
+
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
+
+                    <td><a class=" m-2 float-right btn btn-primary"
+                           href="{{ route('report.products', $request) }}">Report</a></td>
+
                     @can('haveaccess','admin.product.create')
                     <td><a class=" m-2 float-right btn btn-primary"
-                           href="{{ route('admin.product.create') }}">Create</a></td>
+                           href="{{ route('admin.product.create') }}">Create product</a></td>
                     @endcan
+
+                   @include('custom.modal_import')
+
+                   @include('custom.modal_export')
+
                         <table class="table table-head-fixed text-nowrap">                        <thead>
                         <tr>
 
@@ -60,6 +57,7 @@
 
                                 <td>{{$product->name}}</td>
                                 <td>
+
                                     <img style="height: 100px; width: 100px" src="{{ $product->images->random()->url }}"
                                          class="rounded-circle">
                                 </td>
@@ -120,6 +118,5 @@
             <!-- /.card -->
         </div>
     </div>
-
 
 @endsection

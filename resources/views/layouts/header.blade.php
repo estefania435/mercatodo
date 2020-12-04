@@ -32,7 +32,6 @@
 
                                 <i class="fas fa-file-invoice-dollar"></i>Payments</a></li>
 
-
                         <!-- Authentication Links -->
                         <li class="nav-item">
 

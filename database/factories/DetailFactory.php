@@ -1,25 +1,33 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\MercatodoModels\Detail;
-use Faker\Generator as Faker;
+use App\MercatodoModels\Order;
+use App\MercatodoModels\Product;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+class DetailFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Detail::class;
 
-$factory->define(Detail::class, function (Faker $faker) {
-    return [
-        'quantity' => '2',
-        'products_id' => '1',
-        'order_id' => '1',
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'quantity' => 1,
+            'products_id' => Product::all()->random()->id,
+            'unit_price' => Product::all()->random()->price,
+            'order_id' => Order::all()->random()->id,
+        ];
+    }
+}

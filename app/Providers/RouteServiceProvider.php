@@ -2,15 +2,18 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * This namespace is applied to your controller routes.
+     * The path to the "home" route for your application.
      *
-     * In addition, it is set as the URL generator's root namespace.
+     * This is used by Laravel authentication to redirect users after login.
      *
      * @var string
      */

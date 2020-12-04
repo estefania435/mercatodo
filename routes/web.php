@@ -1,10 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\MercatodoModels\User;
-use App\MercatodoModels\Role;
-use App\MercatodoModels\Permission;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +34,8 @@ Route::get('/admin', function () {
     return view('plantilla.admin');
 })->name('admin');
 
-Route::resource('admin/category', 'Admin\AdminCategoryController')->names('admin.category')->middleware('auth');
+Route::resource('admin/category', 'Admin\AdminCategoryController')
+    ->names('admin.category')->middleware('auth');
 
 Route::resource('admin/product', 'Admin\AdminProductController')->names('admin.product')
     ->middleware('auth');
@@ -152,3 +150,24 @@ Route::get('pay/redirection', [
     'as' => 'pay.redirection',
     'uses' => 'Admin\AdminPayController@redirection'
 ]);
+
+
+Route::post('products/import', 'Admin\AdminProductController@import')
+    ->name('products.import');
+
+Route::get('products/export', 'Admin\AdminProductController@exportProduct')
+    ->name('products.export')->middleware('auth');
+
+Route::get('orders/report', 'Admin\AdminOrderController@reportOrder')
+    ->name('report.orders')->middleware('auth');
+
+Route::get('report/products', 'Admin\AdminProductController@reportProduct')
+    ->name('report.products')->middleware('auth');
+
+Route::get('report/sales', 'Admin\AdminOrderController@saleReport')
+    ->name('report.sales')->middleware('auth');
+
+Route::get('markAsRead', function(){
+    auth()->user()->unreadNotifications->markAsRead();
+    return redirect()->back();
+})->name('markAsRead');

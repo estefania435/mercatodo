@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\MercatodoModels\User;
 use App\Providers\RouteServiceProvider;
+use App\MercatodoModels\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    use RegistersUsers;
-
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -23,7 +21,7 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
+    use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -51,13 +49,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'min:3', 'max:30'],
-            'surname' => ['required', 'string', 'min:4', 'max:30'],
-            'identification' => ['required', 'numeric','digits_between:8,10', 'unique:users'],
-            'address' => ['required','string', 'min:15', 'max:50'],
-            'phone' => ['required', 'numeric','digits_between:7,10'],
-            'email' => ['required', 'string', 'email', 'unique:users', 'min:15', 'max:50'],
-            'password' => ['required', 'string', 'min:8', 'max:15'],
+            'name' => ['required', 'string', 'max:255'],
+            'surname' => ['required', 'string', 'max:255'],
+            'identification' => ['required', 'Integer'],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'Integer'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -65,7 +63,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\MercatodoModels\User
+     * @return User
      */
     protected function create(array $data)
     {

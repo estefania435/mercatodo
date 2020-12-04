@@ -230,6 +230,62 @@ class MercatodoPermissionInfoSeeder extends Seeder
             'description' => 'A user can edit order',
         ]);
 
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name' => 'Generate report of products',
+            'slug' => 'report.products',
+            'description' => 'A user can generate reports of products',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name' => 'Generate report of orders',
+            'slug' => 'report.orders',
+            'description' => 'A user can generate reports of orders',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name' => 'Generate report of sales',
+            'slug' => 'report.sales',
+            'description' => 'A user can generate reports of sales',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name' => 'Import products',
+            'slug' => 'products.import',
+            'description' => 'A user can import products',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name' => 'Export products',
+            'slug' => 'products.export',
+            'description' => 'A user can export products',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name' => 'Restore products',
+            'slug' => 'admin.product.restore',
+            'description' => 'A user can restore products',
+        ]);
+
+        $permission_all[] = $permission->id;
+
+        $permission = Permission::create([
+            'name' => 'Restore categories',
+            'slug' => 'admin.category.restore',
+            'description' => 'A user can restore categories',
+        ]);
+
         $roladmin->permissions()->sync($permission_all);
     }
 }

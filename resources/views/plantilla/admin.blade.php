@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/admin-lte/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -34,50 +36,6 @@
                 <a href={{ route('home')}} class="nav-link">Home</a>
             </li>
         </ul>
-
-
-        <div id="api_search_autocomplete" style="position:relative">
-
-
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                           aria-label="Search"
-                           name="name"
-                           v-model="palabra_a_buscar"
-                           v-on:keyup="autoComplete"
-                           v-on:keyup.enter="SubmitForm"
-                    >
-                    <div class="input-group-append">
-                        <button id="miboton"
-                                ref="SubmitButtonSearch"
-                                class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <div class="panel-footer" v-if="resultados.length"
-                 style="position:absolute; z-index:3; left:9px;">
-                <ul class="list-group" style="align-items:center;  justify-content:center;">
-                    <li class="list-group-item" v-for="resultado in resultados">
-                        <a href="#" class="dropdown-item"
-                           v-on:click.prevent="select(resultado)">
-
-             <span v-html="resultado.name_negrita">
-
-             </span>
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-
-        </div>
 
 
         <!-- Right navbar links -->
@@ -146,28 +104,23 @@
             <!-- Notifications Dropdown Menu -->
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge">15</span>
+                    <i class="fas fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">
+                        @if(count(auth()->user()->unreadNotifications))
+                            <span class="badge badge-warning">{{ count(auth()->user()->unreadNotifications)}}</span>
+                        @endif
+                    </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <span class="dropdown-item dropdown-header">15 Notifications</span>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-envelope mr-2"></i> 4 new messages
-                        <span class="float-right text-muted text-sm">3 mins</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-users mr-2"></i> 8 friend requests
-                        <span class="float-right text-muted text-sm">12 hours</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-file mr-2"></i> 3 new reports
-                        <span class="float-right text-muted text-sm">2 days</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                @foreach(auth()->user()->unreadNotifications as $notification)
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> {{ $notification->data['message'] }}
+                            <span class="ml-3 float-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ route('markAsRead') }}" class="dropdown-item dropdown-footer">Marcar como leidas</a>
+                    @endforeach
+
                 </div>
             </li>
             <li class="nav-item">

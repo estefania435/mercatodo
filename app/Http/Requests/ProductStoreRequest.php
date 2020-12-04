@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductStoreRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,17 +16,11 @@ class ProductStoreRequest extends FormRequest
     {
         return true;
     }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules(): array
     {
         return [
-                'name' => 'required|unique:products,name',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'required|unique:products,name',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

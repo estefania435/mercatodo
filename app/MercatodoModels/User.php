@@ -4,6 +4,7 @@ namespace App\MercatodoModels;
 
 use App\Traits\UserTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use UserTrait;
     use SoftDeletes;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -66,6 +68,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function orders(): BelongsTo
     {
-        return $this->belongsTo("App\MercatodoModels\Order");
+        return $this->belongsTo('App\MercatodoModels\Order');
     }
 }

@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 7.4
+
+services:
+  - mysql
+
+cache:
+  directories:
+    - node_modules
+    - vendor
+
+before_script:
+  - cp .env.testing .env
+  - sudo mysql -e 'CREATE DATABASE `mercatodo`;'
+  - composer install --no-interaction
+  - npm install
+
+script:
+  - composer phpcs-auto-check-project
+  - composer phpunit

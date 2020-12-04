@@ -22,7 +22,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function anuserCanAddProductToCart(): void
+    /*public function anuserCanAddProductToCart(): void
     {
         $this->withoutExceptionHandling();
         factory(Category::class)->create();
@@ -41,5 +41,5 @@ class CartTest extends TestCase
         );
 
         $response->assertRedirect(route('cart.show'));
-    }
+    }*/
 }

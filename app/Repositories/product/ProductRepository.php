@@ -2,14 +2,21 @@
 
 namespace App\Repositories\product;
 
+use App\Exports\ProductExport;
+use App\Exports\ReportProducts;
+use App\Http\Requests\Products\ExportRequest;
+use App\Imports\importMultipleSheets;
+use App\Jobs\NotifyUserOfCompletedReport;
 use App\MercatodoModels\Category;
 use App\MercatodoModels\Product;
 use App\Repositories\BaseRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductRepository extends BaseRepository
 {
@@ -19,6 +26,27 @@ class ProductRepository extends BaseRepository
     public function getModel(): Product
     {
         return new Product();
+    }
+
+    /**
+     * see the products
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getAllProductAdmin(Request $request): LengthAwarePaginator
+    {
+        if (empty($request->all())) {
+            return $this->getModel()->withTrashed('images', 'category')
+                ->orderBy('name')->paginate(env('PAGINATE'));
+        } else {
+            $isInactive = $request->get('searchbyisInactive');
+
+            $category = $request->get('searchbycategory');
+
+            return $this->getModel()->withTrashed('images', 'category')
+                ->isinactive($isInactive)->category($category)->orderBy('name')->paginate(env('PAGINATE'));
+        }
     }
 
     /**
@@ -53,15 +81,16 @@ class ProductRepository extends BaseRepository
         $prod->description = $data->description;
         $prod->specifications = $data->specifications;
         $prod->data_of_interest = $data->data_of_interest;
+
         $prod->status = $data->status;
 
         $prod->save();
 
         $prod->images()->createMany($urlimages);
 
-        Log::channel('contlog')->info("El producto: " .
-            $prod->name . " " . "ha sido creado por: " . " " .
-            Auth::user()->name . " " . Auth::user()->surname);
+        Log::channel('contlog')->info('El producto: ' .
+            $prod->name . ' ' . 'ha sido creado por: ' . ' ' .
+            Auth::user()->name . ' ' . Auth::user()->surname);
     }
 
     /**
@@ -115,9 +144,9 @@ class ProductRepository extends BaseRepository
 
         $prod->images()->createMany($urlimages);
 
-        Log::channel('contlog')->info("El producto: " .
-            $prod->name . " " . "ha sido editado por: " . " " .
-            Auth::user()->name . " " . Auth::user()->surname);
+        Log::channel('contlog')->info('El producto: ' .
+            $prod->name . ' ' . 'ha sido editado por: ' . ' ' .
+            Auth::user()->name . ' ' . Auth::user()->surname);
     }
 
     /**
@@ -127,6 +156,42 @@ class ProductRepository extends BaseRepository
      */
     public function categoryForProduct(): Collection
     {
-        return Category::orderBy('name')->get();
+        return Category::cachedCategories();
+    }
+
+    /**
+     * Import products and images in bulk
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function importProduct(Request $request): void
+    {
+        Excel::import(new importMultipleSheets(), $request->file('importFile'));
+    }
+
+    /**
+     * Export products and images in bulk
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function productExport(Request $request): void
+    {
+        $extension = $request->input('extension');
+        (new ProductExport())->store('products.' . $extension);
+    }
+
+    /**
+     * report of products
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function productReport(Request $request): void
+    {
+        (new ReportProducts($request->all()))->queue('ReportOfproducts.xlsx')->chain([
+            new NotifyUserOfCompletedReport(request()->user()),
+        ]);
     }
 }

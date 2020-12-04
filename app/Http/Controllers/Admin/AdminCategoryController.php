@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Paginator;
 use App\Http\Controllers\Controller;
+use App\MercatodoModels\Category;
 use App\Repositories\category\CategoryRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -142,6 +144,8 @@ class AdminCategoryController extends Controller
      */
     public function restore(Request $request): RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.category.restore');
+
         $this->categoryRepo->restore($request);
 
         return redirect()->route('admin.category.index')

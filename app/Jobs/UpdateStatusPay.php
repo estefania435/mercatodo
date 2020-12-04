@@ -38,7 +38,7 @@ class UpdateStatusPay implements ShouldQueue
      */
     public function handle()
     {
-        $p = new ConectionPTPRepository;
+        $p = new ConectionPTPRepository();
         $paymen = new PlaceToPayRepository($p);
 
         $pay = Pay::where('status', 'PENDING')->first();

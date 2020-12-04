@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\MercatodoModels\Category;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -30,12 +31,14 @@ abstract class BaseRepository
      * @param object $data
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllProduct(Request $data): LengthAwarePaginator
+    public function getAllProduct(Request $request): LengthAwarePaginator
     {
-        $name = $data->get('name');
+        $name = $request->get('searchbyname');
+        $price = $request->get('searchbyprice');
+        $category = $request->get('searchbycategory');
 
         return $this->getModel()->withTrashed('images', 'category')
-            ->where('name', 'like', "%$name%")->orderBy('name')->paginate(env('PAGINATE'));
+            ->name($name)->price($price)->category($category)->orderBy('name')->paginate(env('PAGINATE'));
     }
 
     /**
@@ -57,6 +60,7 @@ abstract class BaseRepository
     public function delete(object $object)
     {
         $object->delete();
+        Category::flushCache();
     }
 
     /**
@@ -67,6 +71,8 @@ abstract class BaseRepository
      */
     public function restore(Request $data): bool
     {
+        Category::flushCache();
+
         return $this->getModel()->withTrashed()->find($data->id)->restore();
     }
 }

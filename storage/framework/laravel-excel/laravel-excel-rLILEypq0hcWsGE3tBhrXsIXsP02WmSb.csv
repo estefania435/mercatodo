@@ -1,0 +1,4 @@
+"#","Name","Slug","Category Id","Quantity","Price","Description","Specifications","Data_of_interest","Status","Deleted_at","Created_at","Updated_at","Imagen","Url_Imagen"
+"10","tetimonio","tetimonio","1","40","9000","kjhgfdsxdfghjkjhgfdxsg","","","New","","2020-11-03 10:11:57","2020-11-03 10:17:42","/images/products/1604411732_cepillo perro 2.jpeg","App\MercatodoModels\Product"
+"11","collar","collar","1","9","4000","ghjkmnbvsdfghjkjhgf","","","New","","2020-11-03 10:32:22","2020-11-03 10:32:22","/images/products/1604417542_cama perro2.jpeg","App\MercatodoModels\Product"
+"12","estefania","estefania","1","100","9000","kjhgfdsasdfghjkl","","","New","","2020-11-03 19:09:00","2020-11-03 19:09:00","/images/products/1604448540_comedero perros 2.jpeg","App\MercatodoModels\Product"

@@ -23,3 +23,15 @@ Route::apiResource('category', 'API\CategoryController')->names('api.category');
 Route::apiResource('product', 'API\ProductController')->names('api.product');
 
 Route::get('/autocomplete', 'API\AutocompleteController@autocomplete')->name('autocomplete');
+
+Route::get('Product', 'API\ProductController@showAllProducts')->name('api.product.index');
+
+Route::get('Product/{slug}', 'API\ProductController@showProduct')->name('api.product.show');
+
+Route::post('Product', 'API\ProductController@create')->name('api.product.store');
+
+Route::delete('Product/{id}', 'API\ProductController@delete')->name('api.product.delete');
+
+Route::put('Product/{id}', 'API\ProductController@update')->name('api.product.update');
+
+Route::post('Product/{id}', 'API\ProductController@restore')->name('api.product.restore');

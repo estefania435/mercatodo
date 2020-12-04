@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductExport;
+use App\Exports\ReportProducts;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Products\ImportRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Imports\ProductImport;
+use App\Imports\importMultipleSheets;
+use App\MercatodoModels\Category;
 use App\Repositories\product\ProductRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminProductController extends Controller
 {
@@ -36,9 +43,12 @@ class AdminProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $products = $this->productRepo->getAllProduct($request);
+        $products = $this->productRepo->getAllProductAdmin($request);
+        $category = $this->productRepo->categoryForProduct();
 
-        return view('admin.product.index', compact('products'));
+        $request = $request->all();
+
+        return view('admin.product.index', compact('products', 'category', 'request'));
     }
 
     /**
@@ -149,9 +159,56 @@ class AdminProductController extends Controller
      */
     public function restore(Request $request): RedirectResponse
     {
+        $this->authorize('haveaccess', 'admin.product.restore');
+
         $this->productRepo->restore($request);
 
         return redirect()->route('admin.product.index')
             ->with('data', 'Product  enabled');
+    }
+
+    /**
+     * Import products and images in bulk
+     *
+     * @param ImportRequest $request
+     * @return RedirectResponse
+     */
+    public function import(ImportRequest $request): RedirectResponse
+    {
+        $this->authorize('haveaccess', 'products.import');
+
+        $this->productRepo->importProduct($request);
+
+        return redirect()->back()->with('data', 'Se han importado los productos de manera correcta');
+    }
+
+    /**
+     * Export products and images in bulk
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function exportProduct(Request $request): RedirectResponse
+    {
+        $this->authorize('haveaccess', 'products.export');
+
+        $this->productRepo->productExport($request);
+
+        return redirect()->back()->with('data', 'Se han exportado los productos de manera correcta');
+    }
+
+    /**
+     * report of products
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function reportProduct(Request $request): RedirectResponse
+    {
+        $this->authorize('haveaccess', 'report.products');
+
+        $this->productRepo->productReport($request);
+
+        return redirect()->back()->with('data', 'Reporte generado correctamente');
     }
 }
