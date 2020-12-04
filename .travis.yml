@@ -13,12 +13,11 @@ cache:
 
 before_script:
   - cp .env.testing .env
-  - sudo mysql -e 'CREATE DATABASE `mercatodotest`;'
+  - sudo mysql -e 'CREATE DATABASE `mercatodo`;'
   - composer install --no-interaction
   - npm install
 
 script:
-  - vendor
-  - composer phpcs-auto-check-project
-  - npm run lint-check
-  - composer phpunit
+    - composer phpcs-auto-check-project
+    - npm run lint-check
+    - composer phpunit
