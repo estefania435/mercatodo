@@ -19,5 +19,4 @@ before_script:
 
 script:
   - composer phpcs-auto-check-project
-  - npm run lint-check
   - composer phpunit
