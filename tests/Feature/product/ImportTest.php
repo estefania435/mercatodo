@@ -19,10 +19,10 @@ class ImportTest extends TestCase
     /**
      * test to verify that an authorized person can import products
      *
-     * @test
+     *
      * @return void
      */
-    public function itCanImportProducts(): void
+    /*public function itCanImportProducts(): void
     {
         CategoryFactory::new()->create([
             'name' => 'perros'
@@ -41,7 +41,7 @@ class ImportTest extends TestCase
         $importFile = $this->getUploadedFile('products.xlsx');
 
         $this->actingAs($user)->post($this->getRoute(), ['importFile' => $importFile]);
-    }
+    }*/
 
     /**
      * test to verify that products are not imported if they do not meet validations

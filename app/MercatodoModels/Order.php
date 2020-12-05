@@ -69,7 +69,7 @@ class Order extends Model
      * @param $query
      * @return Builder
      */
-    public function scopeStatusOrder($query, $status): Builder
+    public function scopeStatusOrder($query, $status)
     {
         if ($status) {
             return $query->where('status', 'like', "%$status%");
@@ -82,7 +82,7 @@ class Order extends Model
      * @param $query
      * @return Builder
      */
-    public function scopeDateOrder($query, $date): Builder
+    public function scopeDateOrder($query, $date)
     {
         if ($date) {
             return $query->where('updated_at', 'like', "%$date%");

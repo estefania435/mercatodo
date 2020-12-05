@@ -37,9 +37,13 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithSt
     public function map($product): array
     {
         $category = Category::where('id', $product->category_id)->first();
-
-
-        return [
+        $imagenes = '';
+        foreach ($product->images as $pro)
+        {
+            $imagenes .= $pro->url .", ";
+        }
+        $imagenes = str_replace('/images/products/', '', $imagenes);
+        $products = [
             $product->name,
             $product->slug,
             $category->name,
@@ -49,10 +53,10 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithSt
             $product->specifications,
             $product->data_of_interest,
             $product->status,
-            $product->images[0]->url,
-            $product->images[0]->imageable_type
+            $imagenes
+        ];
 
-        ] ;
+        return $products;
     }
 
     /**
@@ -72,8 +76,7 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithSt
             'specifications',
             'data',
             'status',
-            'image',
-            'imageabletype'
+            'image'
         ] ;
     }
 
