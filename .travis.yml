@@ -18,5 +18,5 @@ before_script:
   - npm install
 
 script:
-  - composer phpcs-auto-check-project
-  - composer phpunit
+    - composer phpcs-auto-check-project
+    - composer phpunit
