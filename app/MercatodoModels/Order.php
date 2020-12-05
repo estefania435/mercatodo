@@ -53,17 +53,6 @@ class Order extends Model
     }
 
     /**
-     * scope to search for the order with state pending
-     *
-     * @param $query
-     * @return Builder
-     */
-    public function scopePendig($query): Builder
-    {
-        return $query->where('orders.status', '=', 'PENDING');
-    }
-
-    /**
      * scope to search for the order with state rejected
      *
      * @param $query
