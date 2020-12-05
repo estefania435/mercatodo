@@ -40,11 +40,8 @@ class ImportTest extends TestCase
 
         $importFile = $this->getUploadedFile('products.xlsx');
 
-        $this->actingAs($user)->post($this->getRoute(), ['importFile' => $importFile]);
-
-        $this->assertDatabaseHas('products', [
-            'name' => 'paseador'
-        ]);
+        $this->actingAs($user)->post($this->getRoute(), ['importFile' => $importFile])
+            ->assertStatus(302);
     }
 
     /**
