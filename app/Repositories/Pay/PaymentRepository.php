@@ -108,9 +108,6 @@ class PaymentRepository extends BaseRepository
      */
     public function updateDatesJob(object $dato): void
     {
-
-        Log::channel('contlog')->info('datos jobs: ' .
-            $dato->requestId);
         $paymen = Pay::where('requestId', $dato->requestId)->pending()->first();
 
         $paymen->status = $dato->status->status;
@@ -130,6 +127,10 @@ class PaymentRepository extends BaseRepository
             }
         }
         $paymen->save();
+
+        $order = Order::where('id', $paymen->reference)->first();
+        $order->status = $paymen->status;
+        $order->save();
 
         Log::channel('contlog')->info('pago realizado por: ' .
             $paymen->name . ' ' . $paymen->surname . ' ' .

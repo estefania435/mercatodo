@@ -35,4 +35,15 @@ class Pay extends Model
     {
         return $query->where('user_id', Auth::user()->id)->where('status', 'OPEN');
     }
+
+    /**
+     * scope to search for the pay with state pending
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopePending($query): Builder
+    {
+        return $query->where('status', '=', 'PENDING');
+    }
 }
