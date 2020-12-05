@@ -40,12 +40,8 @@ class UpdateStatusPay implements ShouldQueue
     {
         $p = new ConectionPTPRepository();
         $paymen = new PlaceToPayRepository($p);
-
-        $pay = Pay::where('status', 'PENDING')->first();
-        $reference = $pay->reference;
-
+        $reference = $this->paymen->reference;
         $res = $paymen->consultPayJob($reference);
-
         $actualiza = new PaymentRepository();
         $actualiza->updateDatesJob($res);
     }

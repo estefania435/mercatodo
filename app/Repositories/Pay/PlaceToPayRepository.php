@@ -48,11 +48,11 @@ class PlaceToPayRepository extends BaseRepository
 
         if ($p) {
             $p->delete();
-            $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
+            $order = $this->getModel()->open()->rejected()->first();
             $total = $order->total;
             $reference = $order->id;
         } else {
-            $order = $this->getModel()->order()->Orwhere('status', 'REJECTED')->first();
+            $order = $this->getModel()->open()->rejected()->first();
 
             $total = $order->total;
             $reference = $order->id;
@@ -118,7 +118,8 @@ class PlaceToPayRepository extends BaseRepository
      */
     public function consultPay(int $reference): object
     {
-        $pay = Pay::where('reference', $reference)->inProcess()->OrWhere('status', 'PENDING')->first();
+
+        $pay = Pay::all()->where('reference', $reference)->last();
         $pay->reference = $reference;
         $requestId = $pay->requestId;
 
@@ -168,7 +169,7 @@ class PlaceToPayRepository extends BaseRepository
      */
     public function consultPayJob(int $reference): object
     {
-        $pay = Pay::where('reference', $reference)->where('status', 'PENDING')->first();
+        $pay = Pay::where('reference', $reference)->pending()->first();
         $pay->reference = $reference;
         $requestId = $pay->requestId;
 
