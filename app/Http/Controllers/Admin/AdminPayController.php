@@ -69,6 +69,7 @@ class AdminPayController extends Controller
     public function consultPayment(int $reference): RedirectResponse
     {
         $res = $this->conection->consultPay($reference);
+
         $this->updateDataOfPay($res);
 
         return redirect()->route('pay.updateOrderStatus');
@@ -81,6 +82,7 @@ class AdminPayController extends Controller
      */
     public function updateDataOfPay(object $dato)
     {
+
         $this->pays->updatePay($dato);
     }
 

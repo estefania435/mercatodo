@@ -27,7 +27,7 @@ class CartRepository extends BaseRepository
      */
     public function addToCart(Request $data): void
     {
-        $order = Order::order()->first();
+        $order = Order::open()->first();
 
         if ($order) {
             $product = Product::find($data->id);
@@ -81,7 +81,7 @@ class CartRepository extends BaseRepository
     public function updateQuantity(string $slug, int $quantity): void
     {
         $product = Product::where('slug', $slug)->first();
-        $order = Order::order()->first();
+        $order = Order::open()->first();
         $detailproduct = Detail::where('order_id', $order->id)
             ->where('products_id', $product->id)->first();
 
@@ -97,7 +97,7 @@ class CartRepository extends BaseRepository
      */
     public function total(): float
     {
-        $cart = $this->getModel()->with('details.products')->done()->get();
+        $cart = $this->getModel()->with('details.products')->open()->get();
 
         $total = 0;
 
@@ -130,7 +130,7 @@ class CartRepository extends BaseRepository
     public function deleteProductOfCart(Request $data): void
     {
         $product = Product::find($data->id);
-        $order = Order::order()->first();
+        $order = Order::open()->first();
         $detailproduct = Detail::where('order_id', $order->id)->where('products_id', $product->id)->first();
         $detailproduct->delete();
     }
@@ -140,20 +140,20 @@ class CartRepository extends BaseRepository
      */
     public function emptyCart(): void
     {
-        $order = Order::order()->first();
+        $order = Order::open()->first();
         Detail::where('order_id', $order->id)->delete();
-        Order::order()->delete();
+        Order::open()->delete();
     }
 
     /**
      * function to receive delivery data
      *
      * @param Request $data
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function datesReceiveOrder(Request $data): Model
     {
-        $order = $this->getModel()->order()->first();
+        $order = $this->getModel()->open()->first();
         $order->name_receive = $data->name_receive;
         $order->surname = $data->surname;
         $order->address = $data->address;
@@ -166,10 +166,10 @@ class CartRepository extends BaseRepository
     /**
      * Function for see detail of order
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function detail(): Model
     {
-        return $this->getModel()->with('details', 'details.products')->done()->first();
+        return $this->getModel()->with('details', 'details.products')->open()->first();
     }
 }

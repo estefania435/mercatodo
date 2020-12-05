@@ -4,7 +4,7 @@ namespace App\Imports;
 
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class importMultipleSheets implements WithMultipleSheets
+class ImportMultipleSheets implements WithMultipleSheets
 {
     /**
      * Specify sheets to import

@@ -23,7 +23,7 @@ class Order extends Model
     /**
      * Relationship between orders and users
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function users(): BelongsTo
     {
@@ -40,38 +40,60 @@ class Order extends Model
         return $this->hasMany('App\MercatodoModels\Detail');
     }
 
-
     /**
      * scope to search for the order with state zero and belonging to the authenticated user
      *
      * @param $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
-    public function scopeorder($query): Builder
-    {
-        return $query->where('user_id', Auth::user()->id)->where('status', 'OPEN');
-    }
-
-    /**
-     * scope to search for the order with state zero and belonging to the authenticated user
-     *
-     * @param $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeDone($query): Builder
+    public function scopeOpen($query): Builder
     {
         return $query->where('orders.user_id', '=', Auth::user()->id)
             ->where('orders.status', '=', 'OPEN');
     }
 
-    public function scopeStatusOrder($query, $status)
+    /**
+     * scope to search for the order with state pending
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopePendig($query): Builder
+    {
+        return $query->where('orders.status', '=', 'PENDING');
+    }
+
+    /**
+     * scope to search for the order with state rejected
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeRejected($query): Builder
+    {
+        return $query->Orwhere('orders.status', '=', 'REJECTED');
+    }
+
+    /**
+     * scope to search for the status
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeStatusOrder($query, $status): Builder
     {
         if ($status) {
             return $query->where('status', 'like', "%$status%");
         }
     }
 
-    public function scopeDateOrder($query, $date)
+    /**
+     * scope to search for the date
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeDateOrder($query, $date): Builder
     {
         if ($date) {
             return $query->where('updated_at', 'like', "%$date%");

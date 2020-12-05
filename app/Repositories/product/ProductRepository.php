@@ -4,7 +4,6 @@ namespace App\Repositories\product;
 
 use App\Exports\ProductExport;
 use App\Exports\ReportProducts;
-use App\Http\Requests\Products\ExportRequest;
 use App\Imports\importMultipleSheets;
 use App\Jobs\NotifyUserOfCompletedReport;
 use App\MercatodoModels\Category;

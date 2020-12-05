@@ -49,7 +49,7 @@ abstract class BaseRepository
     public function getProductsOfCart()
     {
         return $this->getModel()->with('details.products', 'details.products.images')
-            ->done()->first();
+            ->open()->first();
     }
 
     /**
