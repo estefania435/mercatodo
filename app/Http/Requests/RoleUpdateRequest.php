@@ -23,12 +23,12 @@ class RoleUpdateRequest extends FormRequest
      * @param Role $role
      * @return array
      */
-    public function rules(Role $role): array
+    public function rules(): array
     {
         return [
-            'name'        => 'required|max:50|unique:roles,name,' . $role->id,
-            'slug'        => 'required|max:50|unique:roles,slug,' . $role->id,
-            'full-access' => 'required|in:yes,no',
+            'name'        => 'required|max:50',
+            'slug'        => 'required|max:50',
+            'full-access' => 'required|in:yes,no'
         ];
     }
 }

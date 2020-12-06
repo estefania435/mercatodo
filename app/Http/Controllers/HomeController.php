@@ -32,7 +32,7 @@ class HomeController extends Controller
      */
     public function index(Request $request): View
     {
-        $products = $this->prodRepo->getAllProduct($request);
+        $products = $this->prodRepo->getAllProductHome($request);
         $cart = $this->cartShowRepo->getProductsOfCart();
         $category = Category::cachedCategories();
 

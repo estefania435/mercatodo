@@ -81,7 +81,7 @@
                                     <div class="form-group">
 
                                         <label>category</label>
-                                        <select disabled name="category_id" class="form-control select2"
+                                        <select name="category_id" class="form-control select2"
                                                 style="width: 100%;">
                                             <option selected="selected">{{ $product->category->name }}</option>
                                         </select>

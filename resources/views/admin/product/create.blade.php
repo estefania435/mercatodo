@@ -9,6 +9,7 @@
 
 @section('content')
 
+
     <div id="apiproduct">
 
         <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">

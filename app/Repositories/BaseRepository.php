@@ -42,6 +42,23 @@ abstract class BaseRepository
     }
 
     /**
+     * see the products
+     *
+     * @param object $data
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getAllProductHome(Request $request): LengthAwarePaginator
+    {
+        $name = $request->get('searchbyname');
+        $price = $request->get('searchbyprice');
+        $category = $request->get('searchbycategory');
+
+        return $this->getModel()->with('images', 'category')
+            ->name($name)->price($price)->category($category)->orderBy('name')->paginate(env('PAGINATE'));
+    }
+
+
+    /**
      * Function for see producst of cart
      *
      * @return \Illuminate\Database\Eloquent\Model
