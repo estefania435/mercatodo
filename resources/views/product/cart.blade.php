@@ -24,11 +24,9 @@
                             <tbody>
                             @foreach($cart->details as $item)
                                 <tr>
-                                    @foreach ($item->products->images as $c)
-                                        <td><img class="bd-placeholder-img"
-                                                 src="{{ $c->url }}"
+                                    <td><img class="bd-placeholder-img"
+                                                 src="{{  $item->products->images->random()->url }}"
                                                  width="267" height="225" title="Pets"></td>
-                                    @endforeach
                                     <td>{{ $item->products->name}}</td>
                                     <td>${{ number_format($item->products->price,2) }}</td>
                                     <td>

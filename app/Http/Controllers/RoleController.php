@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
+use App\MercatodoModels\Permission;
 
 class RoleController extends Controller
 {
@@ -90,7 +91,7 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Role $role
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function edit(Role $role): View
     {
@@ -111,7 +112,7 @@ class RoleController extends Controller
      */
     public function update(RoleUpdateRequest $request, Role $role): RedirectResponse
     {
-        $this->authorize('haveaccess', 'role.edit');
+       $this->authorize('haveaccess', 'role.edit');
 
         $this->rolesRepo->updateRole($request, $role);
 

@@ -22,7 +22,18 @@
                         @can('haveaccess','user.index')
                             <li class="nav-item"><a href="{{route('user.index')}}" class="nav-link">User</a></li>
                         @endcan
+                        @can('haveaccess','admin.product.index')
+                            <li class="nav-item"><a href="{{route('admin.product.index')}}"
+                                class="nav-link">Product</a></li>
+                        @endcan
+                        @can('haveaccess','admin.product.index')
+                            <li class="nav-item"><a href="{{route('admin.category.index')}}"
+                                class="nav-link">Category</a></li>
+                        @endcan
+
                     </ul>
+
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
