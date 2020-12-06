@@ -38,9 +38,8 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithSt
     {
         $category = Category::where('id', $product->category_id)->first();
         $imagenes = '';
-        foreach ($product->images as $pro)
-        {
-            $imagenes .= $pro->url .", ";
+        foreach ($product->images as $pro) {
+            $imagenes .= $pro->url . ', ';
         }
         $imagenes = str_replace('/images/products/', '', $imagenes);
         $products = [
