@@ -112,7 +112,7 @@ class RoleController extends Controller
      */
     public function update(RoleUpdateRequest $request, Role $role): RedirectResponse
     {
-       $this->authorize('haveaccess', 'role.edit');
+        $this->authorize('haveaccess', 'role.edit');
 
         $this->rolesRepo->updateRole($request, $role);
 
