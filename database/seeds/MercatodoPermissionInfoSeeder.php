@@ -24,6 +24,7 @@ class MercatodoPermissionInfoSeeder extends Seeder
             'phone' => '3173015596',
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin123'),
+            'email_verified_at' => now(),
         ]);
 
         //rol admin

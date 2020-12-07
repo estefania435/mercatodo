@@ -29,8 +29,10 @@ Esto te descargará e instalará las dependencias utilizadas por el proyecto.
 
 * Clona el contenido del archivo .env.example en un nuevo archivo llamado .env
 
-* Por último genera la APP_KEY con el siguiente comando
+* Genera la APP_KEY con el siguiente comando
 
 ```bash
 php artisan key:generate
 ```
+
+* Por último ejecuta las migraciones y los seeders.
