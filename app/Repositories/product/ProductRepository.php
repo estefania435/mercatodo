@@ -167,6 +167,10 @@ class ProductRepository extends BaseRepository
     public function importProduct(Request $request): void
     {
         Excel::import(new importMultipleSheets(), $request->file('importFile'));
+
+        Log::channel('contlog')->info('El usuario ' .
+            Auth::user()->name . ' ' . Auth::user()->surname . ' ' .
+            'ha importado una lista de productos');
     }
 
     /**
@@ -179,6 +183,10 @@ class ProductRepository extends BaseRepository
     {
         $extension = $request->input('extension');
         (new ProductExport())->store('products.' . $extension);
+
+        Log::channel('contlog')->info('El usuario ' .
+            Auth::user()->name . ' ' . Auth::user()->surname . ' ' .
+            'ha exportado una lista de productos');
     }
 
     /**
@@ -192,5 +200,9 @@ class ProductRepository extends BaseRepository
         (new ReportProducts($request->all()))->queue('ReportOfproducts.xlsx')->chain([
             new NotifyUserOfCompletedReport(request()->user()),
         ]);
+
+        Log::channel('contlog')->info('El usuario ' .
+            Auth::user()->name . ' ' . Auth::user()->surname . ' ' .
+            'ha generado un reporte de productos');
     }
 }
