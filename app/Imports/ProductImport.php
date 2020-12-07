@@ -67,7 +67,7 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
      * @param string $rowImagen
      * @return void
      */
-    private function createimage(object $products, string $rowImagen): void
+    private function createImage(object $products, string $rowImagen): void
     {
 
         $urlimages = [];
