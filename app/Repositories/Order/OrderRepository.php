@@ -9,6 +9,8 @@ use App\MercatodoModels\Order;
 use App\Repositories\BaseRepository;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class OrderRepository extends BaseRepository
@@ -56,13 +58,20 @@ class OrderRepository extends BaseRepository
         (new ReportOrders($request->all()))->queue('reportOrders.xlsx')->chain([
             new NotifyUserOfCompletedReport(request()->user()),
         ]);
+
+        Log::channel('contlog')->info('El usuario ' .
+            Auth::user()->name . ' ' . Auth::user()->surname . ' ' .
+            'ha generado un reporte de ordenes');
     }
 
     public function saleReport(Request $request): void
     {
-        //(new ReportSales($request->all()))->store('reportSales.xlsx');
         (new ReportSales($request->all()))->queue('reportSales.xlsx')->chain([
             new NotifyUserOfCompletedReport(request()->user()),
         ]);
+
+        Log::channel('contlog')->info('El usuario ' .
+            Auth::user()->name . ' ' . Auth::user()->surname . ' ' .
+            'ha generado un reporte de ventas');
     }
 }
