@@ -42,7 +42,6 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
             $products->save();
 
             $this->createimage($products, $row['image']);
-
         } else {
             $product = new Product();
             $product->name = $row['name'];
@@ -67,23 +66,19 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
      * @param string $rowImagen
      * @return void
      */
-    private function createimage(object $products, string $rowImagen): void
+    private function createImage(object $products, string $rowImagen): void
     {
 
         $urlimages = [];
-        if (!empty($rowImagen))
-        {
-            foreach (explode(',',$rowImagen) as $image)
-            {
-                if(!empty($image))
-                {
+        if (!empty($rowImagen)) {
+            foreach (explode(',', $rowImagen) as $image) {
+                if (!empty($image)) {
                     $img = str_replace('/images/products/', '', trim($image, ' '));
                     $imagenFormat = '/images/products/' . $img;
 
                     $imageExist = Image::where('url', $imagenFormat)->where('imageable_id', $products->id)->first();
 
-                    if (!$imageExist)
-                    {
+                    if (!$imageExist) {
                         $urlimages[]['url'] = $imagenFormat;
                     }
                 }
@@ -91,6 +86,5 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
         }
 
         $products->images()->createMany($urlimages);
-
     }
 }
