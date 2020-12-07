@@ -31,32 +31,56 @@ class ReportSales implements FromCollection, WithMapping, WithHeadings, ShouldAu
     {
 
         if (empty($this->request['searchbydate'])) {
-            return Order::with('details', 'details.products')->where('status', '=', 'APPROVED')->get();
+            return Order::join('details', 'orders.id', '=', 'details.order_id')
+                ->join('products', 'products.id', '=', 'details.products_id')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->select(
+                    'orders.code as code',
+                    'products.name as name',
+                    'categories.name as category',
+                    'products.price as price',
+                    'products.description as description',
+                    'orders.status as status',
+                    'details.quantity as quantity',
+                    'orders.created_at as created'
+                )
+                ->where('orders.status', '=', 'APPROVED')
+                ->get();
         } else {
-            return Order::with('details', 'details.products')->where('status', '=', 'APPROVED')
-            ->dateorder($this->request['searchbydate'])->get();
+            return Order::join('details', 'orders.id', '=', 'details.order_id')
+                ->join('products', 'products.id', '=', 'details.products_id')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->select(
+                    'orders.code as code',
+                    'products.name as name',
+                    'categories.name as category',
+                    'products.price as price',
+                    'products.description as description',
+                    'orders.status as status',
+                    'details.quantity as quantity',
+                    'orders.created_at as created'
+                )
+                ->
+                where('orders.status', '=', 'APPROVED')
+                ->dateorder($this->request['searchbydate'])
+                ->get();
         }
     }
 
     public function map($order): array
     {
-
-        foreach ($order->details as $detail) {
-            $category = Category::where('id', $detail->products->category_id)->first();
-            return [
-                $order->code,
-                $detail->products->name,
-                $category->name,
-                $detail->products->price,
-                $detail->products->description,
-                $detail->products->status,
-                $detail->quantity,
-                $order->total,
-                $order->updated_at,
-            ];
-        }
+        return [
+            $order->code,
+            $order->name,
+            $order->category,
+            $order->price,
+            $order->description,
+            $order->status,
+            $order->quantity,
+            number_format($order->price * $order->quantity, 2),
+            $order->created
+        ];
     }
-
 
     public function headings(): array
     {
@@ -76,7 +100,7 @@ class ReportSales implements FromCollection, WithMapping, WithHeadings, ShouldAu
     public function styles(Worksheet $sheet)
     {
         return [
-            1    => ['font' => ['bold' => true]],
+            1 => ['font' => ['bold' => true]],
         ];
     }
 }
