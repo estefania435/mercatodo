@@ -30,8 +30,8 @@ Route::get('Product/{slug}', 'API\ProductController@showProduct')->name('api.pro
 
 Route::post('Product', 'API\ProductController@create')->name('api.product.store');
 
-Route::delete('Product/{id}', 'API\ProductController@delete')->name('api.product.delete');
+Route::delete('Product/{slug}', 'API\ProductController@delete')->name('api.product.delete');
 
-Route::put('Product/{id}', 'API\ProductController@update')->name('api.product.update');
+Route::put('Product/{slug}', 'API\ProductController@update')->name('api.product.update');
 
-Route::post('Product/{id}', 'API\ProductController@restore')->name('api.product.restore');
+Route::post('Product/{slug}', 'API\ProductController@restore')->name('api.product.restore');

@@ -10,9 +10,21 @@ use App\MercatodoModels\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
+use App\Repositories\Api\ApiProductRepository;
 
 class ProductController extends Controller
 {
+    protected $apiRepo;
+
+    /**
+     * api Controller constructor.
+     * @param ApiProductRepository $ApiProductRepository
+     */
+    public function __construct(ApiProductRepository $ApiProductRepository)
+    {
+        $this->apiRepo = $ApiProductRepository;
+    }
+
     /**
      * list all products
      *
@@ -45,10 +57,7 @@ class ProductController extends Controller
      */
     public function showAllProducts(): JsonResponse
     {
-        $product = Product::withTrashed('images', 'category')
-            ->orderBy('name')->get();
-
-        return response()->json($product, 200);
+        return $this->apiRepo->showProducts();
     }
 
     /**
@@ -61,10 +70,7 @@ class ProductController extends Controller
     {
         $this->authorize('haveaccess', 'admin.product.show');
 
-        $product = Product::with('images', 'category')
-            ->where('slug', $slug)->firstOrFail();
-
-        return response()->json($product, 200);
+        return $this->apiRepo->seeAProduct($slug);
     }
 
     /**
@@ -77,29 +83,8 @@ class ProductController extends Controller
     {
         $this->authorize('haveaccess', 'admin.product.create');
 
-        $prod = new Product();
-
-        $prod->name = $request->name;
-        $prod->slug = $request->slug;
-        $prod->category_id = $request->category_id;
-        $prod->quantity = $request->quantity;
-        $prod->price = $request->price;
-        $prod->description = $request->description;
-        $prod->specifications = $request->specifications;
-        $prod->data_of_interest = $request->data_of_interest;
-        $prod->status = $request->status;
-
-        $prod->save();
-
-        $image = new Image();
-        $image->url = $request->url ;
-        $image->imageable_type = $request->imageable_type;
-        $image->imageable_id = $prod->id;
-        $image->save();
-
-        return response()->json(['message' => 'Product create successfully'], 201);
+        return $this->apiRepo->createProduct($request);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -107,35 +92,11 @@ class ProductController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function update(ProductUpdateRequest $request, int $id): JsonResponse
+    public function update(ProductUpdateRequest $request, string $slug): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.edit');
 
-        $prod = Product::findOrFail($id);
-
-        $prod->name = $request->name;
-        $prod->slug = $request->slug;
-        $prod->category_id = $request->category_id;
-        $prod->quantity = $request->quantity;
-        $prod->price = $request->price;
-        $prod->description = $request->description;
-        $prod->specifications = $request->specifications;
-        $prod->data_of_interest = $request->data_of_interest;
-        $prod->status = $request->status;
-
-        $prod->save();
-
-        $imageExist = Image::where('url', $request->url)->where('imageable_id', $prod->id)->first();
-
-        if (!$imageExist) {
-            $image = new Image();
-            $image->url = $request->url;
-            $image->imageable_type = $request->imageable_type;
-            $image->imageable_id = $prod->id;
-            $image->save();
-        }
-
-        return response()->json(['message' => 'Product successfully updated'], 200);
+        return $this->apiRepo->updateProduct($request, $slug);
     }
 
     /**
@@ -144,17 +105,11 @@ class ProductController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function delete(int $id): JsonResponse
+    public function delete(string $slug): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.destroy');
 
-        if (Product::where('id', $id)->exists()) {
-            $p = Product::find($id);
-            $p->delete();
-            return response()->json(['message' => 'Product delete successfully'], 200);
-        } else {
-            return response()->json(['message' => 'Product not exist'], 404);
-        }
+        return $this->apiRepo->deleteProduct($slug);
     }
 
     /**
@@ -163,12 +118,10 @@ class ProductController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function restore(int $id): JsonResponse
+    public function restore(string $slug): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.restore');
 
-        Product::withTrashed()->find($id)->restore();
-
-        return response()->json(['message' => 'Product restore successfully'], 200);
+        return $this->apiRepo->restoreProduct($slug);
     }
 }

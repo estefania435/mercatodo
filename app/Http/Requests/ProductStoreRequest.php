@@ -22,7 +22,7 @@ class ProductStoreRequest extends FormRequest
             'name' => 'required|unique:products,name',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'slug' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => 'required',
             'quantity' => 'required|numeric',
             'price' => 'required|numeric',
             'description' => 'required|string',

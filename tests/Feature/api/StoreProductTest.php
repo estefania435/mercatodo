@@ -45,7 +45,7 @@ class StoreProductTest extends TestCase
         $product = ([
             'name' => 'collar',
             'slug' => 'collar',
-            'category_id' => $c->id,
+            'category_id' => $c->name,
             'quantity' => 2,
             'price' => 4000,
             'description' => 'kjbvbnklcvbnmcvhjhgfmnbvcxvbnmnbvcx',
@@ -79,7 +79,7 @@ class StoreProductTest extends TestCase
         $product = ([
             'name' => 'collar',
             'slug' => 'collar',
-            'category_id' => $c->id,
+            'category_id' => $c->name,
             'quantity' => 2,
             'price' => 4000,
             'description' => 'kjbvbnklcvbnmcvhjhgfmnbvcxvbnmnbvcx',
