@@ -30,7 +30,6 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
         $products = Product::where('name', $row['name'])->first();
 
 
-
         if ($products) {
             $products->slug = $row['name'];
             $products->category_id = $category->id;
@@ -42,18 +41,8 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
             $products->status = $row['status'];
             $products->save();
 
-            $img = str_replace('/images/products/', '', $row['image']);
-            $imagen = '/images/products/' . $img;
+            $this->createimage($products, $row['image']);
 
-            $imageExist = Image::where('url', $imagen)->where('imageable_id', $products->id)->first();
-
-            if (!$imageExist) {
-                $image = new Image();
-                $image->url = $imagen;
-                $image->imageable_type = $row['imageabletype'];
-                $image->imageable_id = $products->id;
-                $image->save();
-            }
         } else {
             $product = new Product();
             $product->name = $row['name'];
@@ -67,13 +56,41 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
             $product->status = $row['status'];
             $product->save();
 
-            $img = str_replace('/images/products/', '', $row['image']);
-
-            $image = new Image();
-            $image->url = '/images/products/' . $img;
-            $image->imageable_type = 'App\MercatodoModels\Product';
-            $image->imageable_id = $product->id;
-            $image->save();
+            $this->createimage($product, $row['image']);
         }
+    }
+
+    /**
+     *import images for products import
+     *
+     * @param object $products
+     * @param string $rowImagen
+     * @return void
+     */
+    private function createimage(object $products, string $rowImagen): void
+    {
+
+        $urlimages = [];
+        if (!empty($rowImagen))
+        {
+            foreach (explode(',',$rowImagen) as $image)
+            {
+                if(!empty($image))
+                {
+                    $img = str_replace('/images/products/', '', trim($image, ' '));
+                    $imagenFormat = '/images/products/' . $img;
+
+                    $imageExist = Image::where('url', $imagenFormat)->where('imageable_id', $products->id)->first();
+
+                    if (!$imageExist)
+                    {
+                        $urlimages[]['url'] = $imagenFormat;
+                    }
+                }
+            }
+        }
+
+        $products->images()->createMany($urlimages);
+
     }
 }
