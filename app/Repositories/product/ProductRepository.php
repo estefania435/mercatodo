@@ -5,6 +5,7 @@ namespace App\Repositories\product;
 use App\Exports\ProductExport;
 use App\Exports\ReportProducts;
 use App\Imports\importMultipleSheets;
+use App\Imports\ProductImport;
 use App\Jobs\NotifyUserOfCompletedReport;
 use App\MercatodoModels\Category;
 use App\MercatodoModels\Product;
@@ -126,12 +127,14 @@ class ProductRepository extends BaseRepository
                 $urlimages[]['url'] = '/images/products/' . $name;
             }
         }
+        $category = Category::where('name', $data->category_id)->first();
+
 
         $prod = $this->getModel()->findOrFail($id);
 
         $prod->name = $data->name;
         $prod->slug = $data->slug;
-        $prod->category_id = $data->category_id;
+        $prod->category_id = $category->id;
         $prod->quantity = $data->quantity;
         $prod->price = $data->price;
         $prod->description = $data->description;
@@ -140,6 +143,7 @@ class ProductRepository extends BaseRepository
         $prod->status = $data->status;
 
         $prod->save();
+        dd($prod);
 
         $prod->images()->createMany($urlimages);
 
@@ -162,15 +166,19 @@ class ProductRepository extends BaseRepository
      * Import products and images in bulk
      *
      * @param Request $request
-     * @return void
+     * @return array
      */
-    public function importProduct(Request $request): void
+    public function importProduct(Request $request): array
     {
-        Excel::import(new importMultipleSheets(), $request->file('importFile'));
+        $import = new ProductImport();
+        $import->import($request->file('importFile'));
+        $importedProducts = $import->toArray($request->file('importFile'));
 
         Log::channel('contlog')->info('El usuario ' .
             Auth::user()->name . ' ' . Auth::user()->surname . ' ' .
             'ha importado una lista de productos');
+
+        return $importedProducts;
     }
 
     /**

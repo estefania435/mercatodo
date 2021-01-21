@@ -27,10 +27,11 @@ class ProductImport implements ToModel, WithHeadingRow, WithValidation
     {
         $category = Category::where('name', $row['category'])->first();
 
-        $products = Product::where('name', $row['name'])->first();
+        if (!empty($row['id'])) {
+            $products = Product::where('id', $row['id'])->first();
 
 
-        if ($products) {
+            $products->name = $row['name'];
             $products->slug = $row['name'];
             $products->category_id = $category->id;
             $products->quantity = $row['quantity'];
