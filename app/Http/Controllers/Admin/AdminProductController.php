@@ -128,9 +128,10 @@ class AdminProductController extends Controller
     {
         $this->authorize('haveaccess', 'admin.product.edit');
 
-        $prod = $this->productRepo->updateProduct($request, $id);
+        $this->productRepo->updateProduct($request, $id);
 
-        return redirect()->route('admin.product.edit', $prod->id)
+
+        return redirect()->route('admin.product.index')
             ->with('data', 'Record updated successfully!');
     }
 
@@ -175,11 +176,15 @@ class AdminProductController extends Controller
      */
     public function import(ImportRequest $request): RedirectResponse
     {
+
         $this->authorize('haveaccess', 'products.import');
 
-        $this->productRepo->importProduct($request);
+        $importedProducts = $this->productRepo->importProduct($request);
 
-        return redirect()->back()->with('data', 'Se han importado los productos de manera correcta');
+        return redirect()->route('admin.product.index')->with(
+            'message',
+            trans('products.messages.imported', ['count' => count($importedProducts)])
+        );
     }
 
     /**
