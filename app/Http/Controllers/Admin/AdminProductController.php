@@ -14,6 +14,8 @@ use App\MercatodoModels\Category;
 use App\Repositories\product\ProductRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -191,15 +193,13 @@ class AdminProductController extends Controller
      * Export products and images in bulk
      *
      * @param Request $request
-     * @return RedirectResponse
+     *
      */
-    public function exportProduct(Request $request): RedirectResponse
+    public function exportProduct()
     {
         $this->authorize('haveaccess', 'products.export');
 
-        $this->productRepo->productExport($request);
-
-        return redirect()->back()->with('data', 'Se han exportado los productos de manera correcta');
+        return $this->productRepo->productExport();
     }
 
     /**

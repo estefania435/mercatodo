@@ -53,7 +53,9 @@
 
                    @include('custom.modal_import')
 
-                   @include('custom.modal_export')
+                    <td><a class="m-2 float-left btn btn-success"
+                           href="{{ route('products.export') }}">Export</a></td>
+
 
                         <table class="table table-head-fixed text-nowrap">                        <thead>
                         <tr>
@@ -61,7 +63,6 @@
                             <th>Name</th>
                             <th>Image</th>
                             <th>Price</th>
-
                             <th colspan="3"></th>
 
                         </tr>
