@@ -185,16 +185,11 @@ class ProductRepository extends BaseRepository
      * Export products and images in bulk
      *
      * @param Request $request
-     * @return void
+     * @return
      */
-    public function productExport(Request $request): void
+    public function productExport()
     {
-        $extension = $request->input('extension');
-        (new ProductExport())->store('products.' . $extension);
-
-        Log::channel('contlog')->info('El usuario ' .
-            Auth::user()->name . ' ' . Auth::user()->surname . ' ' .
-            'ha exportado una lista de productos');
+        return Excel::download(new ProductExport(), 'products.xlsx');
     }
 
     /**

@@ -43,6 +43,7 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithSt
         }
         $imagenes = str_replace('/images/products/', '', $imagenes);
         $products = [
+            $product->id,
             $product->name,
             $product->slug,
             $category->name,
@@ -66,6 +67,7 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithSt
     public function headings(): array
     {
         return [
+            'id',
             'name',
             'slug',
             'category',
