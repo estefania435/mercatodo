@@ -29,7 +29,7 @@ class DeleteProductTest extends TestCase
         CategoryFactory::new()->create();
         $product = ProductFactory::new()->create();
 
-        $this->actingAs($user)->deleteJson(route('api.product.delete', $product->slug))
+        $this->actingAs($user)->deleteJson(route('api.product.delete', $product->id))
             ->assertStatus(403);
     }
     /**
@@ -52,7 +52,7 @@ class DeleteProductTest extends TestCase
         $c = CategoryFactory::new()->create();
         $product = ProductFactory::new()->create();
 
-        $response = $this->actingAs($user)->deleteJson(route('api.product.delete', $product->slug));
+        $response = $this->actingAs($user)->deleteJson(route('api.product.delete', $product->id));
 
         $response->assertStatus(200);
     }

@@ -43,7 +43,7 @@ class RestoreProductTest extends TestCase
             'imageable_type' => 'App\MercatodoModels\Product'
         ]);
 
-        $this->actingAs($user)->postJson(route('api.product.restore', $p->slug), $product)
+        $this->actingAs($user)->postJson(route('api.product.restore', $p->id), $product)
             ->assertStatus(403);
     }
     /**
@@ -80,7 +80,7 @@ class RestoreProductTest extends TestCase
             'imageable_type' => 'App\MercatodoModels\Product'
         ]);
 
-        $response = $this->actingAs($user)->postJson(route('api.product.restore', $p->slug), $product);
+        $response = $this->actingAs($user)->postJson(route('api.product.restore', $p->id), $product);
 
         $response->assertStatus(200);
     }

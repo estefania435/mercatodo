@@ -10,6 +10,8 @@ use App\MercatodoModels\Product;
 use App\Repositories\BaseRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ApiProductRepository extends BaseRepository
 {
@@ -28,16 +30,22 @@ class ApiProductRepository extends BaseRepository
      */
     public function showProducts(): JsonResponse
     {
-        $product = Product::withTrashed('images', 'category')
+        $product = Product::with('images', 'category')
             ->orderBy('name')->get();
 
         return response()->json($product, 200);
     }
 
-    public function seeAProduct(string $slug)
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function seeAProduct(int $id): JsonResponse
     {
         $product = Product::with('images', 'category')
-            ->where('slug', $slug)->firstOrFail();
+            ->where('id', $id)->firstOrFail();
 
         return response()->json($product, 200);
     }
@@ -45,7 +53,7 @@ class ApiProductRepository extends BaseRepository
     /**
      * create a new product
      *
-     * @param ProductStoreRequest $request
+     * @param Request $request
      * @return JsonResponse
      */
     public function createProduct(Request $request): JsonResponse
@@ -77,14 +85,14 @@ class ApiProductRepository extends BaseRepository
     /**
      * Update the specified resource in storage.
      *
-     * @param ProductUpdateRequest $request
+     * @param Request $request
      * @param int $id
      * @return JsonResponse
      */
-    public function updateProduct(Request $request, string $slug): JsonResponse
+    public function updateProduct(Request $request, int $id): JsonResponse
     {
         $category = Category::where('name', $request->category_id)->first();
-        $prod = Product::where('slug', $slug)->first();
+        $prod = Product::where('id', $id)->first();
 
         $prod->name = $request->name;
         $prod->slug = $request->slug;
@@ -117,10 +125,10 @@ class ApiProductRepository extends BaseRepository
      * @param int $id
      * @return JsonResponse
      */
-    public function deleteProduct(string $slug): JsonResponse
+    public function deleteProduct(int $id): JsonResponse
     {
-        if (Product::where('slug', $slug)->exists()) {
-            $p = Product::where('slug', $slug)->first();
+        if (Product::where('id', $id)->exists()) {
+            $p = Product::where('id', $id)->first();
             $p->delete();
             return response()->json(['message' => 'Product delete successfully'], 200);
         } else {
@@ -131,12 +139,13 @@ class ApiProductRepository extends BaseRepository
     /**
      * Restore the specified resource from storage.
      *
+     *
      * @param int $id
      * @return JsonResponse
      */
-    public function restoreProduct(string $slug): JsonResponse
+    public function restoreProduct(int $id): JsonResponse
     {
-        Product::withTrashed()->where('slug', $slug)->first()->restore();
+        Product::withTrashed()->where('id', $id)->first()->restore();
 
         return response()->json(['message' => 'Product restore successfully'], 200);
     }
