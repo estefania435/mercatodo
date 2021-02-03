@@ -43,7 +43,7 @@ class UpdateProductTest extends TestCase
             'imageable_type' => 'App\MercatodoModels\Product'
         ]);
 
-        $this->actingAs($user)->putJson(route('api.product.update', $p->slug), $product)->assertStatus(403);
+        $this->actingAs($user)->putJson(route('api.product.update', $p->id), $product)->assertStatus(403);
     }
     /**
      * test to verify if an authorized user can update a product
@@ -79,7 +79,7 @@ class UpdateProductTest extends TestCase
             'imageable_type' => 'App\MercatodoModels\Product'
         ]);
 
-        $response = $this->actingAs($user)->putJson(route('api.product.update', $p->slug), $product);
+        $response = $this->actingAs($user)->putJson(route('api.product.update', $p->id), $product);
         $response->assertStatus(200);
     }
 }

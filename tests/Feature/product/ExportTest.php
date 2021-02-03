@@ -74,6 +74,6 @@ class ExportTest extends TestCase
 
         $this->actingAs($user)->from(route('admin.product.index'))
             ->get(route('products.export', ['extension' => 'xlsx']))
-            ->assertRedirect(route('admin.product.index'));
+            ->assertStatus(200);
     }
 }

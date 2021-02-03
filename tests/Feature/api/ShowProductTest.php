@@ -29,7 +29,7 @@ class ShowProductTest extends TestCase
         $product = ProductFactory::new()->create();
         $user = UserFactory::new()->create();
 
-        $this->actingAs($user)->getJson(route('api.product.show', $product->slug))
+        $this->actingAs($user)->getJson(route('api.product.show', $product->id))
             ->assertStatus(403);
     }
     /**
@@ -52,7 +52,7 @@ class ShowProductTest extends TestCase
         $user->roles()->sync([$roladmin->id]);
         $roladmin->permissions()->sync($permission->id);
 
-        $response = $this->actingAs($user)->getJson(route('api.product.show', $product->slug));
+        $response = $this->actingAs($user)->getJson(route('api.product.show', $product->id));
 
         $response->assertStatus(200);
     }

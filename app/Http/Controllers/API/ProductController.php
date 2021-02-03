@@ -28,7 +28,7 @@ class ProductController extends Controller
     /**
      * list all products
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function index(): Collection
     {
@@ -63,14 +63,14 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param string $slug
+     * @param int $id
      * @return JsonResponse
      */
-    public function showProduct(string $slug): JsonResponse
+    public function showProduct(int $id): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.show');
 
-        return $this->apiRepo->seeAProduct($slug);
+        return $this->apiRepo->seeAProduct($id);
     }
 
     /**
@@ -92,11 +92,11 @@ class ProductController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function update(ProductUpdateRequest $request, string $slug): JsonResponse
+    public function update(ProductUpdateRequest $request, int $id): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.edit');
 
-        return $this->apiRepo->updateProduct($request, $slug);
+        return $this->apiRepo->updateProduct($request, $id);
     }
 
     /**
@@ -105,11 +105,11 @@ class ProductController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function delete(string $slug): JsonResponse
+    public function delete(int $id): JsonResponse
     {
         $this->authorize('haveaccess', 'admin.product.destroy');
 
-        return $this->apiRepo->deleteProduct($slug);
+        return $this->apiRepo->deleteProduct($id);
     }
 
     /**

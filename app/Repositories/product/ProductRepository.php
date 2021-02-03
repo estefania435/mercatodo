@@ -143,7 +143,7 @@ class ProductRepository extends BaseRepository
         $prod->status = $data->status;
 
         $prod->save();
-        dd($prod);
+
 
         $prod->images()->createMany($urlimages);
 
